@@ -1,0 +1,15 @@
+{
+  "name": "心晴岛 APP",
+  "short_name": "心晴岛",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#eef9ff",
+  "theme_color": "#8ecfff",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
