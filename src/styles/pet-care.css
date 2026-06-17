@@ -1,0 +1,200 @@
+/* ============================================
+   照顾晴晴页面
+   ============================================ */
+
+.pet-care-page {
+  padding: var(--space-lg);
+}
+
+.coin-display-small {
+  padding: 6px 12px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-light));
+  border-radius: var(--radius-full);
+  font-size: 14px;
+  font-weight: 800;
+  color: white;
+  box-shadow: 0 2px 8px rgba(255, 179, 71, 0.3);
+}
+
+/* 晴晴展示区 */
+.pet-display-area {
+  margin-bottom: var(--space-xl);
+}
+
+.pet-stage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+  padding: var(--space-xl);
+  background: linear-gradient(180deg, rgba(255, 245, 200, 0.3), rgba(200, 240, 255, 0.3));
+  border-radius: var(--radius-xl);
+  margin-bottom: var(--space-lg);
+  box-shadow: var(--shadow-lg);
+}
+
+.pet-speech-bubble {
+  position: relative;
+  padding: var(--space-lg);
+  margin: 0 var(--space-md) var(--space-lg);
+  text-align: center;
+}
+
+.pet-speech-bubble::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid rgba(255, 255, 255, 0.7);
+}
+
+.pet-speech-bubble p {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--neutral-900);
+  line-height: 1.5;
+}
+
+/* 详细状态条 */
+.pet-stats-detailed {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  padding: var(--space-md);
+}
+
+.stat-bar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.stat-bar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.stat-bar-label {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--neutral-900);
+}
+
+.stat-bar-value {
+  font-size: 16px;
+  font-weight: 900;
+  color: var(--primary);
+}
+
+.stat-bar-track {
+  width: 100%;
+  height: 16px;
+  background: rgba(200, 200, 200, 0.3);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.stat-bar-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: width var(--duration-slow) var(--ease-out-cubic);
+  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.5);
+}
+
+.stat-hunger {
+  background: linear-gradient(90deg, #FF6B9D, #FFA07A);
+}
+
+.stat-happiness {
+  background: linear-gradient(90deg, #FFD93D, #FFEA00);
+}
+
+.stat-energy {
+  background: linear-gradient(90deg, #6BCF7F, #A8E6CF);
+}
+
+/* 操作按钮 */
+.care-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  margin-bottom: var(--space-xl);
+}
+
+.care-action-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-lg);
+  text-align: left;
+  width: 100%;
+}
+
+.care-action-btn .action-icon {
+  font-size: 40px;
+  flex-shrink: 0;
+}
+
+.care-action-btn .action-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.care-action-btn .action-text strong {
+  font-size: 18px;
+}
+
+.care-action-btn .action-cost {
+  font-size: 13px;
+  opacity: 0.85;
+}
+
+.care-action-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+/* 提示区域 */
+.care-tips {
+  padding: var(--space-lg);
+}
+
+.care-tips h3 {
+  margin: 0 0 var(--space-md);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--neutral-900);
+}
+
+.care-tips ul {
+  margin: 0;
+  padding-left: 20px;
+  list-style: none;
+}
+
+.care-tips li {
+  position: relative;
+  margin-bottom: var(--space-sm);
+  font-size: 14px;
+  color: var(--neutral-700);
+  line-height: 1.6;
+}
+
+.care-tips li::before {
+  content: '•';
+  position: absolute;
+  left: -15px;
+  color: var(--primary);
+  font-weight: 900;
+}

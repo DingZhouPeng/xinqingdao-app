@@ -1,0 +1,394 @@
+/* ============================================
+   IslandScene 优化 - 流畅 60fps 动画
+   ============================================ */
+
+.island-scene {
+  position: relative;
+  width: 100%;
+  height: 320px;
+  overflow: hidden;
+  transition: all var(--duration-slow) var(--ease-out-cubic);
+}
+
+.is-clear {
+  background: linear-gradient(180deg, #87CEEB 0%, #B0E5FC 50%, #FFE9B8 100%);
+}
+
+.is-stormy {
+  background: linear-gradient(180deg, #778899 0%, #95A5B0 50%, #C0C8D0 100%);
+}
+
+/* 天空层 */
+.sky-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60%;
+  z-index: 1;
+}
+
+.sun {
+  position: absolute;
+  top: 30px;
+  right: 40px;
+  font-size: 50px;
+  filter: drop-shadow(0 0 20px rgba(255, 220, 100, 0.8));
+  animation: sun-glow 4s var(--ease-in-out-cubic) infinite;
+  will-change: transform;
+}
+
+@keyframes sun-glow {
+  0%, 100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 20px rgba(255, 220, 100, 0.8));
+  }
+  50% {
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 30px rgba(255, 220, 100, 1));
+  }
+}
+
+.sun-dim {
+  opacity: 0.3;
+  filter: drop-shadow(0 0 10px rgba(200, 200, 200, 0.5));
+  animation: none;
+}
+
+/* 云朵 */
+.cloud {
+  position: absolute;
+  width: 80px;
+  height: 30px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 50px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  will-change: transform;
+}
+
+.cloud::before,
+.cloud::after {
+  content: '';
+  position: absolute;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+}
+
+.cloud::before {
+  width: 40px;
+  height: 40px;
+  top: -20px;
+  left: 10px;
+}
+
+.cloud::after {
+  width: 50px;
+  height: 50px;
+  top: -25px;
+  right: 10px;
+}
+
+.cloud-a {
+  top: 40px;
+  left: 20px;
+  animation: cloud-float-1 25s linear infinite;
+}
+
+.cloud-b {
+  top: 80px;
+  left: 50%;
+  animation: cloud-float-2 30s linear infinite;
+}
+
+.cloud-c {
+  top: 60px;
+  right: 30px;
+  animation: cloud-float-1 20s linear infinite reverse;
+}
+
+@keyframes cloud-float-1 {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(100px); }
+}
+
+@keyframes cloud-float-2 {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-120px); }
+}
+
+/* 小鸟 */
+.bird {
+  position: absolute;
+  font-size: 20px;
+  animation: bird-fly 15s linear infinite;
+  will-change: transform;
+}
+
+.bird-1 {
+  top: 50px;
+  left: -30px;
+  animation-delay: 0s;
+}
+
+.bird-2 {
+  top: 90px;
+  left: -30px;
+  animation-delay: 7s;
+}
+
+@keyframes bird-fly {
+  0% { transform: translate(0, 0); }
+  50% { transform: translate(200px, -20px); }
+  100% { transform: translate(400px, 0); }
+}
+
+/* 海洋层 */
+.sea-layer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40%;
+  z-index: 2;
+}
+
+.sea {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  background: linear-gradient(180deg, rgba(64, 164, 223, 0.6) 0%, rgba(100, 200, 255, 0.8) 100%);
+}
+
+/* 波浪 */
+.wave {
+  position: absolute;
+  bottom: 0;
+  left: -100%;
+  width: 200%;
+  height: 60px;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"><path d="M0,60 Q150,10 300,60 T600,60 T900,60 T1200,60 L1200,120 L0,120 Z" fill="rgba(255,255,255,0.3)"/></svg>') repeat-x;
+  background-size: 600px 60px;
+  will-change: transform;
+}
+
+.wave-1 {
+  animation: wave-move 12s linear infinite;
+  opacity: 0.4;
+}
+
+.wave-2 {
+  animation: wave-move 15s linear infinite reverse;
+  opacity: 0.3;
+  bottom: 10px;
+}
+
+.wave-3 {
+  animation: wave-move 18s linear infinite;
+  opacity: 0.2;
+  bottom: 20px;
+}
+
+@keyframes wave-move {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(50%); }
+}
+
+/* 岛屿主体 */
+.island {
+  position: absolute;
+  bottom: 25%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 280px;
+  height: 140px;
+  background: linear-gradient(180deg, #90EE90 0%, #78C078 100%);
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  z-index: 3;
+}
+
+.island::before {
+  content: '';
+  position: absolute;
+  bottom: -20px;
+  left: 10%;
+  width: 80%;
+  height: 30px;
+  background: rgba(100, 150, 100, 0.5);
+  border-radius: 50%;
+  filter: blur(8px);
+}
+
+/* 树木 */
+.tree {
+  position: absolute;
+  bottom: 40px;
+  left: 30px;
+  width: 40px;
+  height: 60px;
+  transition: all var(--duration-slow) var(--ease-out-cubic);
+}
+
+.tree::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 8px;
+  height: 30px;
+  background: #8B4513;
+  border-radius: 4px;
+}
+
+.tree-leaves {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 40px;
+  background: #228B22;
+  border-radius: 50%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.tree-leaves::before,
+.tree-leaves::after {
+  content: '';
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background: #228B22;
+  border-radius: 50%;
+}
+
+.tree-leaves::before {
+  top: -10px;
+  left: -8px;
+}
+
+.tree-leaves::after {
+  top: -10px;
+  right: -8px;
+}
+
+.tree-grow {
+  transform: scale(1.2);
+}
+
+.tree-grow .tree-leaves {
+  background: #32CD32;
+  animation: leaves-sway 3s var(--ease-in-out-cubic) infinite;
+}
+
+@keyframes leaves-sway {
+  0%, 100% { transform: translateX(-50%) rotate(0deg); }
+  50% { transform: translateX(-50%) rotate(5deg); }
+}
+
+/* 宠物 */
+.island-pet {
+  position: absolute;
+  bottom: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
+/* 灯塔 */
+.lighthouse {
+  position: absolute;
+  bottom: 45px;
+  right: 40px;
+  font-size: 36px;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+  transition: all var(--duration-normal) var(--ease-out-cubic);
+}
+
+.lighthouse-on {
+  animation: lighthouse-glow 2s var(--ease-in-out-cubic) infinite;
+}
+
+@keyframes lighthouse-glow {
+  0%, 100% {
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+  }
+  50% {
+    filter: drop-shadow(0 0 20px rgba(255, 200, 50, 0.8));
+  }
+}
+
+.lighthouse i {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 60px;
+  background: radial-gradient(circle, rgba(255, 220, 100, 0.6) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: lighthouse-beam 3s linear infinite;
+}
+
+@keyframes lighthouse-beam {
+  0%, 100% { opacity: 0.8; transform: translateX(-50%) scale(1); }
+  50% { opacity: 1; transform: translateX(-50%) scale(1.2); }
+}
+
+/* 闪光特效 */
+.sparkle {
+  position: absolute;
+  font-size: 24px;
+  animation: sparkle-twinkle 2s var(--ease-in-out-cubic) infinite;
+  will-change: transform, opacity;
+}
+
+.sparkle-1 {
+  top: 30%;
+  left: 20%;
+  animation-delay: 0s;
+}
+
+.sparkle-2 {
+  top: 40%;
+  right: 25%;
+  animation-delay: 1s;
+}
+
+@keyframes sparkle-twinkle {
+  0%, 100% {
+    opacity: 0;
+    transform: scale(0.5) rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2) rotate(180deg);
+  }
+}
+
+/* 场景描述 */
+.scene-caption {
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  color: white;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  z-index: 4;
+}
+
+.scene-caption strong {
+  display: block;
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.scene-caption span {
+  font-size: 13px;
+  opacity: 0.9;
+}

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <defs>
+    <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#8ecfff"/>
+      <stop offset="1" stop-color="#a8efd5"/>
+    </linearGradient>
+  </defs>
+  <rect width="120" height="120" rx="30" fill="url(#g)"/>
+  <circle cx="86" cy="30" r="14" fill="#ffe27a"/>
+  <path d="M20 78c12-18 68-20 82 0 4 6-2 16-12 16H32c-12 0-17-8-12-16Z" fill="#f0d398"/>
+  <path d="M43 75c0-18 12-34 26-34s26 16 26 34" fill="#53d7af" opacity=".9"/>
+  <text x="60" y="72" font-size="24" text-anchor="middle">心</text>
+</svg>

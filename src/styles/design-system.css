@@ -1,0 +1,246 @@
+/* ============================================
+   心晴岛设计系统 - 统一视觉语言
+   ============================================ */
+
+:root {
+  /* 色彩系统 */
+  --primary: #4A90E2;
+  --primary-light: #6BA4EC;
+  --primary-dark: #357ABD;
+
+  --accent: #FFB347;
+  --accent-light: #FFE27A;
+
+  --success: #5FC694;
+  --warning: #F7B731;
+  --danger: #EE5A6F;
+
+  --neutral-50: #FAFBFC;
+  --neutral-100: #F4F6F8;
+  --neutral-200: #E8ECEF;
+  --neutral-300: #DFE3E8;
+  --neutral-700: #6B7280;
+  --neutral-900: #1F2937;
+
+  /* 圆角系统 - 统一使用 */
+  --radius-xs: 8px;
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+  --radius-full: 999px;
+
+  /* 阴影系统 - 分层明确 */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+  --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.16);
+
+  /* 悬浮效果 */
+  --shadow-hover: 0 8px 32px rgba(74, 144, 226, 0.2);
+  --shadow-float: 0 12px 40px rgba(0, 0, 0, 0.15);
+
+  /* 间距系统 - 8px 基准 */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+
+  /* 动画时长 */
+  --duration-fast: 150ms;
+  --duration-normal: 250ms;
+  --duration-slow: 400ms;
+
+  /* 缓动函数 */
+  --ease-out-cubic: cubic-bezier(0.33, 1, 0.68, 1);
+  --ease-in-out-cubic: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ============================================
+   玻璃态卡片基础类
+   ============================================ */
+.glass-card {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: var(--shadow-md);
+  border-radius: var(--radius-lg);
+  transition: all var(--duration-normal) var(--ease-out-cubic);
+}
+
+.glass-card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-hover);
+}
+
+/* 悬浮卡片 */
+.floating-card {
+  background: white;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-float);
+  padding: var(--space-lg);
+  transition: transform var(--duration-normal) var(--ease-out-cubic);
+  will-change: transform;
+}
+
+/* ============================================
+   按钮系统 - 统一风格
+   ============================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  padding: 14px 24px;
+  border: none;
+  border-radius: var(--radius-full);
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--duration-normal) var(--ease-out-cubic);
+  will-change: transform;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn:active {
+  transform: scale(0.96);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  color: white;
+  box-shadow: 0 4px 16px rgba(74, 144, 226, 0.3);
+}
+
+.btn-primary:hover {
+  box-shadow: 0 6px 24px rgba(74, 144, 226, 0.4);
+  transform: translateY(-2px);
+}
+
+.btn-accent {
+  background: linear-gradient(135deg, var(--accent), var(--accent-light));
+  color: white;
+  box-shadow: 0 4px 16px rgba(255, 179, 71, 0.3);
+}
+
+.btn-danger {
+  background: linear-gradient(135deg, #FF6B9D, #FFA07A);
+  color: white;
+  box-shadow: 0 4px 16px rgba(255, 107, 157, 0.3);
+}
+
+.btn-ghost {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(10px);
+  color: var(--neutral-900);
+  border: 1.5px solid rgba(0, 0, 0, 0.08);
+}
+
+.btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(0, 0, 0, 0.12);
+}
+
+/* 大按钮 */
+.btn-large {
+  padding: 18px 32px;
+  font-size: 18px;
+  font-weight: 700;
+  min-height: 64px;
+}
+
+/* ============================================
+   动画优化 - 只用 transform 和 opacity
+   ============================================ */
+@keyframes float-smooth {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes pulse-gentle {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.05); opacity: 0.9; }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in-scale {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* 流畅的悬浮动画 */
+.float-animation {
+  animation: float-smooth 3s var(--ease-in-out-cubic) infinite;
+  will-change: transform;
+}
+
+/* 微妙的脉动 */
+.pulse-animation {
+  animation: pulse-gentle 2s var(--ease-in-out-cubic) infinite;
+  will-change: transform, opacity;
+}
+
+/* 渐入动画 */
+.fade-in-up {
+  animation: fade-in-up var(--duration-slow) var(--ease-out-cubic);
+}
+
+.fade-in-scale {
+  animation: fade-in-scale var(--duration-slow) var(--ease-out-cubic);
+}
+
+/* 延迟动画 */
+.delay-1 { animation-delay: 100ms; }
+.delay-2 { animation-delay: 200ms; }
+.delay-3 { animation-delay: 300ms; }
+.delay-4 { animation-delay: 400ms; }
+
+/* ============================================
+   浮动按钮
+   ============================================ */
+.floating-settings-btn {
+  position: fixed;
+  bottom: calc(80px + env(safe-area-inset-bottom));
+  right: var(--space-lg);
+  width: 56px;
+  height: 56px;
+  border: none;
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  border-radius: 50%;
+  box-shadow: 0 8px 24px rgba(74, 144, 226, 0.4);
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 100;
+  transition: all var(--duration-normal) var(--ease-out-cubic);
+  animation: float-smooth 3s var(--ease-in-out-cubic) infinite;
+}
+
+.floating-settings-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 12px 32px rgba(74, 144, 226, 0.5);
+}
+
+.floating-settings-btn:active {
+  transform: scale(0.95);
+}
