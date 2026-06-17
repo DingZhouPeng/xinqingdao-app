@@ -19,7 +19,7 @@ export default function AchievementUnlocked({ achievement, onClose }: Achievemen
           <span className="reward-icon">💰</span>
           <span className="reward-text">+{achievement.reward} 金币</span>
         </div>
-        <button className="btn btn-primary btn-sm" onClick={onClose}>
+        <button className="primary-button" onClick={onClose}>
           太棒了！
         </button>
       </div>

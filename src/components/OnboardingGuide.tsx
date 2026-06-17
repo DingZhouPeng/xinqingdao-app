@@ -78,8 +78,8 @@ export default function OnboardingGuide({ onComplete }: OnboardingGuideProps) {
 
   return (
     <>
-      {/* 遮罩层 */}
-      <div className="guide-overlay" />
+      {/* 遮罩层 - 点击可跳过 */}
+      <div className="guide-overlay" onClick={handleSkip} />
 
       {/* 高亮目标元素 */}
       {step.target && (
@@ -112,10 +112,10 @@ export default function OnboardingGuide({ onComplete }: OnboardingGuideProps) {
         </div>
 
         <div className="guide-actions">
-          <button className="btn btn-ghost btn-sm" onClick={handleSkip}>
+          <button className="ghost-button" style={{ flex: 1 }} onClick={handleSkip}>
             跳过
           </button>
-          <button className="btn btn-primary btn-sm" onClick={handleNext}>
+          <button className="primary-button" style={{ flex: 1 }} onClick={handleNext}>
             {currentStep === GUIDE_STEPS.length - 1 ? '开始使用' : '下一步'}
           </button>
         </div>

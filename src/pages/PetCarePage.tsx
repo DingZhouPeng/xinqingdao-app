@@ -99,7 +99,7 @@ export default function PetCarePage({ gameProgress, onFeed, onPlay, onRest, onBa
       {/* 操作按钮 */}
       <section className="care-actions">
         <button
-          className="btn btn-primary care-action-btn fade-in-up delay-1"
+          className="primary-button care-action-btn fade-in-up delay-1"
           onClick={onFeed}
           disabled={!canFeed}
         >
@@ -111,7 +111,7 @@ export default function PetCarePage({ gameProgress, onFeed, onPlay, onRest, onBa
         </button>
 
         <button
-          className="btn btn-accent care-action-btn fade-in-up delay-2"
+          className="danger-soft-button care-action-btn fade-in-up delay-2"
           onClick={onPlay}
           disabled={!canPlay}
         >
@@ -123,7 +123,7 @@ export default function PetCarePage({ gameProgress, onFeed, onPlay, onRest, onBa
         </button>
 
         <button
-          className="btn btn-ghost care-action-btn fade-in-up delay-3"
+          className="ghost-button care-action-btn fade-in-up delay-3"
           onClick={onRest}
         >
           <span className="action-icon">😴</span>

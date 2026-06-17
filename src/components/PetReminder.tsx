@@ -46,10 +46,10 @@ export default function PetReminder({ petState, onDismiss, onGoToCare }: PetRemi
           <p>{text}</p>
         </div>
         <div className="reminder-actions">
-          <button className="btn btn-ghost btn-sm" onClick={handleDismiss}>
+          <button className="ghost-button" style={{ flex: 1 }} onClick={handleDismiss}>
             稍后
           </button>
-          <button className="btn btn-primary btn-sm" onClick={handleGoToCare}>
+          <button className="primary-button" style={{ flex: 1 }} onClick={handleGoToCare}>
             去看看
           </button>
         </div>

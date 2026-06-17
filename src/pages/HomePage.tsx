@@ -53,7 +53,7 @@ export default function HomePage({ snapshot, gameProgress, onNavigate }: HomePag
       {/* 主操作区 - 悬浮卡片 */}
       <section className="main-actions fade-in-up delay-3">
         <button
-          className="btn btn-primary btn-large action-card"
+          className="primary-button action-main"
           onClick={() => onNavigate('mood')}
         >
           <span className="action-icon">🌤️</span>
@@ -63,7 +63,7 @@ export default function HomePage({ snapshot, gameProgress, onNavigate }: HomePag
           </div>
         </button>
         <button
-          className="btn btn-danger btn-large action-card"
+          className="danger-soft-button action-main"
           onClick={() => onNavigate('relief')}
         >
           <span className="action-icon">🫧</span>
