@@ -1,7 +1,9 @@
+import { lazy, Suspense } from 'react';
 import type { AppStateSnapshot, ActiveView, GameProgress } from '../types';
-import IslandScene3D from '../components/three/IslandScene3D';
 import ProgressPill from '../components/ProgressPill';
 import { moodEmoji } from '../data/moodOptions';
+
+const IslandScene3D = lazy(() => import('../components/three/IslandScene3D'));
 
 interface HomePageProps {
   snapshot: AppStateSnapshot;
@@ -41,13 +43,22 @@ export default function HomePage({ snapshot, gameProgress, onNavigate }: HomePag
 
       {/* 3D 岛屿场景 */}
       <div className="island-3d-container">
-        <IslandScene3D
-          mood={latest?.input.mood}
-          sunlight={snapshot.sunlight}
-          waterDrops={snapshot.waterDrops}
-          lamps={snapshot.lamps}
-          petState={gameProgress.petState}
-        />
+        <Suspense fallback={
+          <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'linear-gradient(180deg, #bceaff, #d4f2ff 40%, #effbff 60%, #b7f2e2)' }}>
+            <div style={{ textAlign: 'center' }}>
+              <div style={{ fontSize: 40, animation: 'pulse 2s infinite' }}>🏝️</div>
+              <p style={{ color: '#8899aa', fontSize: 13, marginTop: 8 }}>小岛加载中...</p>
+            </div>
+          </div>
+        }>
+          <IslandScene3D
+            mood={latest?.input.mood}
+            sunlight={snapshot.sunlight}
+            waterDrops={snapshot.waterDrops}
+            lamps={snapshot.lamps}
+            petState={gameProgress.petState}
+          />
+        </Suspense>
       </div>
 
       {/* 主操作区 - 悬浮卡片 */}
