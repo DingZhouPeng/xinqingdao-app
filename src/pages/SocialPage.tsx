@@ -31,12 +31,18 @@ export default function SocialPage({
   const [subView, setSubView] = useState<SocialSubView>('hub');
   const [selectedChain, setSelectedChain] = useState<RelayChain | null>(null);
   const [copiedCode, setCopiedCode] = useState<string | null>(null);
+  // Local relay state for immediate UI updates
+  const [localRelayState, setLocalRelayState] = useState<RelayState>(relayState);
 
-  const stats = getMyRelayStats(relayState);
+  // Sync from prop when it changes
+  const displayRelayState = localRelayState.myMessages.length > 0 ? localRelayState : relayState;
+
+  const stats = getMyRelayStats(displayRelayState);
   const latest = snapshot.records[0];
 
   const handleCreateComplete = (messages: RelayMessage[], updatedRelayState: RelayState) => {
     const count = messages.length;
+    setLocalRelayState(updatedRelayState);
     onRelayStateChange(updatedRelayState);
     onEarnCoins(count * 20, `发起温暖接力 x${count}`);
     onStatsUpdate({
@@ -48,7 +54,7 @@ export default function SocialPage({
   };
 
   const handleViewChain = (code: string) => {
-    const chain = findChainByCode(relayState, code);
+    const chain = findChainByCode(displayRelayState, code);
     if (chain) {
       setSelectedChain(chain);
       setSubView('chain');
@@ -85,7 +91,7 @@ export default function SocialPage({
   if (subView === 'create') {
     return (
       <RelayCreateForm
-        relayState={relayState}
+        relayState={displayRelayState}
         onComplete={handleCreateComplete}
         onBack={() => setSubView('hub')}
       />
@@ -198,13 +204,13 @@ export default function SocialPage({
       </div>
 
       {/* My Messages */}
-      {relayState.myMessages.length > 0 && (
+      {displayRelayState.myMessages.length > 0 && (
         <div className="relay-section">
           <h3 className="relay-section-title">
             💌 我的接力消息
           </h3>
-          {relayState.myMessages.map(msg => {
-            const chain = findChainByCode(relayState, msg.shareCode);
+          {displayRelayState.myMessages.map(msg => {
+            const chain = findChainByCode(displayRelayState, msg.shareCode);
             return (
               <div
                 key={msg.id}
