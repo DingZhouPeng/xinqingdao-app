@@ -12,6 +12,12 @@ export interface UserStats {
   petCareCount: number;
   loginStreak: number;
   lastLoginDate: string;
+  relayStarted: number;
+  relayMessagesWritten: number;
+  relayResponses: number;
+  relayTotalReach: number;
+  relayMaxChainReach: number;
+  postcardsShared: number;
 }
 
 export function loadAchievements(): AchievementsState {
@@ -52,7 +58,13 @@ function initializeStats(): UserStats {
     bubblesPopped: 0,
     petCareCount: 0,
     loginStreak: 0,
-    lastLoginDate: ''
+    lastLoginDate: '',
+    relayStarted: 0,
+    relayMessagesWritten: 0,
+    relayResponses: 0,
+    relayTotalReach: 0,
+    relayMaxChainReach: 0,
+    postcardsShared: 0
   };
 }
 
@@ -105,6 +117,24 @@ export function checkAchievements(
         break;
       case 'petHappiness >= 100':
         shouldUnlock = gameProgress.petState.happiness >= 100;
+        break;
+      case 'relayStarted >= 1':
+        shouldUnlock = stats.relayStarted >= 1;
+        break;
+      case 'relayMessagesWritten >= 10':
+        shouldUnlock = stats.relayMessagesWritten >= 10;
+        break;
+      case 'relayResponses >= 5':
+        shouldUnlock = stats.relayResponses >= 5;
+        break;
+      case 'relayTotalReach >= 10':
+        shouldUnlock = stats.relayTotalReach >= 10;
+        break;
+      case 'relayMaxChainReach >= 5':
+        shouldUnlock = stats.relayMaxChainReach >= 5;
+        break;
+      case 'postcardsShared >= 3':
+        shouldUnlock = stats.postcardsShared >= 3;
         break;
     }
 

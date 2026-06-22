@@ -94,5 +94,53 @@ export const DEFAULT_ACHIEVEMENTS: Omit<Achievement, 'unlocked' | 'unlockedAt'>[
     icon: '😊',
     condition: 'petHappiness >= 100',
     reward: 30
+  },
+  {
+    id: 'relay-starter',
+    title: '温暖发起者',
+    description: '发起第一次温暖接力',
+    icon: '🕊️',
+    condition: 'relayStarted >= 1',
+    reward: 30
+  },
+  {
+    id: 'relay-writer',
+    title: '温暖书写者',
+    description: '写下 10 条鼓励消息',
+    icon: '✍️',
+    condition: 'relayMessagesWritten >= 10',
+    reward: 50
+  },
+  {
+    id: 'relay-responder',
+    title: '温暖回应者',
+    description: '回应 5 条接力消息',
+    icon: '💌',
+    condition: 'relayResponses >= 5',
+    reward: 40
+  },
+  {
+    id: 'warm-ambassador',
+    title: '温暖大使',
+    description: '你的温暖传递给了 10 个人',
+    icon: '🌟',
+    condition: 'relayTotalReach >= 10',
+    reward: 100
+  },
+  {
+    id: 'relay-chain-5',
+    title: '接力达人',
+    description: '一条接力链达到 5 人',
+    icon: '🔗',
+    condition: 'relayMaxChainReach >= 5',
+    reward: 60
+  },
+  {
+    id: 'postcard-sharer',
+    title: '明信片使者',
+    description: '分享 3 张心情明信片',
+    icon: '🖼️',
+    condition: 'postcardsShared >= 3',
+    reward: 30
   }
 ];

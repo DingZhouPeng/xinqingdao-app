@@ -23,6 +23,9 @@ import { appendRecord, loadSnapshot, saveSnapshot } from './services/storage';
 import { loadGameProgress, saveGameProgress, earnCoins, purchaseOutfit, equipOutfit, feedPet, playWithPet, restPet } from './services/gameProgress';
 import { loadDailyTasks, saveDailyTasks, completeTask } from './services/dailyTasks';
 import type { DailyTasksState } from './types/dailyTasks';
+import { loadRelayState, saveRelayState } from './services/relay';
+import type { RelayState } from './types/relay';
+import RelayCodeOverlay from './components/RelayCodeOverlay';
 import { loadAchievements, saveAchievements, loadStats, saveStats, checkAchievements, updateLoginStreak, type UserStats } from './services/achievements';
 import type { AchievementsState, Achievement } from './types/achievements';
 import { audioManager } from './services/audio';
@@ -34,6 +37,8 @@ export default function App() {
   const [dailyTasks, setDailyTasks] = useState<DailyTasksState>(loadDailyTasks);
   const [achievements, setAchievements] = useState<AchievementsState>(loadAchievements);
   const [stats, setStats] = useState<UserStats>(loadStats);
+  const [relayState, setRelayState] = useState<RelayState>(loadRelayState);
+  const [pendingRelayCode, setPendingRelayCode] = useState<string | null>(null);
   const [activeView, setActiveView] = useState<ActiveView>(snapshot.profile ? 'home' : 'onboarding');
   const [moodInput, setMoodInput] = useState<MoodInput | null>(null);
   const [abc, setAbc] = useState<ABCInput | null>(null);
@@ -62,6 +67,25 @@ export default function App() {
   useEffect(() => {
     saveStats(stats);
   }, [stats]);
+
+  useEffect(() => {
+    saveRelayState(relayState);
+  }, [relayState]);
+
+  // URL Hash detection for relay codes
+  useEffect(() => {
+    const hash = window.location.hash;
+    const match = hash.match(/^#relay=([A-Z0-9]{6})$/);
+    if (match) {
+      const code = match[1];
+      if (snapshot.profile) {
+        setPendingRelayCode(code);
+      } else {
+        localStorage.setItem('xinqingdao-pending-relay-code', code);
+      }
+      window.history.replaceState(null, '', window.location.pathname);
+    }
+  }, []);
 
   // 登录连续天数更新
   useEffect(() => {
@@ -135,6 +159,12 @@ export default function App() {
   const completeOnboarding = (profile: UserProfile) => {
     setSnapshot((current) => ({ ...current, profile }));
     audioManager.playSfx('complete');
+    // Check for pending relay code
+    const pendingCode = localStorage.getItem('xinqingdao-pending-relay-code');
+    if (pendingCode) {
+      localStorage.removeItem('xinqingdao-pending-relay-code');
+      setPendingRelayCode(pendingCode);
+    }
     setActiveView('home');
   };
 
@@ -202,7 +232,24 @@ export default function App() {
     if (activeView === 'relief') return <QuickReliefPage />;
     if (activeView === 'ai' && moodInput) return <AiGuidePage moodInput={moodInput} onGenerate={handleGenerate} />;
     if (activeView === 'action' && moodInput && abc && recommendation) return <ActionPage moodInput={moodInput} abc={abc} recommendation={recommendation} onComplete={handleCompleteRecord} />;
-    if (activeView === 'social') return <SocialPage />;
+    if (activeView === 'social') return (
+      <SocialPage
+        relayState={relayState}
+        snapshot={snapshot}
+        gameProgress={gameProgress}
+        onRelayStateChange={setRelayState}
+        onNavigate={setActiveView}
+        onEarnCoins={(amount, reason) => setGameProgress(prev => earnCoins(prev, amount, reason))}
+        onStatsUpdate={(updates) => setStats(prev => {
+          const next = { ...prev, ...updates };
+          // Check for relayMaxChainReach update
+          if (updates.relayTotalReach && next.relayTotalReach > next.relayMaxChainReach) {
+            next.relayMaxChainReach = next.relayTotalReach;
+          }
+          return next;
+        })}
+      />
+    );
     if (activeView === 'growth') return <GrowthPage snapshot={snapshot} />;
     if (activeView === 'lighthouse') return <LighthousePage snapshot={snapshot} />;
     if (activeView === 'shop') return <ShopPage gameProgress={gameProgress} onPurchase={handlePurchase} onEquip={handleEquip} />;
@@ -245,6 +292,22 @@ export default function App() {
         <AchievementUnlocked
           achievement={unlockedAchievement}
           onClose={() => setUnlockedAchievement(null)}
+        />
+      )}
+
+      {/* 温暖接力 - 分享码查看弹窗 */}
+      {pendingRelayCode && snapshot.profile && (
+        <RelayCodeOverlay
+          code={pendingRelayCode}
+          relayState={relayState}
+          onDismiss={() => setPendingRelayCode(null)}
+          onRelayStateChange={setRelayState}
+          onEarnCoins={(amount, reason) => setGameProgress(prev => earnCoins(prev, amount, reason))}
+          onStatsUpdate={(updates) => setStats(prev => ({
+            ...prev,
+            ...updates,
+            relayMaxChainReach: updates.relayTotalReach ? Math.max(prev.relayMaxChainReach, prev.relayTotalReach + (updates.relayTotalReach || 0)) : prev.relayMaxChainReach
+          }))}
         />
       )}
 

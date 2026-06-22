@@ -14,6 +14,7 @@ import './styles/audio-settings.css';
 import './styles/onboarding-guide.css';
 import './styles/achievements.css';
 import './styles/achievements-page.css';
+import './styles/relay.css';
 import './styles/app.css';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(

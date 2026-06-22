@@ -1,0 +1,730 @@
+/* ============================================
+   温暖接力 (Warm Relay) 社交裂变游戏样式
+   ============================================ */
+
+/* ---- Relay Hub ---- */
+.relay-hub {
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.relay-header {
+  text-align: center;
+  padding: 20px 18px 10px;
+}
+
+.relay-header .eyebrow {
+  color: var(--coral-300);
+}
+
+/* 影响力卡片 */
+.relay-impact-card {
+  margin: 14px 18px;
+  padding: 22px;
+  background: linear-gradient(135deg, #fff9e6, #fff5f0, #fef9ff);
+  border-radius: 28px;
+  border: 1px solid rgba(255, 200, 150, 0.3);
+  text-align: center;
+  box-shadow: 0 8px 30px rgba(255, 180, 120, 0.15);
+  animation: relay-impact-in 0.6s var(--ease-out-cubic);
+}
+
+@keyframes relay-impact-in {
+  from { opacity: 0; transform: scale(0.9) translateY(20px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.relay-impact-stats {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin-top: 16px;
+}
+
+.relay-impact-stat {
+  text-align: center;
+}
+
+.relay-impact-stat .stat-number {
+  font-size: 36px;
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--coral-300), var(--sun-200));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.relay-impact-stat .stat-label {
+  font-size: 12px;
+  color: var(--muted);
+  display: block;
+  margin-top: 4px;
+}
+
+/* 快速操作区 */
+.relay-actions {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  padding: 0 18px;
+  margin: 16px 0;
+}
+
+.relay-action-btn {
+  min-height: 100px;
+  border-radius: 24px;
+  background: var(--glass-strong);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.2s var(--ease-out-cubic);
+  font-weight: 800;
+  color: var(--ink-900);
+  padding: 16px;
+}
+
+.relay-action-btn:active {
+  transform: scale(0.96);
+  box-shadow: var(--shadow-soft);
+}
+
+.relay-action-btn .action-emoji {
+  font-size: 36px;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+}
+
+.relay-action-btn .action-label {
+  font-size: 15px;
+}
+
+.relay-action-btn .action-sub {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.relay-action-btn.primary-action {
+  background: linear-gradient(135deg, #fff5e8, #ffe8e0);
+  border-color: rgba(255, 180, 140, 0.3);
+}
+
+/* 我的接力列表 */
+.relay-section {
+  padding: 0 18px;
+  margin-bottom: 20px;
+}
+
+.relay-section-title {
+  font-size: 16px;
+  font-weight: 800;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* 接力消息卡片 */
+.relay-message-card {
+  background: var(--glass-strong);
+  border-radius: 20px;
+  padding: 16px;
+  margin-bottom: 10px;
+  box-shadow: var(--shadow-card);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  transition: all 0.2s ease;
+}
+
+.relay-message-card:active {
+  transform: scale(0.98);
+}
+
+.relay-msg-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.relay-alias {
+  background: linear-gradient(135deg, var(--sun-100), var(--coral-100));
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ink-900);
+}
+
+.relay-date {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.relay-msg-text {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--ink-700);
+  margin-bottom: 10px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 12px;
+  padding: 10px;
+}
+
+.relay-msg-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.relay-code-badge {
+  background: linear-gradient(135deg, var(--sky-100), var(--mint-100));
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  color: var(--ink-900);
+  font-family: monospace;
+}
+
+.relay-reach {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.copy-code-btn {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid var(--sky-200);
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--sky-500);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.copy-code-btn:active {
+  background: var(--sky-100);
+  transform: scale(0.95);
+}
+
+.copy-code-btn.copied {
+  background: var(--mint-100);
+  color: var(--mint-400);
+  border-color: var(--mint-200);
+}
+
+/* ---- Relay Create Form ---- */
+.relay-create-page {
+  padding: 0;
+  min-height: 100vh;
+}
+
+.relay-create-header {
+  display: flex;
+  align-items: center;
+  padding: 16px 18px;
+  gap: 12px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.relay-step-indicator {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin: 16px 0;
+}
+
+.relay-step-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(200, 200, 200, 0.4);
+  transition: all 0.3s ease;
+}
+
+.relay-step-dot.active {
+  width: 28px;
+  border-radius: 5px;
+  background: linear-gradient(90deg, var(--coral-300), var(--sun-200));
+}
+
+.relay-step-dot.done {
+  background: var(--mint-400);
+}
+
+.message-input-area {
+  padding: 20px 18px;
+}
+
+.message-input-hint {
+  font-size: 14px;
+  color: var(--muted);
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.relay-textarea {
+  width: 100%;
+  min-height: 120px;
+  border: 2px solid rgba(255, 180, 140, 0.3);
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 20px;
+  padding: 16px;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--ink-900);
+  outline: none;
+  resize: none;
+  transition: border-color 0.2s ease;
+}
+
+.relay-textarea:focus {
+  border-color: var(--coral-300);
+}
+
+.char-count {
+  text-align: right;
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 6px;
+}
+
+.relay-placeholder-suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.suggestion-chip {
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(255, 200, 150, 0.2);
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  color: var(--ink-700);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.suggestion-chip:active {
+  background: var(--sun-100);
+  transform: scale(0.96);
+}
+
+/* Review screen */
+.review-messages {
+  padding: 20px 18px;
+}
+
+.review-card {
+  background: var(--glass-strong);
+  border-radius: 20px;
+  padding: 16px;
+  margin-bottom: 10px;
+  box-shadow: var(--shadow-card);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  position: relative;
+}
+
+.review-card-number {
+  position: absolute;
+  top: -8px;
+  left: -8px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--coral-300), var(--sun-200));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  font-size: 14px;
+  color: white;
+  box-shadow: 0 2px 8px rgba(255, 150, 100, 0.3);
+}
+
+/* Share screen */
+.share-messages {
+  padding: 20px 18px;
+}
+
+.share-card {
+  background: linear-gradient(135deg, #fff9e6, #fff5f0);
+  border-radius: 24px;
+  padding: 20px;
+  margin-bottom: 14px;
+  border: 1px solid rgba(255, 200, 150, 0.3);
+  text-align: center;
+  box-shadow: 0 8px 24px rgba(255, 180, 120, 0.12);
+  animation: share-card-in 0.5s ease-out backwards;
+}
+
+.share-card:nth-child(1) { animation-delay: 0s; }
+.share-card:nth-child(2) { animation-delay: 0.15s; }
+.share-card:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes share-card-in {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.share-code-display {
+  display: inline-block;
+  font-size: 32px;
+  font-weight: 900;
+  letter-spacing: 4px;
+  font-family: monospace;
+  background: linear-gradient(135deg, var(--sky-300), var(--mint-200));
+  padding: 8px 20px;
+  border-radius: 16px;
+  margin: 12px 0;
+  color: var(--ink-900);
+  box-shadow: 0 4px 12px rgba(100, 150, 200, 0.2);
+}
+
+.share-actions-row {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 12px;
+}
+
+.share-action-btn {
+  background: white;
+  border: 1px solid var(--sky-200);
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.share-action-btn:active {
+  transform: scale(0.95);
+  background: var(--sky-50);
+}
+
+.share-action-btn.copied {
+  background: var(--mint-100);
+  border-color: var(--mint-200);
+}
+
+/* ---- Relay Code Overlay ---- */
+.relay-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fade-in 0.3s ease-out;
+}
+
+.relay-overlay-card {
+  width: calc(100% - 40px);
+  max-width: 360px;
+  background: white;
+  border-radius: 30px;
+  padding: 28px 24px;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: relay-card-in 0.5s var(--ease-out-cubic);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+@keyframes relay-card-in {
+  from { opacity: 0; transform: translateY(40px) scale(0.9); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.relay-overlay-icon {
+  font-size: 48px;
+  margin-bottom: 12px;
+  animation: relay-icon-bounce 0.8s var(--ease-spring);
+}
+
+@keyframes relay-icon-bounce {
+  0% { transform: scale(0) rotate(-30deg); }
+  60% { transform: scale(1.2) rotate(5deg); }
+  100% { transform: scale(1) rotate(0); }
+}
+
+.relay-overlay-alias {
+  background: linear-gradient(135deg, var(--sun-100), var(--coral-100));
+  display: inline-block;
+  padding: 4px 14px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 13px;
+  margin-bottom: 12px;
+}
+
+.relay-overlay-message {
+  font-size: 18px;
+  line-height: 1.7;
+  color: var(--ink-900);
+  background: linear-gradient(145deg, #fff9e6, #fff5f0);
+  border-radius: 20px;
+  padding: 18px;
+  margin: 14px 0;
+}
+
+.relay-overlay-stats {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 16px;
+}
+
+.relay-response-input {
+  width: 100%;
+  min-height: 80px;
+  border: 2px solid rgba(255, 180, 140, 0.3);
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 16px;
+  padding: 12px;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--ink-900);
+  outline: none;
+  resize: none;
+  margin-bottom: 12px;
+}
+
+.relay-response-input:focus {
+  border-color: var(--coral-300);
+}
+
+.relay-overlay-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.relay-overlay-actions button {
+  flex: 1;
+  min-height: 44px;
+  border-radius: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+/* ---- Relay Chain View ---- */
+.chain-tree {
+  padding: 20px 18px;
+  position: relative;
+}
+
+.chain-origin {
+  text-align: center;
+  margin-bottom: 24px;
+  position: relative;
+}
+
+.chain-node {
+  background: var(--glass-strong);
+  border-radius: 20px;
+  padding: 14px;
+  margin: 10px 0;
+  box-shadow: var(--shadow-card);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  animation: node-appear 0.4s ease-out backwards;
+  max-width: 280px;
+}
+
+.chain-node:nth-child(2) { animation-delay: 0.1s; }
+.chain-node:nth-child(3) { animation-delay: 0.2s; }
+.chain-node:nth-child(4) { animation-delay: 0.3s; }
+.chain-node:nth-child(5) { animation-delay: 0.4s; }
+
+@keyframes node-appear {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.chain-origin .chain-node {
+  margin: 0 auto;
+  background: linear-gradient(135deg, #fff9e6, #fff5f0);
+  border-color: rgba(255, 200, 150, 0.3);
+}
+
+.chain-responses {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  padding-left: 20px;
+  border-left: 2px dashed rgba(255, 180, 120, 0.3);
+  margin-left: 50%;
+}
+
+.chain-responses .chain-node {
+  margin-left: 16px;
+  position: relative;
+}
+
+.chain-responses .chain-node::before {
+  content: '';
+  position: absolute;
+  left: -28px;
+  top: 50%;
+  width: 12px;
+  height: 2px;
+  background: rgba(255, 180, 120, 0.4);
+}
+
+.chain-node-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.chain-empty {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--muted);
+}
+
+.chain-empty-emoji {
+  font-size: 48px;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.continue-relay-btn {
+  width: 100%;
+  margin-top: 16px;
+}
+
+/* ---- Mood Postcard ---- */
+.postcard-page {
+  padding: 0;
+}
+
+.postcard-preview {
+  margin: 20px 18px;
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.15);
+  position: relative;
+  aspect-ratio: 3 / 4;
+  background: linear-gradient(180deg, #a8d8ff 0%, #c8edff 30%, #fff9e6 60%, #c8f0d8 100%);
+}
+
+.postcard-sky {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 55%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.postcard-sun {
+  font-size: 80px;
+  filter: drop-shadow(0 0 30px rgba(255, 220, 100, 0.8));
+  animation: float 4s ease-in-out infinite;
+}
+
+.postcard-sea {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 45%;
+  background: linear-gradient(180deg, rgba(100, 200, 255, 0.4) 0%, rgba(120, 210, 240, 0.7) 100%);
+}
+
+.postcard-island-icon {
+  position: absolute;
+  bottom: 25%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 100px;
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.15));
+}
+
+.postcard-mood-section {
+  position: absolute;
+  top: 28%;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  z-index: 5;
+}
+
+.postcard-mood-emoji {
+  font-size: 60px;
+  display: block;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.15));
+}
+
+.postcard-mood-label {
+  display: block;
+  font-size: 18px;
+  font-weight: 900;
+  color: white;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  margin-top: 4px;
+}
+
+.postcard-quote {
+  position: absolute;
+  bottom: 18%;
+  left: 24px;
+  right: 24px;
+  text-align: center;
+  color: white;
+  font-size: 20px;
+  font-weight: 800;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+  z-index: 5;
+  line-height: 1.5;
+}
+
+.postcard-footer {
+  position: absolute;
+  bottom: 8%;
+  left: 24px;
+  right: 24px;
+  text-align: center;
+  z-index: 5;
+}
+
+.postcard-brand {
+  display: block;
+  font-size: 14px;
+  color: white;
+  font-weight: 700;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  opacity: 0.9;
+}
+
+.postcard-share-actions {
+  padding: 0 18px;
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.postcard-share-actions button {
+  flex: 1;
+}
