@@ -35,8 +35,9 @@ export default function SocialPage({
   const stats = getMyRelayStats(relayState);
   const latest = snapshot.records[0];
 
-  const handleCreateComplete = (messages: RelayMessage[]) => {
+  const handleCreateComplete = (messages: RelayMessage[], updatedRelayState: RelayState) => {
     const count = messages.length;
+    onRelayStateChange(updatedRelayState);
     onEarnCoins(count * 20, `发起温暖接力 x${count}`);
     onStatsUpdate({
       relayStarted: 1,

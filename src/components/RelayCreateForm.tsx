@@ -4,7 +4,7 @@ import { createRelayMessage, addMyMessage, sanitizeRelayMessage } from '../servi
 
 interface RelayCreateFormProps {
   relayState: RelayState;
-  onComplete: (messages: RelayMessage[]) => void;
+  onComplete: (messages: RelayMessage[], updatedState: RelayState) => void;
   onBack: () => void;
 }
 
@@ -108,7 +108,7 @@ export default function RelayCreateForm({ relayState, onComplete, onBack }: Rela
     for (const msg of createdMessages) {
       updated = addMyMessage(updated, msg);
     }
-    onComplete(createdMessages);
+    onComplete(createdMessages, updated);
   };
 
   // Intro step
