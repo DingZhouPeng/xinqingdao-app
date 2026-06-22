@@ -1,5 +1,5 @@
 import type { AppStateSnapshot, ActiveView, GameProgress } from '../types';
-import IslandScene from '../components/IslandScene';
+import IslandScene3D from '../components/three/IslandScene3D';
 import ProgressPill from '../components/ProgressPill';
 import { moodEmoji } from '../data/moodOptions';
 
@@ -39,9 +39,9 @@ export default function HomePage({ snapshot, gameProgress, onNavigate }: HomePag
         </div>
       </header>
 
-      {/* 岛屿场景 - 大尺寸展示 */}
-      <div className="island-container fade-in-scale delay-2">
-        <IslandScene
+      {/* 3D 岛屿场景 */}
+      <div className="island-3d-container">
+        <IslandScene3D
           mood={latest?.input.mood}
           sunlight={snapshot.sunlight}
           waterDrops={snapshot.waterDrops}
