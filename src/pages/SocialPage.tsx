@@ -16,6 +16,7 @@ interface SocialPageProps {
   onRelayStateChange: (state: RelayState) => void;
   onNavigate: (view: ActiveView) => void;
   onEarnCoins: (amount: number, reason: string) => void;
+  onGrantXp: (amount: number) => void;
   onStatsUpdate: (updates: Record<string, number>) => void;
 }
 
@@ -26,6 +27,7 @@ export default function SocialPage({
   onRelayStateChange,
   onNavigate,
   onEarnCoins,
+  onGrantXp,
   onStatsUpdate
 }: SocialPageProps) {
   const [subView, setSubView] = useState<SocialSubView>('hub');
@@ -45,6 +47,7 @@ export default function SocialPage({
     setLocalRelayState(updatedRelayState);
     onRelayStateChange(updatedRelayState);
     onEarnCoins(count * 20, `发起温暖接力 x${count}`);
+    onGrantXp(count * 20); // 每条消息 20 XP
     onStatsUpdate({
       relayStarted: 1,
       relayMessagesWritten: count,

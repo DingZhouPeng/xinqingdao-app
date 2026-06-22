@@ -18,6 +18,9 @@ export interface UserStats {
   relayTotalReach: number;
   relayMaxChainReach: number;
   postcardsShared: number;
+  evolutionStage: number;
+  hasLegendaryTrait: boolean;
+  fusionCount: number;
 }
 
 export function loadAchievements(): AchievementsState {
@@ -64,7 +67,10 @@ function initializeStats(): UserStats {
     relayResponses: 0,
     relayTotalReach: 0,
     relayMaxChainReach: 0,
-    postcardsShared: 0
+    postcardsShared: 0,
+    evolutionStage: 1,
+    hasLegendaryTrait: false,
+    fusionCount: 0
   };
 }
 
@@ -135,6 +141,18 @@ export function checkAchievements(
         break;
       case 'postcardsShared >= 3':
         shouldUnlock = stats.postcardsShared >= 3;
+        break;
+      case 'evolutionStage >= 3':
+        shouldUnlock = stats.evolutionStage >= 3;
+        break;
+      case 'evolutionStage >= 5':
+        shouldUnlock = stats.evolutionStage >= 5;
+        break;
+      case 'hasLegendaryTrait':
+        shouldUnlock = stats.hasLegendaryTrait;
+        break;
+      case 'fusionCount >= 3':
+        shouldUnlock = stats.fusionCount >= 3;
         break;
     }
 

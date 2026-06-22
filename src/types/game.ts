@@ -1,9 +1,13 @@
+import type { EvolutionState } from './evolution';
+import { createDefaultEvolution } from './evolution';
+
 export interface PetState {
   hunger: number;      // 0-100，0最饿
   happiness: number;   // 0-100，0最不开心
   energy: number;      // 0-100，0最累
   lastUpdate: string;  // ISO 时间戳
   outfit?: string;     // 当前装扮 ID
+  evolution?: EvolutionState; // 精灵进化状态
 }
 
 export interface CurrencyState {
@@ -23,7 +27,8 @@ export const DEFAULT_PET_STATE: PetState = {
   hunger: 80,
   happiness: 80,
   energy: 80,
-  lastUpdate: new Date().toISOString()
+  lastUpdate: new Date().toISOString(),
+  evolution: createDefaultEvolution()
 };
 
 export const DEFAULT_CURRENCY: CurrencyState = {

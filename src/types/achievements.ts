@@ -142,5 +142,37 @@ export const DEFAULT_ACHIEVEMENTS: Omit<Achievement, 'unlocked' | 'unlockedAt'>[
     icon: '🖼️',
     condition: 'postcardsShared >= 3',
     reward: 30
+  },
+  {
+    id: 'evo-stage-3',
+    title: '花苞初绽',
+    description: '晴晴进化到第 3 阶段',
+    icon: '🌸',
+    condition: 'evolutionStage >= 3',
+    reward: 80
+  },
+  {
+    id: 'evo-stage-5',
+    title: '守护者降临',
+    description: '晴晴进化到最高阶段',
+    icon: '👑',
+    condition: 'evolutionStage >= 5',
+    reward: 200
+  },
+  {
+    id: 'evo-legendary',
+    title: '传说之宠',
+    description: '获得一个传说级突变',
+    icon: '🌈',
+    condition: 'hasLegendaryTrait',
+    reward: 150
+  },
+  {
+    id: 'fusion-master',
+    title: '共鸣大师',
+    description: '完成 3 次合体进化',
+    icon: '💫',
+    condition: 'fusionCount >= 3',
+    reward: 120
   }
 ];

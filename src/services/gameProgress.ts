@@ -1,5 +1,7 @@
 import type { GameProgress, PetState, CurrencyState } from '../types/game';
 import { DEFAULT_GAME_PROGRESS } from '../types/game';
+import { addXP, checkEvolution } from './evolution';
+import type { EvolutionState, EvolutionTrait, EvolutionStage } from '../types/evolution';
 
 const GAME_STORAGE_KEY = 'xinqingdao-game-progress-v1';
 
@@ -145,3 +147,32 @@ export function equipOutfit(progress: GameProgress, outfitId: string | undefined
     }
   };
 }
+
+// 精灵进化 - 添加 XP
+export function addPetXp(
+  progress: GameProgress,
+  amount: number
+): { newProgress: GameProgress; didEvolve: boolean; newTraits: EvolutionTrait[]; newStage?: EvolutionStage } {
+  const evolution = progress.petState.evolution;
+  if (!evolution) return { newProgress: progress, didEvolve: false, newTraits: [] };
+
+  const prevStage = evolution.stage;
+  const { newState, newStage: evolvedStage } = addXP(evolution, amount);
+
+  // Check if traits were unlocked
+  const { newState: finalState, newTraits, stageUp } = checkEvolution(newState, prevStage);
+
+  return {
+    newProgress: {
+      ...progress,
+      petState: {
+        ...progress.petState,
+        evolution: finalState,
+      },
+    },
+    didEvolve: stageUp,
+    newTraits,
+    newStage: evolvedStage,
+  };
+}
+

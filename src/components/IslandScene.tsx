@@ -36,7 +36,7 @@ export default function IslandScene({ mood, sunlight, waterDrops, lamps, petStat
           <span className="tree-leaves" />
         </div>
         <div className="island-pet">
-          <QingqingPet mood={mood} petState={petState} activity="idle" size="small" showStatus />
+          <QingqingPet mood={mood} petState={petState} evolution={petState?.evolution} activity="idle" size="small" showStatus />
         </div>
         <div className={`lighthouse ${lamps > 0 ? 'lighthouse-on' : ''}`}>
           {lamps > 0 && <i />}

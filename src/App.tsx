@@ -20,7 +20,7 @@ import OnboardingGuide from './components/OnboardingGuide';
 import AchievementUnlocked from './components/AchievementUnlocked';
 import type { ABCInput, ActiveView, EmotionRecord, MoodInput, Recommendation, UserProfile, GameProgress } from './types';
 import { appendRecord, loadSnapshot, saveSnapshot } from './services/storage';
-import { loadGameProgress, saveGameProgress, earnCoins, purchaseOutfit, equipOutfit, feedPet, playWithPet, restPet } from './services/gameProgress';
+import { loadGameProgress, saveGameProgress, earnCoins, purchaseOutfit, equipOutfit, feedPet, playWithPet, restPet, addPetXp } from './services/gameProgress';
 import { loadDailyTasks, saveDailyTasks, completeTask } from './services/dailyTasks';
 import type { DailyTasksState } from './types/dailyTasks';
 import { loadRelayState, saveRelayState } from './services/relay';
@@ -29,6 +29,8 @@ import RelayCodeOverlay from './components/RelayCodeOverlay';
 import { loadAchievements, saveAchievements, loadStats, saveStats, checkAchievements, updateLoginStreak, type UserStats } from './services/achievements';
 import type { AchievementsState, Achievement } from './types/achievements';
 import { audioManager } from './services/audio';
+import type { EvolutionStage, EvolutionTrait } from './types/evolution';
+import EvolutionCelebration from './components/EvolutionCelebration';
 import { OUTFITS } from './data/outfits';
 
 export default function App() {
@@ -47,6 +49,11 @@ export default function App() {
   const [showAudioSettings, setShowAudioSettings] = useState(false);
   const [showOnboardingGuide, setShowOnboardingGuide] = useState(false);
   const [unlockedAchievement, setUnlockedAchievement] = useState<Achievement | null>(null);
+  const [evoCelebration, setEvoCelebration] = useState<{
+    evolution: import('./types/evolution').EvolutionState;
+    previousStage: EvolutionStage;
+    newTraits: EvolutionTrait[];
+  } | null>(null);
 
   useEffect(() => {
     saveSnapshot(snapshot);
@@ -171,10 +178,20 @@ export default function App() {
   const handleMoodNext = (input: MoodInput, safetyHigh: boolean) => {
     setMoodInput(input);
     audioManager.playSfx('complete');
-    // 完成情绪记录，奖励 10 币，完成每日任务
     setGameProgress(prev => earnCoins(prev, 10, '记录情绪'));
+    // 精灵 XP
+    setGameProgress(prev => {
+      const result = addPetXp(prev, 5);
+      if (result.didEvolve && result.newStage && prev.petState.evolution) {
+        setEvoCelebration({
+          evolution: result.newProgress.petState.evolution!,
+          previousStage: prev.petState.evolution.stage,
+          newTraits: result.newTraits,
+        });
+      }
+      return result.newProgress;
+    });
     setDailyTasks(prev => completeTask(prev, 'record-mood'));
-    // 更新统计
     setStats(prev => ({ ...prev, records: prev.records + 1 }));
     setActiveView(safetyHigh ? 'lighthouse' : 'ai');
   };
@@ -240,9 +257,21 @@ export default function App() {
         onRelayStateChange={setRelayState}
         onNavigate={setActiveView}
         onEarnCoins={(amount, reason) => setGameProgress(prev => earnCoins(prev, amount, reason))}
+        onGrantXp={(amount) => {
+          setGameProgress(prev => {
+            const result = addPetXp(prev, amount);
+            if (result.didEvolve && result.newStage && prev.petState.evolution) {
+              setEvoCelebration({
+                evolution: result.newProgress.petState.evolution!,
+                previousStage: prev.petState.evolution.stage,
+                newTraits: result.newTraits,
+              });
+            }
+            return result.newProgress;
+          });
+        }}
         onStatsUpdate={(updates) => setStats(prev => {
           const next = { ...prev, ...updates };
-          // Check for relayMaxChainReach update
           if (updates.relayTotalReach && next.relayTotalReach > next.relayMaxChainReach) {
             next.relayMaxChainReach = next.relayTotalReach;
           }
@@ -292,6 +321,20 @@ export default function App() {
         <AchievementUnlocked
           achievement={unlockedAchievement}
           onClose={() => setUnlockedAchievement(null)}
+        />
+      )}
+
+      {/* 进化庆祝 */}
+      {evoCelebration && (
+        <EvolutionCelebration
+          evolution={evoCelebration.evolution}
+          previousStage={evoCelebration.previousStage}
+          newTraits={evoCelebration.newTraits}
+          onClose={() => {
+            setEvoCelebration(null);
+            // 奖励进化金币
+            setGameProgress(prev => earnCoins(prev, 30, '精灵进化'));
+          }}
         />
       )}
 
