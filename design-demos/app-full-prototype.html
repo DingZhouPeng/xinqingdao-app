@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>心晴岛 · 全功能交互原型</title>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;700&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#f0e8dc;font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;display:flex;flex-wrap:wrap;gap:24px;padding:32px;justify-content:center;align-items:flex-start;min-height:100vh}
+.screen-wrapper{display:flex;flex-direction:column;align-items:center;gap:10px}
+.screen-label{font-family:'Noto Serif SC',serif;font-size:12px;color:#8c7b6e;font-weight:700;letter-spacing:0.08em;text-transform:uppercase}
+.phone-frame{width:390px;height:844px;border-radius:44px;overflow:hidden;box-shadow:0 8px 40px rgba(120,80,40,0.12),0 0 0 1px rgba(180,140,110,0.12);position:relative}
+.phone-inner{width:100%;height:100%;background:linear-gradient(175deg,#fdf8f3,#faf3ec 40%,#fef8f2);display:flex;flex-direction:column;overflow:hidden}
+.status-bar{padding:14px 24px 6px;display:flex;justify-content:space-between;font-size:12px;font-weight:600;color:#b8a090;letter-spacing:.04em}
+.page-content{flex:1;overflow-y:auto;display:flex;flex-direction:column}
+/* Shared */
+.header{padding:6px 22px 14px;display:flex;justify-content:space-between;align-items:center}
+.header h2{font-family:'Noto Serif SC',serif;font-size:20px;font-weight:500;color:#4a3020;letter-spacing:.03em}
+.header p{font-size:11px;color:#b89880;margin-top:2px;font-weight:500;letter-spacing:.04em}
+.coin-badge{display:flex;align-items:center;gap:4px;background:linear-gradient(135deg,#f0e0c8,#e8d4b0);padding:7px 13px;border-radius:18px;font-size:12px;font-weight:800;color:#6a4a20;border:1px solid rgba(180,140,80,0.15)}
+.island-box{margin:4px 20px;height:240px;border-radius:26px;background:linear-gradient(180deg,#e8f0ff,#e8f6f0 42%,#fef4e8);box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 6px 20px rgba(120,90,60,.06);border:1.5px solid rgba(200,170,140,.15);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px}
+.island-box .pet-text{font-family:'Noto Serif SC',serif;font-size:11px;color:rgba(140,120,100,.3);letter-spacing:.1em}
+.btn{padding:14px 16px;border-radius:20px;border:none;cursor:pointer;font-weight:700;font-size:14px;transition:all .2s cubic-bezier(.34,1.56,.64,1);width:100%;display:flex;align-items:center;gap:8px;justify-content:center}
+.btn:active{transform:scale(.97)}
+.btn-primary{background:linear-gradient(150deg,#e8b890,#d89870);color:#fff;box-shadow:0 6px 18px rgba(200,130,80,.2)}
+.btn-secondary{background:rgba(255,255,255,.7);color:#4a3020;border:1px solid rgba(180,140,110,.15);box-shadow:0 2px 8px rgba(0,0,0,.02)}
+.btn-ghost{background:rgba(255,255,255,.5);color:#7a5a40;border:1px solid rgba(180,140,110,.08)}
+.actions-row{padding:14px 20px;display:flex;gap:10px}
+.card{padding:14px 18px;background:rgba(255,255,255,.6);border-radius:18px;box-shadow:0 2px 10px rgba(0,0,0,.02);border:1px solid rgba(180,140,110,.08);margin:6px 20px}
+.card .label{font-size:9px;color:#b89880;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px}
+.nav-bar{padding:8px 6px;margin:auto 16px 16px;display:flex;justify-content:space-around;background:rgba(255,255,255,.7);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-radius:22px;box-shadow:0 4px 20px rgba(0,0,0,.04),0 0 0 1px rgba(180,140,110,.1)}
+.nav-item{padding:6px 8px;border-radius:14px;text-align:center;background:none;border:none;font-size:10px;font-weight:600;color:#b89880;cursor:pointer;letter-spacing:.03em;transition:all .15s ease}
+.nav-item.active{color:#c07850;background:linear-gradient(135deg,rgba(220,150,110,.15),rgba(210,160,120,.1))}
+.nav-item .ni{font-size:18px;display:block;opacity:.85}
+.nav-item.active .ni{opacity:1}
+/* Mood grid */
+.mood-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:14px 20px}
+.mood-chip{padding:16px 12px;border-radius:18px;text-align:center;border:none;cursor:pointer;background:rgba(255,255,255,.55);border:1px solid rgba(180,140,110,.08);transition:all .25s cubic-bezier(.34,1.56,.64,1);display:flex;flex-direction:column;align-items:center;gap:4px}
+.mood-chip:active{transform:scale(.96)}
+.mood-chip.sel{border-color:#d89870;background:linear-gradient(145deg,#fff,#faf0e4);box-shadow:0 6px 18px rgba(200,130,80,.2)}
+.mood-chip .moji{font-size:32px}
+.mood-chip strong{font-size:13px;color:#4a3020}
+.mood-chip small{font-size:10px;color:#b89880}
+/* AI chat */
+.chat-msg{padding:10px 14px;border-radius:14px;margin-bottom:8px;font-size:13px;line-height:1.5;max-width:85%}
+.chat-msg.bot{background:#faf0e4;color:#5a3a20;align-self:flex-start}
+.chat-msg.user{background:linear-gradient(150deg,#e8b890,#d89870);color:#fff;align-self:flex-end}
+.text-input{width:100%;padding:12px 14px;border-radius:14px;border:1px solid rgba(180,140,110,.15);background:rgba(255,255,255,.8);font-size:13px;color:#4a3020;outline:none;font-family:inherit}
+.text-input:focus{border-color:#d89870}
+/* Flip cards */
+.flip-grid{display:grid;gap:8px;padding:14px 20px}
+.flip-card{padding:16px;border-radius:18px;background:rgba(255,255,255,.6);border:1px solid rgba(180,140,110,.08);cursor:pointer;transition:all .2s ease}
+.flip-card:active{transform:scale(.98);background:rgba(255,255,255,.85)}
+.flip-card .badge{display:inline-block;width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#e8b890,#d89870);color:#fff;text-align:center;line-height:32px;font-weight:800;font-size:13px;margin-bottom:8px}
+.flip-card h4{margin-bottom:4px}
+.flip-card p{font-size:12px;color:#7a5a40}
+/* Relay */
+.relay-stat{text-align:center}
+.relay-stat .num{font-size:28px;font-weight:900;color:#d89870}
+.relay-stat .lbl{font-size:10px;color:#b89880;display:block}
+.relay-msg{padding:12px 14px;border-radius:16px;background:rgba(255,255,255,.6);margin-bottom:8px;border:1px solid rgba(180,140,110,.06)}
+.relay-msg .alias{display:inline-block;padding:3px 10px;border-radius:10px;background:linear-gradient(135deg,#faf0e4,rgba(232,184,144,.2));font-size:11px;font-weight:700;color:#8c5a30}
+.relay-msg .code{display:inline-block;padding:4px 10px;border-radius:10px;background:rgba(216,152,112,.1);font-size:13px;font-weight:900;letter-spacing:2px;font-family:monospace;color:#c07850}
+/* Evolution */
+.evo-bar{height:8px;border-radius:4px;background:rgba(180,140,110,.12);overflow:hidden;margin:8px 0}
+.evo-bar-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,#e8b890,#d89870);transition:width .3s ease}
+.trait-tag{display:inline-block;padding:3px 8px;border-radius:8px;font-size:10px;font-weight:700;margin:2px 3px}
+.trait-common{background:rgba(180,140,110,.12);color:#7a5a40}
+.trait-rare{background:rgba(142,207,255,.15);color:#2a6a8a}
+.trait-legendary{background:linear-gradient(135deg,rgba(255,215,0,.2),rgba(255,180,50,.15));color:#8a6a10}
+/* Achievements */
+.ach-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:14px 20px}
+.ach-card{padding:14px;border-radius:16px;background:rgba(255,255,255,.6);text-align:center;border:1px solid rgba(180,140,110,.08)}
+.ach-card .icon{font-size:28px;display:block;margin-bottom:4px}
+.ach-card strong{font-size:12px;color:#4a3020}
+.ach-card small{font-size:10px;color:#b89880;display:block;margin-top:2px}
+.ach-card.locked{opacity:.4;filter:grayscale(1)}
+/* Onboarding */
+.onboard-hero{text-align:center;padding:60px 40px 30px}
+.onboard-hero .logo{font-size:56px;display:block;margin-bottom:8px}
+.onboard-hero h1{font-family:'Noto Serif SC',serif;font-size:26px;color:#4a3020;font-weight:500}
+.onboard-form{padding:0 24px;display:flex;flex-direction:column;gap:14px}
+</style>
+</head>
+<body>
+
+<script type="text/babel">
+
+const { useState } = React;
+
+// ============ Screen: Home ============
+function HomeScreen() {
+  return (
+    <div className="page-content">
+      <div className="header">
+        <div><h2>小晴</h2><p>来照顾你的小岛吧</p></div>
+        <div className="coin-badge">💰 50</div>
+      </div>
+      <div className="island-box">
+        <div style={{fontSize:60}}>🏝️</div>
+        <div className="pet-text">3D 岛屿 + 晴晴精灵</div>
+      </div>
+      <div className="actions-row">
+        <button className="btn btn-primary" style={{flex:1}}>🌤 记录心情</button>
+        <button className="btn btn-secondary" style={{flex:1}}>🫧 快速补给</button>
+      </div>
+      <div className="card">
+        <span className="label">今日心情</span>
+        <div style={{display:'flex',alignItems:'center',justifyContent:'center',gap:20}}>
+          <div style={{textAlign:'center'}}><span style={{fontSize:30}}>🌪️</span><br/><b style={{fontSize:13}}>8 分</b></div>
+          <span style={{color:'#c0a890'}}>→</span>
+          <div style={{textAlign:'center'}}><span style={{fontSize:30}}>😌</span><br/><b style={{fontSize:13}}>5 分</b></div>
+        </div>
+      </div>
+      <div style={{display:'flex',gap:8,padding:'14px 20px'}}>
+        {[{icon:'☀️',v:12,l:'阳光'},{icon:'💧',v:8,l:'水滴'},{icon:'🕯️',v:1,l:'小灯'}].map(r=>(
+          <div key={r.l} className="card" style={{flex:1,textAlign:'center'}}>
+            <span style={{fontSize:16}}>{r.icon}</span>
+            <b style={{fontSize:15,display:'block',color:'#4a3020',marginTop:2}}>{r.v}</b>
+            <span style={{fontSize:9,color:'#b89880',fontWeight:600}}>{r.l}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ============ Screen: Mood ============
+function MoodScreen() {
+  const [sel,setSel] = useState('nervous');
+  const moods = [
+    {id:'happy',w:'晴天',e:'☀️',h:'有阳光也好记录'},
+    {id:'calm',w:'晴间多云',e:'🌤️',h:'稳定也是力量'},
+    {id:'nervous',w:'大风',e:'🌪️',h:'先让身体慢下来'},
+    {id:'angry',w:'雷阵雨',e:'⛈️',h:'先暂停不急回'},
+    {id:'sad',w:'小雨',e:'🌧️',h:'谢谢你愿意说'},
+    {id:'tired',w:'多云',e:'☁️',h:'也许需要补给'},
+    {id:'confused',w:'雾天',e:'🌫️',h:'先看清下一步'},
+    {id:'stressed',w:'阴天',e:'🌥️',h:'把大问题拆小'},
+  ];
+  return (
+    <div className="page-content">
+      <div style={{padding:'22px 22px 4px'}}><h1 style={{fontFamily:'Noto Serif SC,serif',fontSize:22,fontWeight:500,color:'#4a3020'}}>今天是什么天气？</h1></div>
+      <div className="mood-grid">
+        {moods.map(m=>(
+          <button key={m.id} className={`mood-chip ${sel===m.id?'sel':''}`} onClick={()=>setSel(m.id)}>
+            <span className="moji">{m.e}</span>
+            <strong>{m.w}</strong>
+            <small>{m.h}</small>
+          </button>
+        ))}
+      </div>
+      <div className="card">
+        <span className="label">强度 6/10</span>
+        <input type="range" defaultValue="6" min="1" max="10" style={{width:'100%',accentColor:'#d89870',margin:'8px 0'}}/>
+      </div>
+      <div className="card">
+        <span className="label">来自哪里？</span>
+        <div style={{display:'flex',flexWrap:'wrap',gap:6,marginTop:6}}>
+          {['📚 学习','🤝 朋友','🏠 家庭','🪞 自我','🛌 身体','🫧 说不清'].map((t,i)=>(
+            <span key={t} style={{padding:'6px 12px',borderRadius:999,fontSize:12,fontWeight:600,background:i===0?'linear-gradient(135deg,#faf0e4,rgba(232,184,144,.3))':'rgba(255,255,255,.5)',border:'1px solid rgba(180,140,110,.1)',color:i===0?'#7a4a20':'#7a5a40',cursor:'pointer'}}>{t}</span>
+          ))}
+        </div>
+      </div>
+      <div style={{padding:'10px 20px'}}>
+        <button className="btn btn-primary">下一步 →</button>
+      </div>
+    </div>
+  );
+}
+
+// ============ Screen: AI Guide ============
+function AiGuideScreen() {
+  const [step,setStep] = useState(0);
+  const texts = ['明天要考试，我担心考不好。','如果我做不好，就说明我不行。','我很紧张，想逃避，也很难开始。'];
+  return (
+    <div className="page-content">
+      <div style={{padding:'20px 22px',display:'flex',alignItems:'center',gap:12}}>
+        <div style={{width:48,height:48,borderRadius:18,background:'linear-gradient(135deg,#faf0e4,rgba(232,184,144,.3))',display:'flex',alignItems:'center',justifyContent:'center',fontSize:20,fontWeight:900,boxShadow:'0 2px 10px rgba(180,120,70,.08)'}}>晴</div>
+        <h2 style={{fontFamily:'Noto Serif SC,serif',fontSize:19,fontWeight:500,color:'#4a3020'}}>分开来看看</h2>
+      </div>
+      <div style={{padding:'0 22px',display:'flex',flexDirection:'column'}}>
+        <div className="chat-msg bot">发生了什么？</div>
+        <div className="chat-msg user">{texts[0]}</div>
+        <div className="chat-msg bot">你的想法？</div>
+        <div className="chat-msg user">{texts[1]}</div>
+        <div className="chat-msg bot">带来了什么感受？</div>
+        <div className="chat-msg user">{texts[2]}</div>
+      </div>
+      <div className="card" style={{margin:'12px 22px'}}>
+        <span className="label">💡 新的想法</span>
+        <p style={{fontSize:13,color:'#5a3a20',lineHeight:1.6,marginTop:6}}>一次考试或作业不能代表全部能力。它更像一张提示卡，告诉我下一步可以先复习哪一小块。</p>
+      </div>
+      <div style={{padding:'10px 22px'}}>
+        <button className="btn btn-primary">✨ 生成行动卡</button>
+      </div>
+    </div>
+  );
+}
+
+// ============ Screen: Relay Hub ============
+function RelayScreen() {
+  const msgs = [
+    {alias:'温暖的小海豚',text:'你今天已经很棒了，给自己一个大大的拥抱吧！',code:'A3K9M2',reach:5},
+    {alias:'勇敢的小星星',text:'一切都会好起来的，相信自己。',code:'B7F4N8',reach:2},
+    {alias:'善良的小贝壳',text:'别忘了照顾自己，你的感受很重要。',code:'C2X6P1',reach:8},
+  ];
+  return (
+    <div className="page-content">
+      <div style={{textAlign:'center',padding:'22px'}}>
+        <p style={{fontSize:11,color:'#d89870',fontWeight:800,letterSpacing:'.1em',textTransform:'uppercase'}}>温暖接力</p>
+        <h1 style={{fontFamily:'Noto Serif SC,serif',fontSize:22,fontWeight:500,color:'#4a3020'}}>弱社交，强支持</h1>
+        <p style={{fontSize:12,color:'#b89880',marginTop:4}}>用匿名的方式传递温暖</p>
+      </div>
+      <div className="card" style={{textAlign:'center'}}>
+        <span style={{fontSize:12,fontWeight:700,color:'#d89870'}}>🌟 你的温暖影响力</span>
+        <div style={{display:'flex',justifyContent:'center',gap:24,marginTop:10}}>
+          <div className="relay-stat"><span className="num">15</span><span className="lbl">触达人数</span></div>
+          <div className="relay-stat"><span className="num">3</span><span className="lbl">发送消息</span></div>
+          <div className="relay-stat"><span className="num">4</span><span className="lbl">收到回应</span></div>
+        </div>
+      </div>
+      <div className="actions-row">
+        <button className="btn btn-primary" style={{flex:1,flexDirection:'column',gap:2}}><span style={{fontSize:28}}>💌</span>发起接力<small style={{fontSize:10,fontWeight:500,opacity:.7}}>+60 金币</small></button>
+        <button className="btn btn-secondary" style={{flex:1,flexDirection:'column',gap:2}}><span style={{fontSize:28}}>🖼️</span>精灵快照<small style={{fontSize:10,fontWeight:500,opacity:.7}}>分享给朋友</small></button>
+      </div>
+      <div style={{padding:'0 20px'}}>
+        <b style={{fontSize:13,color:'#4a3020'}}>💌 我的接力消息</b>
+        {msgs.map(m=>(
+          <div key={m.code} className="relay-msg">
+            <span className="alias">{m.alias}</span>
+            <p style={{fontSize:13,color:'#5a3a20',margin:'8px 0'}}>"{m.text}"</p>
+            <div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
+              <span className="code">{m.code}</span>
+              <span style={{fontSize:11,color:'#b89880'}}>{m.reach} 人收到</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ============ Screen: Evolution ============
+function EvolutionScreen() {
+  const traits = [
+    {name:'樱花粉',emoji:'🌸',rarity:'common'},{name:'星星环绕',emoji:'⭐',rarity:'uncommon'},
+    {name:'蝴蝶结',emoji:'🎀',rarity:'common'},{name:'柔和白光',emoji:'💫',rarity:'common'},
+    {name:'闪耀金',emoji:'✨',rarity:'rare'},{name:'天使光环',emoji:'😇',rarity:'legendary'},
+  ];
+  return (
+    <div className="page-content">
+      <div style={{padding:'22px'}}>
+        <h1 style={{fontFamily:'Noto Serif SC,serif',fontSize:22,fontWeight:500,color:'#4a3020'}}>晴晴精灵</h1>
+        <p style={{fontSize:12,color:'#b89880'}}>第 3 阶段 · 花苞</p>
+      </div>
+      <div className="island-box" style={{margin:'0 20px',height:200}}>
+        <div style={{fontSize:80}}>🌸</div>
+      </div>
+      <div className="card" style={{margin:'12px 20px'}}>
+        <span className="label">进化进度 · 350 / 700 XP · 第 4 阶段</span>
+        <div className="evo-bar"><div className="evo-bar-fill" style={{width:'50%'}}></div></div>
+        <div style={{display:'flex',justifyContent:'space-between',fontSize:10,color:'#b89880',fontWeight:600}}>
+          <span>⭐ 闪耀</span><span>👑 守护者</span>
+        </div>
+      </div>
+      <div className="card" style={{margin:'6px 20px'}}>
+        <span className="label">已解锁突变 · 6/24</span>
+        <div style={{display:'flex',flexWrap:'wrap',gap:4,marginTop:8}}>
+          {traits.map(t=>(
+            <span key={t.name} className={`trait-tag trait-${t.rarity}`}>
+              {t.emoji} {t.name}
+              <small style={{opacity:.6,marginLeft:2}}>{t.rarity==='legendary'?'传说':t.rarity==='rare'?'稀有':'常见'}</small>
+            </span>
+          ))}
+          {Array.from({length:4},(_,i)=>(
+            <span key={'locked'+i} className="trait-tag trait-common" style={{opacity:.3}}>🔒 ???</span>
+          ))}
+        </div>
+      </div>
+      <div style={{padding:'10px 20px'}}>
+        <button className="btn btn-primary">📸 生成精灵快照卡</button>
+      </div>
+    </div>
+  );
+}
+
+// ============ Screen: Achievements ============
+function AchievementsScreen() {
+  const ach = [
+    {icon:'🌟',name:'初次记录',desc:'记录第一次心情',unlocked:true,reward:10},
+    {icon:'🏆',name:'情绪大师',desc:'累计记录10次',unlocked:true,reward:50},
+    {icon:'🕊️',name:'温暖发起者',desc:'发起第一次接力',unlocked:true,reward:30},
+    {icon:'🌸',name:'花苞初绽',desc:'进化到第3阶段',unlocked:true,reward:80},
+    {icon:'👑',name:'守护者降临',desc:'进化到最高阶段',unlocked:false,reward:200},
+    {icon:'🌈',name:'传说之宠',desc:'获得传说突变',unlocked:false,reward:150},
+    {icon:'💫',name:'共鸣大师',desc:'完成3次合体进化',unlocked:false,reward:120},
+    {icon:'🔥',name:'坚持不懈',desc:'连续7天登录',unlocked:false,reward:80},
+  ];
+  return (
+    <div className="page-content">
+      <div style={{padding:'22px'}}>
+        <h1 style={{fontFamily:'Noto Serif SC,serif',fontSize:22,fontWeight:500,color:'#4a3020'}}>成就</h1>
+        <div style={{display:'flex',alignItems:'center',gap:10,marginTop:10}}>
+          <div className="evo-bar" style={{flex:1}}><div className="evo-bar-fill" style={{width:'50%'}}></div></div>
+          <span style={{fontSize:12,fontWeight:700,color:'#4a3020'}}>4 / 8</span>
+        </div>
+      </div>
+      <div className="ach-grid">
+        {ach.map(a=>(
+          <div key={a.name} className={`ach-card ${a.unlocked?'':'locked'}`}>
+            <span className="icon">{a.unlocked ? a.icon : '🔒'}</span>
+            <strong>{a.unlocked ? a.name : '???'}</strong>
+            <small>{a.unlocked ? a.desc : '完成隐藏条件解锁'}</small>
+            {a.unlocked && <small style={{color:'#d89870',fontWeight:700}}>+{a.reward} 币</small>}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ============ Screen: Action Cards ============
+function ActionScreen() {
+  const cards = [
+    {cat:'体',title:'一分钟方块呼吸',detail:'吸气4秒，停顿4秒，呼气4秒，停顿4秒'},
+    {cat:'智',title:'列出3个复习重点',detail:'只写现在最需要复习的3个小知识点'},
+    {cat:'劳',title:'整理桌面3分钟',detail:'只整理眼前的一小块桌面'},
+    {cat:'德',title:'不伤人表达句式',detail:'用"我感到…因为…我希望…"表达'},
+  ];
+  const [flipped,setFlipped] = useState({});
+  return (
+    <div className="page-content">
+      <div style={{padding:'20px 22px'}}>
+        <span style={{display:'inline-block',padding:'4px 10px',borderRadius:999,background:'linear-gradient(135deg,#faf0e4,rgba(232,184,144,.3))',fontSize:11,fontWeight:800,color:'#8c5a30'}}>✨ 行动卡</span>
+        <h1 style={{fontFamily:'Noto Serif SC,serif',fontSize:22,fontWeight:500,color:'#4a3020',marginTop:8}}>心晴补给卡</h1>
+      </div>
+      <div className="flip-grid">
+        {cards.map((c,i)=>(
+          <div key={i} className="flip-card" onClick={()=>setFlipped(p=>({...p,[i]:!p[i]}))}>
+            {!flipped[i] ? (
+              <div style={{textAlign:'center',padding:'20px'}}>
+                <div style={{fontSize:36,color:'#d89870',marginBottom:8}}>?</div>
+                <p style={{fontSize:13,color:'#b89880'}}>点击翻开 →</p>
+              </div>
+            ) : (
+              <div>
+                <div className="badge">{c.cat}</div>
+                <h4 style={{fontSize:15,fontWeight:700,color:'#4a3020'}}>{c.title}</h4>
+                <p style={{fontSize:12,color:'#7a5a40',marginTop:4}}>{c.detail}</p>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+      <div style={{padding:'10px 22px'}}>
+        <button className="btn btn-primary">完成并保存</button>
+      </div>
+    </div>
+  );
+}
+
+// ============ Nav Bar ============
+const tabs = [
+  {id:'home',label:'小岛',icon:'🏝️'},
+  {id:'mood',label:'天气',icon:'🌤️'},
+  {id:'relay',label:'温暖',icon:'🕯️'},
+  {id:'evo',label:'精灵',icon:'🌸'},
+  {id:'ach',label:'成就',icon:'🏆'},
+];
+
+// ============ App Phone ============
+function AppPhone({ initial, label }) {
+  const [screen,setScreen] = useState(initial);
+  const screens = {home:HomeScreen,mood:MoodScreen,ai:AiGuideScreen,relay:RelayScreen,evo:EvolutionScreen,ach:AchievementsScreen,action:ActionScreen};
+  const Screen = screens[screen] || HomeScreen;
+  return (
+    <div className="screen-wrapper">
+      <span className="screen-label">{label}</span>
+      <div className="phone-frame">
+        <div className="phone-inner">
+          <div className="status-bar"><span>9:41</span><span>▮▮▮▮  🔋 85%</span></div>
+          <Screen />
+          <div className="nav-bar">
+            {tabs.map(t=>(
+              <button key={t.id} className={`nav-item ${screen===t.id||(screen==='ai'&&t.id==='mood')||(screen==='action'&&t.id==='mood')?'active':''}`} onClick={()=>setScreen(t.id)}>
+                <span className="ni">{t.icon}</span>{t.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ============ Main App ============
+function App() {
+  return (
+    <>
+      <AppPhone initial="home" label="1. 首页 · 3D岛屿" />
+      <AppPhone initial="mood" label="2. 心情记录 · 天气选择" />
+      <AppPhone initial="ai" label="3. 晴晴助手 · ABC引导" />
+      <AppPhone initial="action" label="4. 行动卡 · 翻开五育任务" />
+      <AppPhone initial="relay" label="5. 温暖接力 · 社交裂变" />
+      <AppPhone initial="evo" label="6. 精灵进化 · 突变收集" />
+      <AppPhone initial="ach" label="7. 成就系统 · 解锁激励" />
+    </>
+  );
+}
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<App />);
+</script>
+
+<div id="root"></div>
+</body>
+</html>
