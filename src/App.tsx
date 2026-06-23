@@ -159,12 +159,13 @@ export default function App() {
   useEffect(() => {
     if (snapshot.profile && activeView === 'home') {
       const completed = localStorage.getItem('xinqingdao-onboarding-completed');
-      if (!completed) {
-        // 延迟1秒显示，让用户先看到主页
+      const hasPendingRelay = !!localStorage.getItem('xinqingdao-pending-relay-code');
+      // 有待处理接力消息时优先显示接力，不弹新手引导
+      if (!completed && !hasPendingRelay && !pendingRelayCode) {
         setTimeout(() => setShowOnboardingGuide(true), 1000);
       }
     }
-  }, [snapshot.profile, activeView]);
+  }, [snapshot.profile, activeView, pendingRelayCode]);
 
   const completeOnboarding = (profile: UserProfile) => {
     setSnapshot((current) => ({ ...current, profile }));
@@ -246,7 +247,12 @@ export default function App() {
   };
 
   const renderView = () => {
-    if (activeView === 'onboarding') return <OnboardingPage onComplete={completeOnboarding} />;
+    if (activeView === 'onboarding') return (
+      <OnboardingPage
+        onComplete={completeOnboarding}
+        pendingRelayCode={localStorage.getItem('xinqingdao-pending-relay-code')}
+      />
+    );
     if (activeView === 'home') return <HomePage snapshot={snapshot} gameProgress={gameProgress} onNavigate={setActiveView} />;
     if (activeView === 'mood') return <MoodPage onNext={handleMoodNext} onBubblePopped={(count) => setStats(prev => ({ ...prev, bubblesPopped: prev.bubblesPopped + count }))} />;
     if (activeView === 'relief') return <QuickReliefPage />;

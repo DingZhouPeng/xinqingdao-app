@@ -137,3 +137,48 @@
 .guide-actions button {
   flex: 1;
 }
+
+/* ---- 接力冷启动横幅 ---- */
+.relay-coldstart-banner {
+  margin: 14px 18px;
+  padding: 18px 20px;
+  background: linear-gradient(135deg, #fef9f0, #fff5e8);
+  border-radius: 20px;
+  border: 1.5px solid rgba(216, 152, 112, 0.25);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 4px 16px rgba(200, 130, 80, 0.12);
+  animation: banner-glow 3s ease-in-out infinite;
+}
+
+@keyframes banner-glow {
+  0%, 100% { box-shadow: 0 4px 16px rgba(200, 130, 80, 0.12); }
+  50% { box-shadow: 0 4px 24px rgba(200, 130, 80, 0.22); }
+}
+
+.relay-coldstart-icon {
+  font-size: 36px;
+  flex-shrink: 0;
+  animation: banner-icon-bounce 1.5s ease-in-out infinite;
+}
+
+@keyframes banner-icon-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+.relay-coldstart-text strong {
+  font-size: 15px;
+  color: #4a3020;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 3px;
+}
+
+.relay-coldstart-text p {
+  font-size: 12px;
+  color: #b89880;
+  margin: 0;
+  line-height: 1.4;
+}

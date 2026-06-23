@@ -4,11 +4,12 @@ import type { UserProfile } from '../types';
 
 interface OnboardingPageProps {
   onComplete: (profile: UserProfile) => void;
+  pendingRelayCode?: string | null;
 }
 
 const focusOptions = ['考试压力', '朋友关系', '亲子沟通', '容易紧张', '没动力', '只是想记录心情'];
 
-export default function OnboardingPage({ onComplete }: OnboardingPageProps) {
+export default function OnboardingPage({ onComplete, pendingRelayCode }: OnboardingPageProps) {
   const [nickname, setNickname] = useState('');
   const [focus, setFocus] = useState(focusOptions[0]);
   const [supporter1, setSupporter1] = useState('妈妈/爸爸');
@@ -16,6 +17,17 @@ export default function OnboardingPage({ onComplete }: OnboardingPageProps) {
 
   return (
     <div className="page page-onboarding">
+      {/* 接力冷启动横幅 */}
+      {pendingRelayCode && (
+        <section className="relay-coldstart-banner">
+          <div className="relay-coldstart-icon">💌</div>
+          <div className="relay-coldstart-text">
+            <strong>有人给你送来了一份温暖！</strong>
+            <p>完成注册后即可查看匿名鼓励消息</p>
+          </div>
+        </section>
+      )}
+
       <section className="hero-card onboarding-card">
         <div className="brand-mark">🏝️</div>
         <h1>欢迎来到心晴岛</h1>
