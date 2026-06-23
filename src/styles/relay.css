@@ -16,7 +16,7 @@
 }
 
 .relay-header .eyebrow {
-  color: var(--coral-300);
+  color: var(--accent);
 }
 
 /* 影响力卡片 */
@@ -50,7 +50,7 @@
 .relay-impact-stat .stat-number {
   font-size: 36px;
   font-weight: 900;
-  background: linear-gradient(135deg, var(--coral-300), var(--sun-200));
+  background: linear-gradient(135deg, var(--accent), var(--warm-300));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -152,7 +152,7 @@
 }
 
 .relay-alias {
-  background: linear-gradient(135deg, var(--sun-100), var(--coral-100));
+  background: linear-gradient(135deg, var(--warm-100), var(--warm-100));
   padding: 4px 10px;
   border-radius: 999px;
   font-size: 12px;
@@ -183,7 +183,7 @@
 }
 
 .relay-code-badge {
-  background: linear-gradient(135deg, var(--sky-100), var(--mint-100));
+  background: linear-gradient(135deg, var(--warm-100), var(--warm-100));
   padding: 6px 12px;
   border-radius: 999px;
   font-size: 14px;
@@ -200,25 +200,25 @@
 
 .copy-code-btn {
   background: rgba(255, 255, 255, 0.9);
-  border: 1px solid var(--sky-200);
+  border: 1px solid var(--warm-200);
   padding: 6px 12px;
   border-radius: 999px;
   font-size: 12px;
   font-weight: 700;
-  color: var(--sky-500);
+  color: var(--accent);
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .copy-code-btn:active {
-  background: var(--sky-100);
+  background: var(--warm-100);
   transform: scale(0.95);
 }
 
 .copy-code-btn.copied {
-  background: var(--mint-100);
-  color: var(--mint-400);
-  border-color: var(--mint-200);
+  background: var(--warm-100);
+  color: var(--accent);
+  border-color: var(--warm-200);
 }
 
 /* ---- Relay Create Form ---- */
@@ -253,11 +253,11 @@
 .relay-step-dot.active {
   width: 28px;
   border-radius: 5px;
-  background: linear-gradient(90deg, var(--coral-300), var(--sun-200));
+  background: linear-gradient(90deg, var(--accent), var(--warm-300));
 }
 
 .relay-step-dot.done {
-  background: var(--mint-400);
+  background: var(--accent);
 }
 
 .message-input-area {
@@ -287,7 +287,7 @@
 }
 
 .relay-textarea:focus {
-  border-color: var(--coral-300);
+  border-color: var(--accent);
 }
 
 .char-count {
@@ -316,7 +316,7 @@
 }
 
 .suggestion-chip:active {
-  background: var(--sun-100);
+  background: var(--warm-100);
   transform: scale(0.96);
 }
 
@@ -342,7 +342,7 @@
   width: 28px;
   height: 28px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--coral-300), var(--sun-200));
+  background: linear-gradient(135deg, var(--accent), var(--warm-300));
   display: flex;
   align-items: center;
   justify-content: center;
@@ -383,7 +383,7 @@
   font-weight: 900;
   letter-spacing: 4px;
   font-family: monospace;
-  background: linear-gradient(135deg, var(--sky-300), var(--mint-200));
+  background: linear-gradient(135deg, var(--accent-light), var(--warm-200));
   padding: 8px 20px;
   border-radius: 16px;
   margin: 12px 0;
@@ -400,7 +400,7 @@
 
 .share-action-btn {
   background: white;
-  border: 1px solid var(--sky-200);
+  border: 1px solid var(--warm-200);
   padding: 8px 16px;
   border-radius: 999px;
   font-size: 13px;
@@ -414,12 +414,12 @@
 
 .share-action-btn:active {
   transform: scale(0.95);
-  background: var(--sky-50);
+  background: var(--warm-100);
 }
 
 .share-action-btn.copied {
-  background: var(--mint-100);
-  border-color: var(--mint-200);
+  background: var(--warm-100);
+  border-color: var(--warm-200);
 }
 
 /* ---- Relay Code Overlay ---- */
@@ -465,7 +465,7 @@
 }
 
 .relay-overlay-alias {
-  background: linear-gradient(135deg, var(--sun-100), var(--coral-100));
+  background: linear-gradient(135deg, var(--warm-100), var(--warm-100));
   display: inline-block;
   padding: 4px 14px;
   border-radius: 999px;
@@ -506,7 +506,7 @@
 }
 
 .relay-response-input:focus {
-  border-color: var(--coral-300);
+  border-color: var(--accent);
 }
 
 .relay-overlay-actions {
@@ -624,7 +624,7 @@
   box-shadow: 0 16px 48px rgba(0, 0, 0, 0.15);
   position: relative;
   aspect-ratio: 3 / 4;
-  background: linear-gradient(180deg, #a8d8ff 0%, #c8edff 30%, #fff9e6 60%, #c8f0d8 100%);
+  background: linear-gradient(180deg, var(--sky-soft) 0%, #e8f0f8 30%, #fef9f0 60%, var(--mint-soft) 100%);
 }
 
 .postcard-sky {
@@ -650,7 +650,7 @@
   left: 0;
   right: 0;
   height: 45%;
-  background: linear-gradient(180deg, rgba(100, 200, 255, 0.4) 0%, rgba(120, 210, 240, 0.7) 100%);
+  background: linear-gradient(180deg, rgba(180, 190, 210, 0.4) 0%, rgba(160, 180, 200, 0.5) 100%);
 }
 
 .postcard-island-icon {
