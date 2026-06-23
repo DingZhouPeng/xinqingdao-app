@@ -139,18 +139,21 @@ export default function App() {
       const { petState } = gameProgress;
       const needsAttention = petState.hunger < 30 || petState.energy < 30 || petState.happiness < 40;
 
-      if (needsAttention && !showPetReminder) {
+      if (needsAttention) {
+        // 检查距离上次关闭是否超过 5 分钟
+        const lastDismissed = localStorage.getItem('xinqingdao-pet-reminder-dismissed');
+        if (lastDismissed) {
+          const elapsed = Date.now() - parseInt(lastDismissed, 10);
+          if (elapsed < 5 * 60 * 1000) return; // 5分钟内不重复弹出
+        }
         setShowPetReminder(true);
       }
     };
 
-    // 进入首页时检查
     checkPetStatus();
-
-    // 每5分钟检查一次
     const interval = setInterval(checkPetStatus, 5 * 60 * 1000);
     return () => clearInterval(interval);
-  }, [gameProgress, snapshot.profile, activeView, showPetReminder]);
+  }, [gameProgress, snapshot.profile, activeView]);
 
   // 检查是否需要显示新手引导
   useEffect(() => {
@@ -298,8 +301,12 @@ export default function App() {
       {showPetReminder && (
         <PetReminder
           petState={gameProgress.petState}
-          onDismiss={() => setShowPetReminder(false)}
+          onDismiss={() => {
+            localStorage.setItem('xinqingdao-pet-reminder-dismissed', Date.now().toString());
+            setShowPetReminder(false);
+          }}
           onGoToCare={() => {
+            localStorage.removeItem('xinqingdao-pet-reminder-dismissed');
             setShowPetReminder(false);
             setActiveView('pet-care');
           }}
