@@ -1,28 +1,75 @@
+/* ============================================
+   心晴岛 融合设计系统 · 毛绒玩具 × 侘寂质感
+   底色取方向三（暖萌奶油），字体/质感取方向一（单色+留白）
+   ============================================ */
+
 :root {
-  --sky-50: #eef9ff;
-  --sky-100: #d9f1ff;
-  --sky-200: #bde8ff;
-  --sky-300: #8ecfff;
-  --sky-500: #4aa7e8;
-  --mint-100: #dcfff1;
-  --mint-200: #a8efd5;
-  --mint-400: #53d7af;
-  --sun-100: #fff6c7;
-  --sun-200: #ffe27a;
-  --coral-100: #ffe4df;
-  --coral-300: #ff9d8a;
-  --lavender-100: #eee8ff;
-  --lavender-200: #d9c8ff;
-  --ink-900: #223044;
-  --ink-700: #3e506b;
-  --muted: #75839a;
-  --white: #ffffff;
-  --glass: rgba(255,255,255,0.82);
-  --glass-strong: rgba(255,255,255,0.94);
-  --shadow-soft: 0 20px 60px rgba(69, 135, 180, 0.20);
-  --shadow-card: 0 12px 36px rgba(65, 107, 153, 0.16);
-  --radius-xl: 30px;
-  --radius-lg: 24px;
+  /* ---- 底色系统（暖奶油调）---- */
+  --bg-cream: #fdf8f3;
+  --bg-warm: #faf3ec;
+  --bg-light: #fef8f2;
+  --bg-white: #ffffff;
+
+  /* ---- Accent（陶土橙 · 单一贯穿）---- */
+  --accent: #d89870;
+  --accent-light: #e8b890;
+  --accent-dark: #c07850;
+  --accent-glow: rgba(200,130,80,0.2);
+
+  /* ---- 暖系辅助色 ---- */
+  --warm-100: #faf0e4;
+  --warm-200: #f0dcc8;
+  --warm-300: #e0c4a0;
+
+  /* ---- 自然点缀（保留用于 3D/情绪指示）---- */
+  --sky-soft: #e8f0ff;
+  --mint-soft: #e8f6f0;
+  --sun-soft: #fef4e8;
+
+  /* ---- 文字层级 ---- */
+  --ink-900: #4a3020;
+  --ink-700: #5a3a20;
+  --ink-500: #7a5a40;
+  --muted: #b89880;
+  --muted-light: #c8b8a8;
+
+  /* ---- 玻璃/卡片 ---- */
+  --glass: rgba(255,255,255,0.55);
+  --glass-strong: rgba(255,255,255,0.75);
+
+  /* ---- 阴影系统（柔光为主，拒绝硬黑）---- */
+  --shadow-xs: 0 1px 4px rgba(140,100,60,0.04);
+  --shadow-sm: 0 2px 10px rgba(140,100,60,0.06);
+  --shadow-md: 0 4px 20px rgba(140,100,60,0.08);
+  --shadow-lg: 0 8px 32px rgba(120,80,40,0.1);
+  --shadow-accent: 0 6px 20px rgba(200,130,80,0.25);
+
+  /* ---- 圆角 ---- */
+  --radius-xs: 8px;
+  --radius-sm: 12px;
   --radius-md: 18px;
+  --radius-lg: 22px;
+  --radius-xl: 28px;
+  --radius-full: 24px;
+
+  /* ---- 字体 ---- */
+  --font-display: 'Noto Serif SC', 'Source Han Serif SC', 'STSong', serif;
+  --font-body: -apple-system, 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', sans-serif;
+
+  /* ---- 间距 ---- */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 20px;
+  --space-xl: 24px;
+
+  /* ---- 安全区 ---- */
   --safe-bottom: env(safe-area-inset-bottom, 0px);
+
+  /* ---- 动画 ---- */
+  --duration-fast: 0.15s;
+  --duration-normal: 0.25s;
+  --duration-slow: 0.4s;
+  --ease-out-cubic: cubic-bezier(0.33, 1, 0.68, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 }

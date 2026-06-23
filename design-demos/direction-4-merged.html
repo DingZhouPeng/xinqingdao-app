@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>方向四：融合版 · 心晴岛</title>
+<style>
+/* === 方向四：毛绒玩具 × 侘寂细节 ===
+   底色/形状取方向三（奶油暖萌），字体/质感取方向一（衬线+单色+留白）
+   治愈但不幼稚，可爱但有品味
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;700&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: #faf5f0;
+  display: flex; justify-content: center; align-items: center;
+  min-height: 100vh; padding: 20px;
+  font-family: -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+}
+
+.phone {
+  width: 390px; height: 844px;
+  background: linear-gradient(175deg, #fdf8f3 0%, #faf3ec 40%, #fef8f2 100%);
+  border-radius: 44px;
+  overflow: hidden;
+  box-shadow:
+    0 8px 40px rgba(160,120,90,0.12),
+    0 0 0 1px rgba(180,140,110,0.12);
+  position: relative;
+  display: flex; flex-direction: column;
+}
+
+/* ====== Status bar ====== */
+.status-bar {
+  padding: 16px 28px 8px;
+  display: flex; justify-content: space-between;
+  font-size: 12px; font-weight: 600; color: #b8a090;
+  letter-spacing: 0.04em;
+}
+
+/* ====== Header ====== */
+.header {
+  padding: 8px 24px 16px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+
+.greeting h2 {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 22px; font-weight: 500; color: #4a3020;
+  letter-spacing: 0.03em;
+}
+
+.greeting p {
+  font-size: 12px; color: #b89880; margin-top: 3px;
+  font-weight: 500; letter-spacing: 0.04em;
+}
+
+.coin {
+  background: linear-gradient(135deg, #f0e0c8, #e8d4b0);
+  padding: 9px 16px; border-radius: 20px;
+  font-size: 13px; font-weight: 700; color: #6a4a20;
+  box-shadow: 0 2px 8px rgba(160,120,60,0.15);
+  border: 1px solid rgba(180,140,80,0.15);
+  letter-spacing: 0.02em;
+}
+
+/* ====== 3D Island ====== */
+.island-area {
+  margin: 4px 20px;
+  height: 280px;
+  border-radius: 28px;
+  background: linear-gradient(180deg, #e8f0ff 0%, #e8f6f0 42%, #fef4e8 100%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 6px 24px rgba(120,90,60,0.08);
+  position: relative; overflow: hidden;
+  border: 1.5px solid rgba(200,170,140,0.15);
+}
+
+.island-area::after {
+  content: '3D 岛屿场景';
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Noto Serif SC', serif;
+  font-size: 12px; color: rgba(140,120,100,0.35);
+  letter-spacing: 0.1em;
+}
+
+/* ====== Actions ====== */
+.actions {
+  padding: 18px 20px 12px;
+  display: flex; gap: 12px;
+}
+
+.action-btn {
+  flex: 1; padding: 18px 16px;
+  border-radius: 22px; border: none;
+  cursor: pointer; transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  text-align: left;
+}
+
+.action-btn:active { transform: scale(0.96); }
+
+.action-btn.primary {
+  background: linear-gradient(150deg, #e8b890, #d89870);
+  color: #fff;
+  box-shadow: 0 6px 20px rgba(200,130,80,0.25);
+}
+
+.action-btn.secondary {
+  background: rgba(255,255,255,0.7);
+  color: #4a3020;
+  border: 1px solid rgba(180,140,110,0.15);
+  box-shadow: 0 3px 10px rgba(0,0,0,0.03);
+}
+
+.action-btn .icon { font-size: 28px; display: block; margin-bottom: 6px; opacity: 0.9; }
+.action-btn strong { font-size: 15px; font-weight: 700; display: block; letter-spacing: 0.02em; }
+.action-btn small { font-size: 11px; opacity: 0.6; margin-top: 3px; display: block; font-weight: 500; }
+.action-btn.primary small { opacity: 0.75; }
+
+/* ====== Status card ====== */
+.status-card {
+  margin: 8px 20px;
+  padding: 16px 20px;
+  background: rgba(255,255,255,0.65);
+  border-radius: 20px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.03);
+  border: 1px solid rgba(180,140,110,0.1);
+}
+
+.status-card .section-label {
+  font-size: 10px; color: #b89880; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase;
+}
+
+.mood-row {
+  display: flex; align-items: center; justify-content: center; gap: 20px;
+  margin-top: 10px;
+}
+
+.mood-item { text-align: center; }
+.mood-item .mood-emoji {
+  font-size: 34px;
+  filter: drop-shadow(0 3px 4px rgba(0,0,0,0.06));
+}
+.mood-item .mood-score {
+  font-size: 13px; font-weight: 700; color: #5a3a20;
+  margin-top: 4px; display: block;
+}
+.mood-arrow { font-size: 20px; color: #c0a890; }
+
+/* ====== Resources ====== */
+.resources {
+  padding: 14px 20px;
+  display: flex; gap: 10px;
+}
+
+.resource-pill {
+  flex: 1; text-align: center;
+  padding: 14px 8px;
+  background: rgba(255,255,255,0.55);
+  border-radius: 18px;
+  border: 1px solid rgba(180,140,110,0.08);
+  box-shadow: 0 1px 6px rgba(0,0,0,0.02);
+}
+
+.resource-pill .r-icon { font-size: 18px; }
+.resource-pill .r-value {
+  font-size: 16px; font-weight: 800; color: #4a3020;
+  margin-top: 4px; display: block;
+}
+.resource-pill .r-label {
+  font-size: 10px; color: #b89880; font-weight: 600;
+  margin-top: 2px; letter-spacing: 0.04em;
+}
+
+/* ====== Bottom nav ====== */
+.bottom-nav {
+  margin: auto 16px 20px;
+  padding: 8px 6px;
+  display: flex; justify-content: space-around;
+  background: rgba(255,255,255,0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: 24px;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.05), 0 0 0 1px rgba(180,140,110,0.1);
+}
+
+.nav-item {
+  text-align: center; background: none; border: none;
+  font-size: 11px; font-weight: 600; color: #b89880; cursor: pointer;
+  padding: 8px 10px; border-radius: 16px; transition: all 0.2s ease;
+  letter-spacing: 0.03em;
+}
+
+.nav-item.active {
+  color: #c07850;
+  background: linear-gradient(135deg, rgba(220,150,110,0.15), rgba(210,160,120,0.1));
+}
+
+.nav-item .n-icon { font-size: 20px; display: block; margin-bottom: 2px; opacity: 0.85; }
+.nav-item.active .n-icon { opacity: 1; }
+</style>
+</head>
+<body>
+<div class="phone">
+  <div class="status-bar"><span>9:41</span><span>▮▮▮▮  🔋 85%</span></div>
+
+  <div class="header">
+    <div class="greeting">
+      <h2>小晴</h2>
+      <p>来照顾你的小岛吧</p>
+    </div>
+    <div class="coin">💰 50</div>
+  </div>
+
+  <div class="island-area"></div>
+
+  <div class="actions">
+    <button class="action-btn primary">
+      <span class="icon">🌤</span>
+      <strong>记录心情</strong>
+      <small>+ 5 金币</small>
+    </button>
+    <button class="action-btn secondary">
+      <span class="icon">🫧</span>
+      <strong>快速补给</strong>
+      <small>缓解压力</small>
+    </button>
+  </div>
+
+  <div class="status-card">
+    <span class="section-label">今日心情</span>
+    <div class="mood-row">
+      <div class="mood-item">
+        <span class="mood-emoji">🌤</span>
+        <span class="mood-score">6 分</span>
+      </div>
+      <span class="mood-arrow">→</span>
+      <div class="mood-item">
+        <span class="mood-emoji">😌</span>
+        <span class="mood-score">4 分</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="resources">
+    <div class="resource-pill"><span class="r-icon">☀️</span><span class="r-value">12</span><span class="r-label">阳光</span></div>
+    <div class="resource-pill"><span class="r-icon">💧</span><span class="r-value">8</span><span class="r-label">水滴</span></div>
+    <div class="resource-pill"><span class="r-icon">🕯️</span><span class="r-value">1</span><span class="r-label">小灯</span></div>
+  </div>
+
+  <div class="bottom-nav">
+    <button class="nav-item active"><span class="n-icon">🏝</span>小岛</button>
+    <button class="nav-item"><span class="n-icon">🌤</span>天气</button>
+    <button class="nav-item"><span class="n-icon">🫧</span>补给</button>
+    <button class="nav-item"><span class="n-icon">🕯</span>温暖</button>
+    <button class="nav-item"><span class="n-icon">📒</span>成长</button>
+  </div>
+</div>
+</body>
+</html>
