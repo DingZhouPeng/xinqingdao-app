@@ -5,9 +5,10 @@ import { getMyRelayStats, findChainByCode } from '../services/relay';
 import RelayCreateForm from '../components/RelayCreateForm';
 import RelayChainView from '../components/RelayChainView';
 import MoodPostcard from '../components/MoodPostcard';
+import SpriteSnapshotCard from '../components/SpriteSnapshotCard';
 import { moodEmoji } from '../data/moodOptions';
 
-type SocialSubView = 'hub' | 'create' | 'chain' | 'postcard';
+type SocialSubView = 'hub' | 'create' | 'chain' | 'postcard' | 'snapshot';
 
 interface SocialPageProps {
   relayState: RelayState;
@@ -148,6 +149,18 @@ export default function SocialPage({
     );
   }
 
+  // Sprint snapshot card
+  if (subView === 'snapshot' && gameProgress.petState.evolution) {
+    return (
+      <SpriteSnapshotCard
+        evolution={gameProgress.petState.evolution}
+        relayCode={relayState.myMessages[0]?.shareCode}
+        onClose={() => setSubView('hub')}
+        onShared={() => onStatsUpdate({ postcardsShared: 1 })}
+      />
+    );
+  }
+
   // Hub view
   return (
     <div className="relay-hub">
@@ -193,7 +206,7 @@ export default function SocialPage({
       )}
 
       {/* Quick Actions */}
-      <div className="relay-actions">
+      <div className="relay-actions" style={{ gridTemplateColumns: 'repeat(3, 1fr)' }}>
         <button className="relay-action-btn primary-action" onClick={() => setSubView('create')}>
           <span className="action-emoji">💌</span>
           <span className="action-label">发起接力</span>
@@ -201,8 +214,13 @@ export default function SocialPage({
         </button>
         <button className="relay-action-btn" onClick={() => setSubView('postcard')}>
           <span className="action-emoji">🖼️</span>
-          <span className="action-label">心情明信片</span>
-          <span className="action-sub">分享给朋友</span>
+          <span className="action-label">明信片</span>
+          <span className="action-sub">分享心情</span>
+        </button>
+        <button className="relay-action-btn primary-action" onClick={() => setSubView('snapshot')}>
+          <span className="action-emoji">📸</span>
+          <span className="action-label">精灵快照</span>
+          <span className="action-sub">晒进化精灵</span>
         </button>
       </div>
 
