@@ -13,9 +13,10 @@ interface IslandScene3DProps {
   waterDrops: number;
   lamps: number;
   petState?: PetState;
+  isCelebrating?: boolean;
 }
 
-function IslandScene({ mood, sunlight, waterDrops, lamps, petState }: IslandScene3DProps) {
+function IslandScene({ mood, sunlight, waterDrops, lamps, petState, isCelebrating }: IslandScene3DProps) {
   const stormy = mood === 'angry' || mood === 'nervous' || mood === 'sad' || mood === 'stressed';
   const isClear = mood === 'happy' || mood === 'calm' || !mood;
   const hasProgress = sunlight > 0 || waterDrops > 0 || lamps > 0;
@@ -141,16 +142,25 @@ function IslandScene({ mood, sunlight, waterDrops, lamps, petState }: IslandScen
         <Qingqing3D
           evolution={petState?.evolution}
           mood={stormy ? 'sad' : 'happy'}
+          isCelebrating={isCelebrating}
         />
       </group>
 
-      {/* 粒子场 */}
+      {/* 粒子场 — 庆祝时爆发 */}
       <ParticleField
-        count={stormy ? 40 : hasProgress ? 150 : 80}
-        color={stormy ? '#8899cc' : isClear ? '#ffd700' : '#aaccff'}
-        spread={3.5}
+        count={isCelebrating ? 250 : stormy ? 40 : hasProgress ? 150 : 80}
+        color={isCelebrating ? '#ffd700' : stormy ? '#8899cc' : isClear ? '#ffd700' : '#aaccff'}
+        spread={isCelebrating ? 5 : 3.5}
         stormy={stormy}
       />
+
+      {/* 庆祝光柱 */}
+      {isCelebrating && (
+        <>
+          <pointLight position={[0, 1.5, 0.5]} intensity={3} color="#ffd080" distance={5} />
+          <pointLight position={[0, 0.5, 0.5]} intensity={2} color="#ffaa60" distance={3} />
+        </>
+      )}
 
       {/* 迷雾（柔和环境） */}
       <fog attach="fog" args={[stormy ? '#556688' : '#d4e8ff', 0.2, 8]} />

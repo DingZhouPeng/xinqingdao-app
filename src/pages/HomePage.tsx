@@ -9,9 +9,10 @@ interface HomePageProps {
   snapshot: AppStateSnapshot;
   gameProgress: GameProgress;
   onNavigate: (view: ActiveView) => void;
+  isEvolving?: boolean;
 }
 
-export default function HomePage({ snapshot, gameProgress, onNavigate }: HomePageProps) {
+export default function HomePage({ snapshot, gameProgress, onNavigate, isEvolving }: HomePageProps) {
   const latest = snapshot.records[0];
   const nickname = snapshot.profile?.nickname ?? '小岛同学';
 
@@ -57,6 +58,7 @@ export default function HomePage({ snapshot, gameProgress, onNavigate }: HomePag
             waterDrops={snapshot.waterDrops}
             lamps={snapshot.lamps}
             petState={gameProgress.petState}
+            isCelebrating={isEvolving}
           />
         </Suspense>
       </div>

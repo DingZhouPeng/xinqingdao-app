@@ -253,7 +253,7 @@ export default function App() {
         pendingRelayCode={localStorage.getItem('xinqingdao-pending-relay-code')}
       />
     );
-    if (activeView === 'home') return <HomePage snapshot={snapshot} gameProgress={gameProgress} onNavigate={setActiveView} />;
+    if (activeView === 'home') return <HomePage snapshot={snapshot} gameProgress={gameProgress} onNavigate={setActiveView} isEvolving={!!evoCelebration} />;
     if (activeView === 'mood') return <MoodPage onNext={handleMoodNext} onBubblePopped={(count) => setStats(prev => ({ ...prev, bubblesPopped: prev.bubblesPopped + count }))} />;
     if (activeView === 'relief') return <QuickReliefPage />;
     if (activeView === 'ai' && moodInput) return <AiGuidePage moodInput={moodInput} onGenerate={handleGenerate} />;
