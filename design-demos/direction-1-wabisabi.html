@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>方向一：侘寂治愈 · 心晴岛</title>
+<style>
+/* === 方向一：侘寂治愈 Wabi-Sabi Healing ===
+   设计哲学：留白 > 填充，温度 > 效率，触感 > 科技
+   参照：无印良品 × Headspace 的交叉地带
+   色彩：暖米色底 + 单色 accent（陶土橙），几乎无色
+   字体：衬线 display + system sans body
+*/
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: #f5f0e8;
+  display: flex; justify-content: center; align-items: center;
+  min-height: 100vh; padding: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.phone {
+  width: 390px; height: 844px;
+  background: #faf7f0;
+  border-radius: 44px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.12), 0 0 0 1px rgba(0,0,0,0.04);
+  position: relative;
+  display: flex; flex-direction: column;
+}
+
+/* Status bar */
+.status-bar {
+  padding: 16px 28px 8px;
+  display: flex; justify-content: space-between;
+  font-size: 13px; font-weight: 600; color: #8c7b6e;
+}
+
+/* Header */
+.header {
+  padding: 8px 24px 16px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+
+.greeting h2 {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 22px; font-weight: 400; color: #4a3728;
+  letter-spacing: 0.02em;
+}
+
+.greeting p {
+  font-size: 13px; color: #a89888; margin-top: 2px;
+}
+
+.coin {
+  background: #f0e8d8;
+  padding: 8px 16px; border-radius: 20px;
+  font-size: 14px; font-weight: 600; color: #8b6914;
+}
+
+/* 3D Island placeholder */
+.island-area {
+  margin: 0 20px;
+  height: 280px;
+  border-radius: 28px;
+  background: linear-gradient(175deg, #e8e0d5 0%, #f0e8d8 40%, #d4ccc0 100%);
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(0,0,0,0.04);
+}
+
+.island-area::after {
+  content: '3D 岛屿场景';
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Noto Serif SC', serif;
+  font-size: 14px; color: #b8a898;
+  letter-spacing: 0.1em;
+}
+
+/* Main actions */
+.actions {
+  padding: 20px 24px 12px;
+  display: flex; gap: 12px;
+}
+
+.action-btn {
+  flex: 1; padding: 18px 16px;
+  border-radius: 20px; border: none;
+  cursor: pointer; transition: transform 0.15s ease;
+  text-align: left;
+}
+
+.action-btn:active { transform: scale(0.97); }
+
+.action-btn.primary {
+  background: #e07b5a;
+  color: white;
+  box-shadow: 0 4px 16px rgba(224,123,90,0.25);
+}
+
+.action-btn.secondary {
+  background: #f0e8d8;
+  color: #4a3728;
+}
+
+.action-btn .icon { font-size: 24px; display: block; margin-bottom: 6px; }
+.action-btn strong { font-size: 15px; font-weight: 600; display: block; }
+.action-btn small { font-size: 11px; opacity: 0.7; margin-top: 2px; display: block; }
+
+/* Status card */
+.status-card {
+  margin: 0 24px;
+  padding: 16px 20px;
+  background: rgba(255,255,255,0.5);
+  border-radius: 18px;
+  border: 1px solid rgba(0,0,0,0.04);
+}
+
+.status-card .label {
+  font-size: 11px; color: #a89888; text-transform: uppercase; letter-spacing: 0.08em;
+}
+
+.mood-row {
+  display: flex; align-items: center; justify-content: center; gap: 16px;
+  margin-top: 8px;
+}
+
+.mood-row .mood { text-align: center; }
+.mood-row .mood .emoji { font-size: 32px; display: block; }
+.mood-row .mood .score { font-size: 13px; color: #8c7b6e; margin-top: 2px; }
+.mood-row .arrow { font-size: 20px; color: #c0b0a0; }
+
+/* Resources */
+.resources {
+  padding: 16px 24px;
+  display: flex; gap: 10px;
+}
+
+.resource {
+  flex: 1; text-align: center;
+  padding: 12px 8px;
+  background: rgba(255,255,255,0.4);
+  border-radius: 16px;
+}
+
+.resource .icon { font-size: 18px; }
+.resource .value { font-size: 16px; font-weight: 700; color: #4a3728; margin-top: 4px; display: block; }
+.resource .label { font-size: 10px; color: #a89888; margin-top: 1px; }
+
+/* Bottom nav */
+.bottom-nav {
+  margin-top: auto;
+  padding: 12px 20px 28px;
+  display: flex; justify-content: space-around;
+  background: rgba(255,255,255,0.6);
+  border-top: 1px solid rgba(0,0,0,0.03);
+}
+
+.nav-item {
+  text-align: center; background: none; border: none;
+  font-size: 12px; color: #a89888; cursor: pointer;
+  padding: 6px 12px; border-radius: 14px;
+  transition: all 0.2s ease;
+}
+
+.nav-item.active {
+  color: #e07b5a; background: rgba(224,123,90,0.08);
+}
+
+.nav-item .icon { font-size: 20px; display: block; margin-bottom: 2px; }
+</style>
+</head>
+<body>
+<div class="phone">
+  <div class="status-bar"><span>9:41</span><span>🔋 85%</span></div>
+
+  <div class="header">
+    <div class="greeting">
+      <h2>小晴</h2>
+      <p>来照顾你的小岛吧</p>
+    </div>
+    <div class="coin">💰 50</div>
+  </div>
+
+  <div class="island-area"></div>
+
+  <div class="actions">
+    <button class="action-btn primary">
+      <span class="icon">🌤</span>
+      <strong>记录心情</strong>
+      <small>+5 金币</small>
+    </button>
+    <button class="action-btn secondary">
+      <span class="icon">🫧</span>
+      <strong>快速补给</strong>
+      <small>缓解压力</small>
+    </button>
+  </div>
+
+  <div class="status-card">
+    <span class="label">今日心情</span>
+    <div class="mood-row">
+      <div class="mood"><span class="emoji">🌤</span><span class="score">6 分</span></div>
+      <span class="arrow">→</span>
+      <div class="mood"><span class="emoji">😌</span><span class="score">4 分</span></div>
+    </div>
+  </div>
+
+  <div class="resources">
+    <div class="resource"><span class="icon">☀️</span><span class="value">12</span><span class="label">阳光</span></div>
+    <div class="resource"><span class="icon">💧</span><span class="value">8</span><span class="label">水滴</span></div>
+    <div class="resource"><span class="icon">🕯️</span><span class="value">1</span><span class="label">小灯</span></div>
+  </div>
+
+  <div class="bottom-nav">
+    <button class="nav-item active"><span class="icon">🏝</span>小岛</button>
+    <button class="nav-item"><span class="icon">🌤</span>天气</button>
+    <button class="nav-item"><span class="icon">🫧</span>补给</button>
+    <button class="nav-item"><span class="icon">🕯</span>温暖</button>
+    <button class="nav-item"><span class="icon">📒</span>成长</button>
+  </div>
+</div>
+</body>
+</html>

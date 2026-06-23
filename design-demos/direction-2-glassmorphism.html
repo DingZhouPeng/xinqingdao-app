@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>方向二：玻璃态自然 · 心晴岛</title>
+<style>
+/* === 方向二：玻璃态自然 Glassmorphism Nature ===
+   设计哲学：层次感 > 平面，通透 > 厚重，光影 > 色块
+   参照：iOS 17 玻璃态 × Stripe 的渐变克制 × 自然色板
+   色彩：天空渐变底 + 大量毛玻璃卡片 + 单色 accent
+*/
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: linear-gradient(160deg, #d4e8ff 0%, #e8f4e8 35%, #fff8e8 70%, #f0e0f0 100%);
+  display: flex; justify-content: center; align-items: center;
+  min-height: 100vh; padding: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.phone {
+  width: 390px; height: 844px;
+  background: transparent;
+  border-radius: 44px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(60,90,130,0.15), 0 0 0 1px rgba(255,255,255,0.5);
+  position: relative;
+  display: flex; flex-direction: column;
+}
+
+/* Gradient sky background */
+.phone-bg {
+  position: absolute; inset: 0;
+  background: linear-gradient(170deg, #c8ddf8 0%, #d8eed8 35%, #fff5e0 70%, #f0e0f8 100%);
+  z-index: 0;
+}
+
+.content { position: relative; z-index: 1; display: flex; flex-direction: column; flex: 1; }
+
+/* Glass header */
+.header {
+  margin: 12px 16px;
+  padding: 16px 18px;
+  display: flex; justify-content: space-between; align-items: center;
+  background: rgba(255,255,255,0.45);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 24px;
+  border: 1px solid rgba(255,255,255,0.6);
+}
+
+.greeting h2 { font-size: 18px; font-weight: 700; color: #1a3a4a; }
+.greeting p { font-size: 12px; color: #5a7a8a; margin-top: 1px; }
+
+.coin {
+  background: linear-gradient(135deg, rgba(255,210,120,0.5), rgba(255,180,80,0.4));
+  padding: 7px 14px; border-radius: 20px;
+  font-size: 13px; font-weight: 700; color: #5a3a10;
+  border: 1px solid rgba(255,200,100,0.3);
+}
+
+/* 3D Island */
+.island-area {
+  margin: 0 16px;
+  height: 270px;
+  border-radius: 28px;
+  background: linear-gradient(180deg, rgba(180,220,255,0.5) 0%, rgba(200,240,220,0.5) 50%, rgba(240,240,255,0.5) 100%);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.5);
+  position: relative;
+  overflow: hidden;
+}
+
+.island-area::after {
+  content: '3D 岛屿场景';
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; color: rgba(100,140,160,0.5);
+  letter-spacing: 0.08em;
+}
+
+/* Actions */
+.actions {
+  padding: 16px;
+  display: flex; gap: 10px;
+}
+
+.glass-btn {
+  flex: 1; padding: 16px;
+  border-radius: 20px; border: 1px solid rgba(255,255,255,0.5);
+  cursor: pointer; transition: all 0.2s ease;
+  background: rgba(255,255,255,0.35);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.glass-btn:active { transform: scale(0.97); background: rgba(255,255,255,0.55); }
+
+.glass-btn.accent {
+  background: linear-gradient(135deg, rgba(142,207,255,0.5), rgba(125,225,188,0.5));
+  border-color: rgba(142,207,255,0.4);
+}
+
+.glass-btn .icon { font-size: 26px; display: block; margin-bottom: 4px; }
+.glass-btn strong { font-size: 15px; color: #1a3a4a; }
+.glass-btn small { font-size: 11px; color: #5a7a8a; display: block; margin-top: 2px; }
+
+/* Status */
+.status-card {
+  margin: 0 16px; padding: 14px 18px;
+  background: rgba(255,255,255,0.35);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.5);
+}
+
+.status-card .label { font-size: 11px; color: #5a7a8a; font-weight: 600; letter-spacing: 0.06em; }
+
+.mood-row { display: flex; align-items: center; justify-content: center; gap: 14px; margin-top: 8px; }
+.mood-row .mood { text-align: center; }
+.mood-row .emoji { font-size: 28px; }
+.mood-row .score { font-size: 12px; color: #5a7a8a; }
+.mood-row .arrow { color: rgba(100,140,160,0.4); }
+
+/* Resources */
+.resources {
+  padding: 16px;
+  display: flex; gap: 8px;
+}
+
+.resource {
+  flex: 1; text-align: center; padding: 12px 6px;
+  background: rgba(255,255,255,0.3);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.4);
+}
+
+.resource .icon { font-size: 16px; }
+.resource .value { font-size: 15px; font-weight: 700; color: #1a3a4a; margin-top: 3px; display: block; }
+.resource .label { font-size: 10px; color: #5a7a8a; }
+
+/* Nav */
+.bottom-nav {
+  margin-top: auto;
+  padding: 10px 16px 24px;
+  display: flex; justify-content: space-around;
+  background: rgba(255,255,255,0.4);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid rgba(255,255,255,0.4);
+}
+
+.nav-item {
+  text-align: center; background: none; border: none;
+  font-size: 11px; color: #5a7a8a; cursor: pointer;
+  padding: 6px 10px; border-radius: 14px; transition: all 0.2s ease;
+}
+
+.nav-item.active { color: #2a6a8a; font-weight: 700; }
+.nav-item .icon { font-size: 20px; display: block; margin-bottom: 2px; }
+</style>
+</head>
+<body>
+<div class="phone">
+  <div class="phone-bg"></div>
+  <div class="content">
+    <div class="header">
+      <div class="greeting"><h2>小晴</h2><p>来照顾你的小岛吧</p></div>
+      <div class="coin">💰 50</div>
+    </div>
+    <div class="island-area"></div>
+    <div class="actions">
+      <button class="glass-btn accent">
+        <span class="icon">🌤</span><strong>记录心情</strong><small>+5 金币</small>
+      </button>
+      <button class="glass-btn">
+        <span class="icon">🫧</span><strong>快速补给</strong><small>缓解压力</small>
+      </button>
+    </div>
+    <div class="status-card">
+      <span class="label">今日心情</span>
+      <div class="mood-row">
+        <div class="mood"><span class="emoji">🌤</span><span class="score">6 分</span></div>
+        <span class="arrow">→</span>
+        <div class="mood"><span class="emoji">😌</span><span class="score">4 分</span></div>
+      </div>
+    </div>
+    <div class="resources">
+      <div class="resource"><span class="icon">☀️</span><span class="value">12</span><span class="label">阳光</span></div>
+      <div class="resource"><span class="icon">💧</span><span class="value">8</span><span class="label">水滴</span></div>
+      <div class="resource"><span class="icon">🕯️</span><span class="value">1</span><span class="label">小灯</span></div>
+    </div>
+    <div class="bottom-nav">
+      <button class="nav-item active"><span class="icon">🏝</span>小岛</button>
+      <button class="nav-item"><span class="icon">🌤</span>天气</button>
+      <button class="nav-item"><span class="icon">🫧</span>补给</button>
+      <button class="nav-item"><span class="icon">🕯</span>温暖</button>
+      <button class="nav-item"><span class="icon">📒</span>成长</button>
+    </div>
+  </div>
+</div>
+</body>
+</html>
