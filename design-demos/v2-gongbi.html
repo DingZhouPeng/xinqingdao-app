@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=375,initial-scale=1.0">
+<title>方向二：工笔重彩 · 心晴岛</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;700;900&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#1a1410;display:flex;justify-content:center;align-items:center;min-height:100vh;padding:16px}
+.phone{
+  width:375px;min-height:812px;
+  background:linear-gradient(175deg,#1a1028 0%,#201830 30%,#2a1840 100%);
+  position:relative;overflow:hidden;border-radius:40px;
+  box-shadow:0 0 0 3px #d4a040,0 0 0 6px #2a1a10,0 0 0 8px #8b6914,0 0 40px rgba(212,160,40,.15),0 20px 60px rgba(0,0,0,.6);
+}
+/* 鎏金暗纹 */
+.phone::before{
+  content:'';position:absolute;inset:0;
+  background:url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5 Q35 15 45 20 Q35 25 30 35 Q25 25 15 20 Q25 15 30 5Z' fill='none' stroke='rgba(212,160,64,.06)' stroke-width='1'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;
+}
+.content{position:relative;z-index:1;display:flex;flex-direction:column;min-height:100vh}
+
+.status-bar{padding:14px 24px 6px;display:flex;justify-content:space-between;font-size:11px;color:rgba(212,160,64,.6);font-weight:600}
+.header{padding:8px 20px;display:flex;justify-content:space-between;align-items:center}
+.greeting-name{font-family:'Noto Serif SC',serif;font-size:22px;font-weight:700;color:#f0d880;letter-spacing:.06em;text-shadow:0 0 20px rgba(240,200,100,.2)}
+.greeting-sub{font-size:11px;color:rgba(200,160,80,.5);margin-top:2px;letter-spacing:.06em}
+.coin-badge{
+  background:linear-gradient(135deg,rgba(212,160,40,.2),rgba(180,130,30,.15));
+  padding:8px 14px;border-radius:16px;border:1.5px solid rgba(212,160,64,.3);
+  font-size:12px;font-weight:800;color:#f0d880;
+  box-shadow:0 0 16px rgba(212,160,40,.15);
+}
+
+.scene{
+  margin:8px 16px;height:260px;border-radius:20px;
+  background:linear-gradient(180deg,#0a0820 0%,#141030 30%,#1a1030 100%);
+  position:relative;overflow:hidden;
+  border:2px solid rgba(212,160,64,.25);
+  box-shadow:0 0 30px rgba(120,80,180,.1),inset 0 0 60px rgba(80,40,160,.08);
+}
+/* 紫霞天空 */
+.purple-sky{
+  position:absolute;top:0;left:0;right:0;height:50%;
+  background:linear-gradient(180deg,rgba(100,60,180,.2),transparent);
+}
+/* 星辰 */
+.star{
+  position:absolute;width:2px;height:2px;background:#fff;border-radius:50%;
+  animation:twinkle 2s ease-in-out infinite;
+}
+.star:nth-child(1){top:10%;left:15%;animation-delay:0s}.star:nth-child(2){top:20%;right:20%;animation-delay:.5s}
+.star:nth-child(3){top:30%;left:50%}.star:nth-child(4){top:8%;right:35%;animation-delay:1s}
+.star:nth-child(5){top:25%;left:30%;animation-delay:1.5s}
+@keyframes twinkle{0%,100%{opacity:.3;transform:scale(1)}50%{opacity:1;transform:scale(2)}}
+/* 仙山 */
+.fairy-mountain{
+  position:absolute;bottom:30%;border-left:solid transparent;border-right:solid transparent;border-bottom:solid;
+}
+.fairy-mountain.m1{border-left-width:40px;border-right-width:60px;border-bottom-width:45px;border-bottom-color:rgba(100,70,140,.4);left:5%}
+.fairy-mountain.m2{border-left-width:60px;border-right-width:40px;border-bottom-width:55px;border-bottom-color:rgba(80,50,120,.3);right:8%}
+/* 仙湖 */
+.fairy-lake{
+  position:absolute;bottom:0;left:0;right:0;height:30%;
+  background:linear-gradient(180deg,rgba(60,30,100,.2),rgba(40,20,80,.5));
+}
+.fairy-lake::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,rgba(212,160,64,.3),transparent);
+  animation:shimmer 3s ease-in-out infinite;
+}
+@keyframes shimmer{0%,100%{opacity:.3}50%{opacity:1}}
+/* 仙岛 */
+.fairy-island{
+  position:absolute;bottom:25%;left:50%;transform:translateX(-50%);
+  width:150px;height:40px;
+  background:linear-gradient(180deg,rgba(180,140,200,.3),rgba(140,100,160,.2));
+  border-radius:45% 45% 50% 50% / 60% 60% 40% 40%;
+  border:1px solid rgba(212,160,64,.2);
+  box-shadow:0 0 20px rgba(150,100,200,.15);
+}
+/* 灵树 */
+.spirit-tree{
+  position:absolute;bottom:24px;left:14px;
+}
+.spirit-tree .trunk{width:4px;height:22px;background:rgba(180,140,200,.4);border-radius:2px;margin:0 auto}
+.spirit-tree .crown{
+  width:28px;height:28px;background:radial-gradient(circle,rgba(160,200,120,.5),rgba(100,140,80,.3));
+  border-radius:50%;margin-top:-4px;box-shadow:0 0 12px rgba(140,200,100,.2);
+}
+/* 灵塔 */
+.spirit-lighthouse{
+  position:absolute;bottom:20px;right:18px;
+  width:10px;height:24px;background:rgba(200,180,220,.4);border-radius:3px 3px 0 0;
+}
+.spirit-lighthouse::before{
+  content:'';position:absolute;top:-5px;left:-3px;width:16px;height:8px;
+  background:rgba(200,180,220,.5);border-radius:2px 2px 0 0;
+}
+.spirit-lighthouse.lit::after{
+  content:'';position:absolute;top:2px;left:50%;transform:translateX(-50%);
+  width:6px;height:6px;border-radius:50%;
+  background:radial-gradient(circle,#fff,#d4a040);
+  box-shadow:0 0 16px rgba(212,160,64,.6),0 0 30px rgba(200,140,40,.3);
+  animation:lamp 2s ease-in-out infinite;
+}
+@keyframes lamp{0%,100%{opacity:.4;transform:translateX(-50%) scale(1)}50%{opacity:1;transform:translateX(-50%) scale(1.5)}}
+/* 精灵 */
+.pet-area{position:absolute;bottom:24%;left:50%;transform:translateX(-50%);z-index:5}
+.pet-body{
+  width:48px;height:48px;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#fff,#f8e0f0 50%,#e8c8e0);
+  box-shadow:0 0 20px rgba(200,150,220,.3),0 0 40px rgba(180,130,200,.15);
+  position:relative;animation:pet-bob 3s ease-in-out infinite;
+}
+@keyframes pet-bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.pet-eyes{position:absolute;top:15px;left:50%;transform:translateX(-50%);display:flex;gap:10px}
+.pet-eye{width:8px;height:10px;background:#1a0a20;border-radius:50%}
+.pet-eye::after{content:'';position:absolute;width:3px;height:3px;background:#fff;border-radius:50%;top:2px;left:1px}
+.pet-mouth{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);width:6px;height:3px;border-bottom:1.5px solid #c090b0;border-radius:0 0 6px 6px}
+.pet-blush{position:absolute;width:10px;height:6px;background:radial-gradient(ellipse,rgba(255,140,200,.3),transparent);border-radius:50%}
+.pet-blush.l{top:23px;left:3px}.pet-blush.r{top:23px;right:3px}
+.scene-label{
+  position:absolute;bottom:8px;left:50%;transform:translateX(-50%);
+  background:rgba(20,10,40,.6);padding:3px 12px;border-radius:10px;
+  border:1px solid rgba(212,160,64,.2);
+  font-size:10px;font-weight:700;color:#d4a040;
+  font-family:'Noto Serif SC',serif;letter-spacing:.06em;
+}
+
+.btns{padding:14px 20px;display:flex;gap:10px}
+.btn{flex:1;padding:16px 12px;border-radius:16px;border:none;font-family:'Noto Serif SC',serif;font-size:14px;font-weight:700;cursor:pointer;transition:all .15s ease}
+.btn:active{transform:scale(.97)}
+.btn-main{
+  background:linear-gradient(135deg,#d4a040,#b08030);color:#1a1028;
+  box-shadow:0 4px 20px rgba(212,160,40,.3),inset 0 1px 0 rgba(255,255,255,.2);
+}
+.btn-sub{
+  background:rgba(255,255,255,.08);color:#d4a040;
+  border:1px solid rgba(212,160,64,.2);
+}
+.btn-icon{font-size:22px;display:block;margin-bottom:4px}
+
+.mood-card{
+  margin:4px 20px;padding:14px 16px;
+  background:rgba(255,255,255,.06);border-radius:16px;
+  border:1px solid rgba(212,160,64,.15);
+}
+.mood-label{font-size:9px;color:rgba(212,160,64,.5);font-weight:700;letter-spacing:.1em}
+.mood-display{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:8px}
+.mood-item{text-align:center}.mood-emoji{font-size:28px}.mood-score{font-size:12px;font-weight:700;color:#d4a040;margin-top:2px}
+.mood-arrow{color:rgba(212,160,64,.3);font-size:16px}
+
+.resources{padding:12px 20px;display:flex;gap:8px}
+.res-pill{
+  flex:1;text-align:center;padding:12px 6px;
+  background:rgba(255,255,255,.04);border-radius:14px;
+  border:1px solid rgba(212,160,64,.12);
+}
+.res-icon{font-size:16px}.res-val{font-size:15px;font-weight:800;color:#f0d880;display:block;margin-top:2px}
+.res-lbl{font-size:9px;color:rgba(212,160,64,.4);font-weight:600}
+
+.bottom-nav{
+  margin:auto 14px 16px;padding:6px 4px;display:flex;justify-content:space-around;
+  background:rgba(20,10,40,.7);backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);border-radius:20px;
+  border:1px solid rgba(212,160,64,.15);
+}
+.nav-item{text-align:center;background:none;border:none;padding:6px 8px;font-size:10px;font-weight:600;color:rgba(212,160,64,.4);cursor:pointer;border-radius:12px;transition:all .15s ease}
+.nav-item.active{color:#f0d880;background:rgba(212,160,40,.1)}
+.nav-icon{font-size:18px;display:block;opacity:.85}.nav-item.active .nav-icon{opacity:1}
+</style>
+</head>
+<body>
+<div class="phone">
+  <div class="content">
+    <div class="status-bar"><span>9:41</span><span>🔋 85%</span></div>
+    <div class="header">
+      <div><div class="greeting-name">小晴</div><div class="greeting-sub">来照顾你的小岛吧</div></div>
+      <div class="coin-badge">💰 50</div>
+    </div>
+    <div class="scene">
+      <div class="purple-sky"></div>
+      <div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div>
+      <div class="fairy-mountain m1"></div><div class="fairy-mountain m2"></div>
+      <div class="fairy-lake"></div>
+      <div class="fairy-island"></div>
+      <div class="spirit-tree"><div class="crown"></div><div class="trunk"></div></div>
+      <div class="spirit-lighthouse lit"></div>
+      <div class="pet-area"><div class="pet-body"><div class="pet-eyes"><div class="pet-eye"></div><div class="pet-eye"></div></div><div class="pet-mouth"></div><div class="pet-blush l"></div><div class="pet-blush r"></div></div></div>
+      <div class="scene-label">🌙 心晴仙岛 · 静</div>
+    </div>
+    <div class="btns">
+      <button class="btn btn-main"><span class="btn-icon">🌤</span>记录心情</button>
+      <button class="btn btn-sub"><span class="btn-icon">🫧</span>快速补给</button>
+    </div>
+    <div class="mood-card">
+      <div class="mood-label">今日心情</div>
+      <div class="mood-display">
+        <div class="mood-item"><span class="mood-emoji">🌪</span><span class="mood-score">8 分</span></div><span class="mood-arrow">→</span>
+        <div class="mood-item"><span class="mood-emoji">😌</span><span class="mood-score">5 分</span></div>
+      </div>
+    </div>
+    <div class="resources">
+      <div class="res-pill"><span class="res-icon">☀</span><span class="res-val">12</span><span class="res-lbl">阳光</span></div>
+      <div class="res-pill"><span class="res-icon">💧</span><span class="res-val">8</span><span class="res-lbl">水滴</span></div>
+      <div class="res-pill"><span class="res-icon">🕯</span><span class="res-val">1</span><span class="res-lbl">小灯</span></div>
+    </div>
+    <div class="bottom-nav">
+      <button class="nav-item active"><span class="nav-icon">🏝</span>小岛</button>
+      <button class="nav-item"><span class="nav-icon">🌤</span>天气</button>
+      <button class="nav-item"><span class="nav-icon">🎒</span>背包</button>
+      <button class="nav-item"><span class="nav-icon">🕯</span>温暖</button>
+      <button class="nav-item"><span class="nav-icon">📒</span>成长</button>
+    </div>
+  </div>
+</div>
+</body>
+</html>

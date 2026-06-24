@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=375,initial-scale=1.0">
+<title>方向三：碧落仙踪 · 心晴岛</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;700&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#c8d8c0;display:flex;justify-content:center;align-items:center;min-height:100vh;padding:16px}
+.phone{
+  width:375px;min-height:812px;
+  background:linear-gradient(180deg,#e8f4e8 0%,#f0f8ec 30%,#fefdf8 60%,#f8f4e8 100%);
+  position:relative;overflow:hidden;border-radius:40px;
+  box-shadow:0 0 0 3px #8aaa80,0 0 0 6px #3a5a30,0 0 0 8px #a0c090,0 20px 60px rgba(40,80,30,.15);
+}
+/* 竹叶纹理 */
+.phone::before{
+  content:'';position:absolute;inset:0;
+  background:url("data:image/svg+xml,%3Csvg width='80' height='80' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 10 Q25 0 30 10 Q25 20 20 10Z' fill='rgba(100,160,80,.02)'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;
+}
+.content{position:relative;z-index:1;display:flex;flex-direction:column;min-height:100vh}
+
+.status-bar{padding:14px 24px 6px;display:flex;justify-content:space-between;font-size:11px;color:#6a8a5a;font-weight:600}
+.header{padding:8px 20px;display:flex;justify-content:space-between;align-items:center}
+.greeting-name{font-family:'Ma Shan Zheng',cursive;font-size:24px;color:#3a5a20;letter-spacing:.06em}
+.greeting-sub{font-size:11px;color:#7aaa6a;margin-top:1px;letter-spacing:.06em}
+.coin-badge{
+  background:linear-gradient(135deg,rgba(255,255,255,.7),rgba(240,248,232,.6));
+  padding:8px 14px;border-radius:16px;border:1.5px solid rgba(120,180,100,.25);
+  font-size:12px;font-weight:800;color:#4a6a2a;
+  box-shadow:0 2px 8px rgba(60,100,30,.08),inset 0 1px 0 rgba(255,255,255,.6);
+}
+
+.scene{
+  margin:8px 16px;height:260px;border-radius:20px;
+  background:linear-gradient(180deg,#dce8f8 0%,#e0f0ec 20%,#f0f4e4 50%,#fef8ec 100%);
+  position:relative;overflow:hidden;
+  border:2px solid rgba(120,180,100,.15);
+  box-shadow:0 4px 20px rgba(60,100,30,.06),inset 0 0 40px rgba(200,220,180,.1);
+}
+/* 翠峰 */
+.jade-mountain{
+  position:absolute;bottom:32%;
+  border-left:solid transparent;border-right:solid transparent;border-bottom:solid;
+}
+.jade-mountain.m1{border-left-width:45px;border-right-width:65px;border-bottom-width:55px;border-bottom-color:rgba(140,180,120,.35);left:5%}
+.jade-mountain.m2{border-left-width:55px;border-right-width:45px;border-bottom-width:50px;border-bottom-color:rgba(120,160,100,.25);right:10%}
+/* 碧湖 */
+.jade-lake{
+  position:absolute;bottom:0;left:0;right:0;height:30%;
+  background:linear-gradient(180deg,rgba(180,210,200,.3),rgba(140,190,180,.55));
+}
+.jade-lake::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.3),transparent);
+}
+/* 翠岛 */
+.jade-island{
+  position:absolute;bottom:26%;left:50%;transform:translateX(-50%);
+  width:155px;height:42px;
+  background:linear-gradient(180deg,#d4e4c0,#c0d4a0);
+  border-radius:45% 45% 50% 50% / 60% 60% 40% 40%;
+  box-shadow:0 4px 14px rgba(60,100,30,.1),inset 0 -5px 8px rgba(80,120,40,.08);
+}
+/* 碧树 */
+.jade-tree{position:absolute;bottom:24px;left:14px}
+.jade-tree .trunk{width:4px;height:22px;background:#6a8a4a;border-radius:2px;margin:0 auto}
+.jade-tree .crown{
+  width:30px;height:30px;background:radial-gradient(circle at 40% 30%,#a0d880,#6aaa50);
+  border-radius:50%;margin-top:-4px;box-shadow:0 0 10px rgba(120,200,80,.2);
+}
+/* 翠塔 */
+.jade-lighthouse{
+  position:absolute;bottom:20px;right:16px;
+  width:10px;height:24px;background:#d0d8c8;border-radius:3px 3px 0 0;
+}
+.jade-lighthouse::before{
+  content:'';position:absolute;top:-5px;left:-3px;width:16px;height:8px;
+  background:#a0c880;border-radius:2px 2px 0 0;
+}
+.jade-lighthouse.lit::after{
+  content:'';position:absolute;top:2px;left:50%;transform:translateX(-50%);
+  width:6px;height:6px;border-radius:50%;
+  background:radial-gradient(circle,#ffe880,#e0c040);
+  box-shadow:0 0 14px rgba(240,200,60,.5),0 0 24px rgba(220,180,40,.2);
+  animation:lamp 2s ease-in-out infinite;
+}
+@keyframes lamp{0%,100%{opacity:.5}50%{opacity:1}}
+
+/* 精灵 — 小翠灵 */
+.pet-area{position:absolute;bottom:24%;left:50%;transform:translateX(-50%);z-index:5}
+.pet-body{
+  width:50px;height:50px;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#fff,#f0f8e0 50%,#d8f0c0);
+  box-shadow:0 0 0 3px rgba(140,200,100,.15),0 4px 16px rgba(60,100,20,.1);
+  position:relative;animation:pet-bob 3s ease-in-out infinite;
+}
+@keyframes pet-bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.pet-eyes{position:absolute;top:15px;left:50%;transform:translateX(-50%);display:flex;gap:10px}
+.pet-eye{width:8px;height:10px;background:#2a3a1a;border-radius:50%}
+.pet-eye::after{content:'';position:absolute;width:3px;height:3px;background:#fff;border-radius:50%;top:2px;left:1px}
+.pet-mouth{position:absolute;bottom:12px;left:50%;width:6px;height:3px;border-bottom:1.5px solid #90b070;border-radius:0 0 6px 6px;transform:translateX(-50%)}
+.pet-blush{position:absolute;width:10px;height:6px;background:radial-gradient(ellipse,rgba(255,160,140,.3),transparent);border-radius:50%}
+.pet-blush.l{top:23px;left:3px}.pet-blush.r{top:23px;right:3px}
+/* 精灵头饰 — 小叶子 */
+.pet-body::before{
+  content:'🍃';position:absolute;top:-15px;left:50%;transform:translateX(-50%);
+  font-size:16px;animation:leaf-bob 2s ease-in-out infinite;
+}
+@keyframes leaf-bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-3px)}}
+.scene-label{
+  position:absolute;bottom:8px;left:50%;transform:translateX(-50%);
+  background:rgba(255,255,255,.75);padding:3px 12px;border-radius:10px;
+  border:1px solid rgba(120,180,100,.15);
+  font-size:10px;font-weight:700;color:#4a6a2a;
+  font-family:'Noto Serif SC',serif;letter-spacing:.04em;
+}
+
+.btns{padding:14px 20px;display:flex;gap:10px}
+.btn{flex:1;padding:16px 12px;border-radius:16px;border:none;font-family:'Noto Serif SC',serif;font-size:14px;font-weight:700;cursor:pointer;transition:all .15s ease}
+.btn:active{transform:scale(.97)}
+.btn-main{
+  background:linear-gradient(135deg,#80b060,#5a9030);color:#fff;
+  box-shadow:0 4px 16px rgba(90,140,40,.25);
+}
+.btn-sub{
+  background:rgba(255,255,255,.7);color:#3a5a20;
+  border:1px solid rgba(120,180,100,.2);box-shadow:0 2px 8px rgba(0,0,0,.02);
+}
+.btn-icon{font-size:22px;display:block;margin-bottom:4px}
+
+.mood-card{
+  margin:4px 20px;padding:14px 16px;
+  background:rgba(255,255,255,.55);border-radius:16px;
+  border:1px solid rgba(120,180,100,.1);box-shadow:0 2px 8px rgba(0,0,0,.02);
+}
+.mood-label{font-size:9px;color:#7aaa6a;font-weight:700;letter-spacing:.1em}
+.mood-display{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:8px}
+.mood-item{text-align:center}.mood-emoji{font-size:28px}.mood-score{font-size:12px;font-weight:700;color:#4a6a2a;margin-top:2px}
+.mood-arrow{color:#a0c090;font-size:16px}
+
+.resources{padding:12px 20px;display:flex;gap:8px}
+.res-pill{
+  flex:1;text-align:center;padding:12px 6px;
+  background:rgba(255,255,255,.5);border-radius:14px;
+  border:1px solid rgba(120,180,100,.08);
+}
+.res-icon{font-size:16px}.res-val{font-size:15px;font-weight:800;color:#3a5a20;display:block;margin-top:2px}
+.res-lbl{font-size:9px;color:#7aaa6a;font-weight:600}
+
+.bottom-nav{
+  margin:auto 14px 16px;padding:6px 4px;display:flex;justify-content:space-around;
+  background:rgba(255,255,255,.7);backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);border-radius:20px;
+  border:1px solid rgba(120,180,100,.1);box-shadow:0 4px 16px rgba(0,0,0,.03);
+}
+.nav-item{text-align:center;background:none;border:none;padding:6px 8px;font-size:10px;font-weight:600;color:#8aaa7a;cursor:pointer;border-radius:12px;transition:all .15s ease}
+.nav-item.active{color:#5a8030;background:rgba(120,180,100,.08)}
+.nav-icon{font-size:18px;display:block;opacity:.85}.nav-item.active .nav-icon{opacity:1}
+</style>
+</head>
+<body>
+<div class="phone">
+  <div class="content">
+    <div class="status-bar"><span>9:41</span><span>🔋 85%</span></div>
+    <div class="header">
+      <div><div class="greeting-name">小晴</div><div class="greeting-sub">来照顾你的小岛吧</div></div>
+      <div class="coin-badge">💰 50</div>
+    </div>
+    <div class="scene">
+      <div class="jade-mountain m1"></div><div class="jade-mountain m2"></div>
+      <div class="jade-lake"></div>
+      <div class="jade-island"></div>
+      <div class="jade-tree"><div class="crown"></div><div class="trunk"></div></div>
+      <div class="jade-lighthouse lit"></div>
+      <div class="pet-area"><div class="pet-body"><div class="pet-eyes"><div class="pet-eye"></div><div class="pet-eye"></div></div><div class="pet-mouth"></div><div class="pet-blush l"></div><div class="pet-blush r"></div></div></div>
+      <div class="scene-label">🍃 碧落仙岛 · 灵</div>
+    </div>
+    <div class="btns">
+      <button class="btn btn-main"><span class="btn-icon">🌤</span>记录心情</button>
+      <button class="btn btn-sub"><span class="btn-icon">🫧</span>快速补给</button>
+    </div>
+    <div class="mood-card">
+      <div class="mood-label">今日心情</div>
+      <div class="mood-display">
+        <div class="mood-item"><span class="mood-emoji">🌪</span><span class="mood-score">8 分</span></div><span class="mood-arrow">→</span>
+        <div class="mood-item"><span class="mood-emoji">😌</span><span class="mood-score">5 分</span></div>
+      </div>
+    </div>
+    <div class="resources">
+      <div class="res-pill"><span class="res-icon">☀</span><span class="res-val">12</span><span class="res-lbl">阳光</span></div>
+      <div class="res-pill"><span class="res-icon">💧</span><span class="res-val">8</span><span class="res-lbl">水滴</span></div>
+      <div class="res-pill"><span class="res-icon">🕯</span><span class="res-val">1</span><span class="res-lbl">小灯</span></div>
+    </div>
+    <div class="bottom-nav">
+      <button class="nav-item active"><span class="nav-icon">🏝</span>小岛</button>
+      <button class="nav-item"><span class="nav-icon">🌤</span>天气</button>
+      <button class="nav-item"><span class="nav-icon">🎒</span>背包</button>
+      <button class="nav-item"><span class="nav-icon">🕯</span>温暖</button>
+      <button class="nav-item"><span class="nav-icon">📒</span>成长</button>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -3,7 +3,7 @@
   display: grid;
   place-items: center;
   padding: 18px;
-  background: var(--bg-cream);
+  background: #c8c0b0;
 }
 
 .phone-frame {
@@ -13,8 +13,8 @@
   min-height: 720px;
   border-radius: 42px;
   padding: 10px;
-  background: linear-gradient(145deg, rgba(255,255,255,0.9), rgba(230,210,190,0.35));
-  box-shadow: 0 30px 80px rgba(120, 80, 40, 0.15);
+  background: linear-gradient(145deg, rgba(255,255,255,.85), rgba(220,210,190,.4));
+  box-shadow: 0 30px 80px rgba(40,20,8,.2);
   overflow: hidden;
 }
 
@@ -22,7 +22,7 @@
   height: 100%;
   overflow: auto;
   border-radius: 34px;
-  background: linear-gradient(175deg, var(--bg-cream) 0%, var(--bg-warm) 40%, var(--bg-light) 100%);
+  background: linear-gradient(180deg, var(--bg-paper) 0%, var(--bg-warm) 15%, var(--bg-light) 50%, var(--bg-warm) 100%);
   padding-bottom: calc(100px + var(--safe-bottom));
   scrollbar-width: none;
 }
@@ -166,28 +166,28 @@ p { line-height: 1.65; margin: 0; color: var(--ink-700); }
 }
 
 .primary-button, .danger-soft-button, .ghost-button {
-  width: 100%; min-height: 50px; border-radius: 20px;
+  width: 100%; min-height: 48px; border-radius: 16px;
   font-weight: 800; color: var(--ink-900);
-  transition: transform .16s var(--ease-spring), box-shadow .16s ease;
-  display: flex; align-items: center; justify-content: center; gap: 10px;
-  border: none;
+  transition: transform .15s var(--ease-spring), box-shadow .15s ease;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  border: none; font-family: var(--font-display); letter-spacing: .04em;
 }
 .primary-button {
-  background: linear-gradient(150deg, var(--accent-light), var(--accent));
+  background: linear-gradient(135deg, #c05040, #9a3028);
   color: #fff;
-  box-shadow: var(--shadow-accent);
+  box-shadow: 0 4px 14px rgba(160,40,30,.25);
 }
 .danger-soft-button {
   background: var(--glass-strong);
-  border: 1px solid rgba(180, 140, 110, 0.15);
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.03);
+  border: 1px solid rgba(160,130,90,.15);
+  box-shadow: 0 2px 8px rgba(0,0,0,.02);
 }
 .ghost-button {
   background: var(--glass);
-  border: 1px solid rgba(180, 140, 110, 0.1);
+  border: 1px solid rgba(160,130,90,.1);
   box-shadow: var(--shadow-xs);
 }
-.primary-button:active, .danger-soft-button:active, .ghost-button:active, .choice-chip:active { transform: scale(0.97); }
+.primary-button:active, .danger-soft-button:active, .ghost-button:active, .choice-chip:active { transform: scale(.97); }
 
 .action-main {
   min-height: 76px;

@@ -1,65 +1,72 @@
 /* ============================================
-   心晴岛 融合设计系统 · 毛绒玩具 × 侘寂质感
-   底色取方向三（暖萌奶油），字体/质感取方向一（单色+留白）
+   心晴岛 · 水墨古典设计系统
+   宣纸底 + 水墨山 + 朱砂红 + 鎏金边
    ============================================ */
 
 :root {
-  /* ---- 底色系统（暖奶油调）---- */
-  --bg-cream: #fdf8f3;
-  --bg-warm: #faf3ec;
-  --bg-light: #fef8f2;
-  --bg-white: #ffffff;
+  /* ---- 宣纸底色系统 ---- */
+  --bg-paper: #f5efe0;
+  --bg-warm: #ede4d4;
+  --bg-light: #f8f3e8;
+  --bg-white: #fdfaf4;
 
-  /* ---- Accent（陶土橙 · 单一贯穿）---- */
-  --accent: #d89870;
-  --accent-light: #e8b890;
-  --accent-dark: #c07850;
-  --accent-glow: rgba(200,130,80,0.2);
+  /* ---- 水墨色阶 ---- */
+  --ink-900: #3a2010;
+  --ink-700: #5a3a1a;
+  --ink-500: #7a5a3a;
+  --ink-300: #a08868;
+  --muted: #a08868;
+  --muted-light: #c0b098;
 
-  /* ---- 暖系辅助色 ---- */
-  --warm-100: #faf0e4;
-  --warm-200: #f0dcc8;
-  --warm-300: #e0c4a0;
+  /* ---- 朱砂红 Accent ---- */
+  --accent: #b8443a;
+  --accent-light: #d46858;
+  --accent-dark: #9a3028;
+  --accent-glow: rgba(180,60,40,.2);
 
-  /* ---- 自然点缀（保留用于 3D/情绪指示）---- */
-  --sky-soft: #e8f0ff;
-  --mint-soft: #e8f6f0;
-  --sun-soft: #fef4e8;
+  /* ---- 鎏金 ---- */
+  --gold: #d4c4a0;
+  --gold-light: #e8dcc4;
+  --gold-dark: #a08860;
 
-  /* ---- 文字层级 ---- */
-  --ink-900: #4a3020;
-  --ink-700: #5a3a20;
-  --ink-500: #7a5a40;
-  --muted: #b89880;
-  --muted-light: #c8b8a8;
+  /* ---- 辅助色 ---- */
+  --warm-100: #f8f0e0;
+  --warm-200: #e8dcc8;
+  --warm-300: #d4c4a0;
+
+  /* ---- 自然点缀 ---- */
+  --sky-soft: #e8ddd0;
+  --mint-soft: #e0e8d8;
+  --sun-soft: #f8f0e0;
 
   /* ---- 玻璃/卡片 ---- */
-  --glass: rgba(255,255,255,0.55);
-  --glass-strong: rgba(255,255,255,0.75);
+  --glass: rgba(255,255,255,.5);
+  --glass-strong: rgba(255,255,255,.65);
 
-  /* ---- 阴影系统（柔光为主，拒绝硬黑）---- */
-  --shadow-xs: 0 1px 4px rgba(140,100,60,0.04);
-  --shadow-sm: 0 2px 10px rgba(140,100,60,0.06);
-  --shadow-md: 0 4px 20px rgba(140,100,60,0.08);
-  --shadow-lg: 0 8px 32px rgba(120,80,40,0.1);
-  --shadow-accent: 0 6px 20px rgba(200,130,80,0.25);
+  /* ---- 阴影（暖调柔光）---- */
+  --shadow-xs: 0 1px 4px rgba(80,40,15,.04);
+  --shadow-sm: 0 2px 8px rgba(80,40,15,.06);
+  --shadow-md: 0 4px 16px rgba(80,40,15,.08);
+  --shadow-lg: 0 8px 24px rgba(80,40,15,.1);
+  --shadow-accent: 0 4px 14px rgba(160,40,30,.25);
+  --shadow-gold: 0 2px 8px rgba(120,80,20,.12);
 
   /* ---- 圆角 ---- */
   --radius-xs: 8px;
   --radius-sm: 12px;
-  --radius-md: 18px;
-  --radius-lg: 22px;
-  --radius-xl: 28px;
-  --radius-full: 24px;
+  --radius-md: 16px;
+  --radius-lg: 20px;
+  --radius-xl: 24px;
+  --radius-full: 20px;
 
   /* ---- 字体 ---- */
-  --font-display: 'Noto Serif SC', 'Source Han Serif SC', 'STSong', serif;
-  --font-body: -apple-system, 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', sans-serif;
+  --font-display: 'Ma Shan Zheng', 'Noto Serif SC', 'STKaiti', 'KaiTi', cursive;
+  --font-body: -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
 
   /* ---- 间距 ---- */
   --space-xs: 4px;
   --space-sm: 8px;
-  --space-md: 16px;
+  --space-md: 14px;
   --space-lg: 20px;
   --space-xl: 24px;
 
@@ -67,9 +74,9 @@
   --safe-bottom: env(safe-area-inset-bottom, 0px);
 
   /* ---- 动画 ---- */
-  --duration-fast: 0.15s;
-  --duration-normal: 0.25s;
-  --duration-slow: 0.4s;
-  --ease-out-cubic: cubic-bezier(0.33, 1, 0.68, 1);
-  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --duration-fast: .15s;
+  --duration-normal: .25s;
+  --duration-slow: .4s;
+  --ease-out-cubic: cubic-bezier(.33,1,.68,1);
+  --ease-spring: cubic-bezier(.34,1.56,.64,1);
 }

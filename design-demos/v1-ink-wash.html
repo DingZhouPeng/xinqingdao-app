@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=375, initial-scale=1.0">
+<title>方向一：水墨古典 · 心晴岛</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=ZCOOL+XiaoWei&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#2a2018;display:flex;justify-content:center;align-items:center;min-height:100vh;padding:16px}
+.phone{
+  width:375px;min-height:812px;
+  background:linear-gradient(180deg,#f5efe0 0%,#ede4d4 15%,#f8f3e8 50%,#efe8d8 100%);
+  position:relative;overflow:hidden;
+  border-radius:40px;
+  box-shadow:0 0 0 3px #8b7355,0 0 0 6px #3a2a18,0 0 0 8px #a08868,0 20px 60px rgba(0,0,0,.5);
+}
+/* 宣纸纹理 */
+.phone::before{
+  content:'';position:absolute;inset:0;
+  background:url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.03'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;
+}
+.content{position:relative;z-index:1;display:flex;flex-direction:column;min-height:100vh}
+
+/* 顶栏 */
+.status-bar{padding:14px 24px 6px;display:flex;justify-content:space-between;font-size:11px;color:#8b7355;font-weight:600;letter-spacing:.04em}
+.header{padding:8px 20px;display:flex;justify-content:space-between;align-items:center}
+.greeting-name{font-family:'Ma Shan Zheng',cursive;font-size:24px;color:#3a2010;letter-spacing:.06em;line-height:1.2}
+.greeting-sub{font-size:11px;color:#a08868;margin-top:1px;letter-spacing:.08em;font-weight:500}
+.coin-badge{
+  background:linear-gradient(135deg,#d4c4a0,#c4b088);
+  padding:8px 14px;border-radius:16px;border:1.5px solid #a08860;
+  font-size:12px;font-weight:800;color:#5a4018;
+  box-shadow:0 2px 6px rgba(100,60,20,.15),inset 0 1px 0 rgba(255,255,255,.4);
+  letter-spacing:.03em;
+}
+
+/* 场景区 */
+.scene{
+  margin:8px 16px;height:260px;border-radius:20px;
+  background:linear-gradient(180deg,#e8ddd0 0%,#f0e4d4 30%,#e0d8c8 100%);
+  position:relative;overflow:hidden;
+  border:2px solid rgba(160,130,90,.2);
+  box-shadow:0 4px 16px rgba(80,40,15,.08),inset 0 0 40px rgba(200,180,160,.15);
+}
+/* 水墨山 */
+.ink-mountain{
+  position:absolute;bottom:35%;
+  border-left:solid transparent;border-right:solid transparent;border-bottom:solid;
+  opacity:.7;
+}
+.ink-mountain.m1{border-left-width:50px;border-right-width:70px;border-bottom-width:50px;border-bottom-color:#8b7b6b;left:8%}
+.ink-mountain.m2{border-left-width:70px;border-right-width:50px;border-bottom-width:60px;border-bottom-color:#a09080;left:35%;opacity:.5}
+.ink-mountain.m3{border-left-width:40px;border-right-width:60px;border-bottom-width:45px;border-bottom-color:#7b6b5b;right:10%;opacity:.6}
+/* 水面 */
+.ink-water{
+  position:absolute;bottom:0;left:0;right:0;height:32%;
+  background:linear-gradient(180deg,rgba(180,200,210,.2),rgba(140,170,190,.45));
+}
+.ink-water::before{
+  content:'';position:absolute;top:0;left:-10%;right:-10%;height:2px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.2) 30%,rgba(255,255,255,.4) 50%,rgba(255,255,255,.2) 70%,transparent);
+  animation:water-line 4s linear infinite;
+}
+@keyframes water-line{0%{transform:translateX(-5%)}100%{transform:translateX(5%)}}
+/* 岛屿 */
+.ink-island{
+  position:absolute;bottom:28%;left:50%;transform:translateX(-50%);
+  width:160px;height:45px;
+  background:linear-gradient(180deg,#c4b090,#b0a080);
+  border-radius:50% 50% 45% 45% / 60% 60% 35% 35%;
+  box-shadow:0 4px 12px rgba(60,30,10,.15),inset 0 -6px 8px rgba(80,40,15,.1);
+}
+/* 树 */
+.ink-tree{
+  position:absolute;bottom:26px;left:16px;
+}
+.ink-tree .trunk{width:4px;height:24px;background:#6b5b3a;border-radius:2px;margin:0 auto}
+.ink-tree .crown{
+  width:32px;height:32px;background:radial-gradient(circle at 35% 30%,#6a8a4a,#4a6a2a);
+  border-radius:50%;margin-top:-4px;position:relative;
+}
+.ink-tree .crown::after{
+  content:'';position:absolute;
+  width:20px;height:20px;background:#5a7a3a;border-radius:50%;
+  top:-6px;right:-4px;
+}
+/* 灯塔 */
+.ink-lighthouse{
+  position:absolute;bottom:22px;right:20px;
+  width:10px;height:26px;background:#d8d0c8;border-radius:3px 3px 0 0;
+}
+.ink-lighthouse::before{
+  content:'';position:absolute;top:-6px;left:-3px;
+  width:16px;height:8px;background:#a04030;border-radius:2px 2px 0 0;
+}
+.ink-lighthouse.lit::after{
+  content:'';position:absolute;top:1px;left:50%;transform:translateX(-50%);
+  width:5px;height:5px;background:radial-gradient(circle,#ffe880,#e0b830);
+  border-radius:50%;box-shadow:0 0 10px rgba(240,200,60,.5);
+  animation:lamp 2s ease-in-out infinite;
+}
+@keyframes lamp{0%,100%{opacity:.5}50%{opacity:1}}
+/* 精灵 */
+.pet-area{
+  position:absolute;bottom:26%;left:50%;transform:translateX(-50%);z-index:5;
+}
+.pet-body{
+  width:44px;height:44px;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#fff8f0,#f8e0c0 60%,#e8c8a0);
+  box-shadow:0 0 0 3px rgba(200,160,100,.2),0 4px 12px rgba(100,50,20,.12);
+  position:relative;animation:pet-bob 3s ease-in-out infinite;
+}
+@keyframes pet-bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+.pet-eyes{position:absolute;top:14px;left:50%;transform:translateX(-50%);display:flex;gap:10px}
+.pet-eye{width:8px;height:10px;background:#2a1a0a;border-radius:50%;animation:blink 4s ease-in-out infinite}
+.pet-eye::after{content:'';position:absolute;width:3px;height:3px;background:#fff;border-radius:50%;top:2px;left:1px}
+@keyframes blink{0%,44%,48%,100%{transform:scaleY(1)}46%{transform:scaleY(.08)}}
+.pet-mouth{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);width:6px;height:3px;border-bottom:1.5px solid #c09080;border-radius:0 0 6px 6px}
+.pet-blush{position:absolute;width:10px;height:6px;background:radial-gradient(ellipse,rgba(255,140,140,.35),transparent);border-radius:50%}
+.pet-blush.l{top:22px;left:4px}.pet-blush.r{top:22px;right:4px}
+/* 场景文字 */
+.scene-label{
+  position:absolute;bottom:8px;left:50%;transform:translateX(-50%);
+  background:rgba(255,255,255,.8);padding:3px 12px;border-radius:10px;
+  font-size:10px;font-weight:700;color:#5a3a1a;white-space:nowrap;
+  font-family:'ZCOOL XiaoWei',serif;letter-spacing:.04em;
+}
+
+/* 按钮 */
+.btns{padding:14px 20px;display:flex;gap:10px}
+.btn{
+  flex:1;padding:16px 12px;border-radius:16px;border:none;
+  font-family:'ZCOOL XiaoWei',serif;font-size:14px;font-weight:700;
+  cursor:pointer;transition:all .15s ease;text-align:center;
+  letter-spacing:.04em;
+}
+.btn:active{transform:scale(.97)}
+.btn-main{
+  background:linear-gradient(135deg,#b8443a,#9a3028);color:#fff;
+  box-shadow:0 4px 14px rgba(160,40,30,.3);
+}
+.btn-sub{
+  background:rgba(255,255,255,.6);color:#5a3a1a;
+  border:1px solid rgba(160,130,90,.2);box-shadow:0 2px 8px rgba(0,0,0,.03);
+}
+.btn-icon{font-size:22px;display:block;margin-bottom:4px}
+
+/* 心情卡 */
+.mood-card{
+  margin:4px 20px;padding:14px 16px;
+  background:rgba(255,255,255,.5);border-radius:16px;
+  border:1px solid rgba(160,130,90,.12);
+  box-shadow:0 2px 8px rgba(0,0,0,.02);
+}
+.mood-label{font-size:9px;color:#a08868;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+.mood-display{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:8px}
+.mood-item{text-align:center}
+.mood-emoji{font-size:28px;display:block}
+.mood-score{font-size:12px;font-weight:700;color:#5a3a1a;margin-top:2px}
+.mood-arrow{color:#c0b090;font-size:16px}
+
+/* 资源 */
+.resources{padding:12px 20px;display:flex;gap:8px}
+.res-pill{
+  flex:1;text-align:center;padding:12px 6px;
+  background:rgba(255,255,255,.4);border-radius:14px;
+  border:1px solid rgba(160,130,90,.08);
+}
+.res-icon{font-size:16px}
+.res-val{font-size:15px;font-weight:800;color:#3a2010;display:block;margin-top:2px}
+.res-lbl{font-size:9px;color:#a08868;font-weight:600;letter-spacing:.04em}
+
+/* 导航 */
+.bottom-nav{
+  margin:auto 14px 16px;padding:6px 4px;display:flex;justify-content:space-around;
+  background:rgba(255,255,255,.65);backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);border-radius:20px;
+  border:1px solid rgba(160,130,90,.1);
+  box-shadow:0 4px 16px rgba(0,0,0,.04);
+}
+.nav-item{
+  text-align:center;background:none;border:none;padding:6px 8px;
+  font-size:10px;font-weight:600;color:#a08868;cursor:pointer;
+  border-radius:12px;transition:all .15s ease;letter-spacing:.03em;
+}
+.nav-item.active{color:#9a3028;background:rgba(180,60,40,.06)}
+.nav-icon{font-size:18px;display:block;opacity:.85}
+.nav-item.active .nav-icon{opacity:1}
+</style>
+</head>
+<body>
+<div class="phone">
+  <div class="content">
+    <div class="status-bar"><span>9:41</span><span>🔋 85%</span></div>
+    <div class="header">
+      <div><div class="greeting-name">小晴</div><div class="greeting-sub">来照顾你的小岛吧</div></div>
+      <div class="coin-badge">💰 50</div>
+    </div>
+
+    <div class="scene">
+      <div class="ink-mountain m1"></div><div class="ink-mountain m2"></div><div class="ink-mountain m3"></div>
+      <div class="ink-water"></div>
+      <div class="ink-island"></div>
+      <div class="ink-tree"><div class="crown"></div><div class="trunk"></div></div>
+      <div class="ink-lighthouse lit"></div>
+      <div class="pet-area">
+        <div class="pet-body"><div class="pet-eyes"><div class="pet-eye"></div><div class="pet-eye"></div></div><div class="pet-mouth"></div><div class="pet-blush l"></div><div class="pet-blush r"></div></div>
+      </div>
+      <div class="scene-label">🏝 心晴岛 · 晴</div>
+    </div>
+
+    <div class="btns">
+      <button class="btn btn-main"><span class="btn-icon">🌤</span>记录心情</button>
+      <button class="btn btn-sub"><span class="btn-icon">🫧</span>快速补给</button>
+    </div>
+
+    <div class="mood-card">
+      <div class="mood-label">今日心情</div>
+      <div class="mood-display">
+        <div class="mood-item"><span class="mood-emoji">🌪</span><span class="mood-score">8 分</span></div>
+        <span class="mood-arrow">→</span>
+        <div class="mood-item"><span class="mood-emoji">😌</span><span class="mood-score">5 分</span></div>
+      </div>
+    </div>
+
+    <div class="resources">
+      <div class="res-pill"><span class="res-icon">☀</span><span class="res-val">12</span><span class="res-lbl">阳光</span></div>
+      <div class="res-pill"><span class="res-icon">💧</span><span class="res-val">8</span><span class="res-lbl">水滴</span></div>
+      <div class="res-pill"><span class="res-icon">🕯</span><span class="res-val">1</span><span class="res-lbl">小灯</span></div>
+    </div>
+
+    <div class="bottom-nav">
+      <button class="nav-item active"><span class="nav-icon">🏝</span>小岛</button>
+      <button class="nav-item"><span class="nav-icon">🌤</span>天气</button>
+      <button class="nav-item"><span class="nav-icon">🎒</span>背包</button>
+      <button class="nav-item"><span class="nav-icon">🕯</span>温暖</button>
+      <button class="nav-item"><span class="nav-icon">📒</span>成长</button>
+    </div>
+  </div>
+</div>
+</body>
+</html>
