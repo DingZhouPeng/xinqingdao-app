@@ -3,7 +3,7 @@ import type { ActiveView } from '../types';
 const tabs: Array<{ view: ActiveView; label: string; icon: string }> = [
   { view: 'home', label: '小岛', icon: '🏝️' },
   { view: 'mood', label: '天气', icon: '🌤️' },
-  { view: 'relief', label: '补给', icon: '🫧' },
+  { view: 'inventory', label: '背包', icon: '🎒' },
   { view: 'social', label: '温暖', icon: '🕯️' },
   { view: 'growth', label: '成长', icon: '📒' }
 ];

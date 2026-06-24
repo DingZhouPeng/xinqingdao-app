@@ -2,7 +2,7 @@ export type MoodType = 'happy' | 'calm' | 'nervous' | 'angry' | 'sad' | 'tired' 
 export type SceneTag = 'study' | 'friends' | 'family' | 'self' | 'body' | 'unknown';
 export type WuyuCategory = '德' | '智' | '体' | '美' | '劳';
 export type SafetyLevel = 'none' | 'watch' | 'high';
-export type ActiveView = 'home' | 'mood' | 'relief' | 'ai' | 'action' | 'social' | 'growth' | 'lighthouse' | 'onboarding' | 'shop' | 'daily-tasks' | 'pet-care' | 'achievements';
+export type ActiveView = 'home' | 'mood' | 'relief' | 'ai' | 'action' | 'social' | 'growth' | 'lighthouse' | 'onboarding' | 'shop' | 'daily-tasks' | 'pet-care' | 'achievements' | 'inventory';
 
 export type { GameProgress, PetState, CurrencyState } from './types/game';
 

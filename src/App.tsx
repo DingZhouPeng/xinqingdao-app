@@ -26,6 +26,10 @@ import type { DailyTasksState } from './types/dailyTasks';
 import { loadRelayState, saveRelayState } from './services/relay';
 import type { RelayState } from './types/relay';
 import RelayCodeOverlay from './components/RelayCodeOverlay';
+import { loadInventory, saveInventory, addItem, giftItem, receiveItem } from './services/items';
+import type { InventoryState, GameItem } from './types/items';
+import InventoryPage from './pages/InventoryPage';
+import DualDungeon from './components/DualDungeon';
 import { loadAchievements, saveAchievements, loadStats, saveStats, checkAchievements, updateLoginStreak, type UserStats } from './services/achievements';
 import type { AchievementsState, Achievement } from './types/achievements';
 import { audioManager } from './services/audio';
@@ -40,7 +44,10 @@ export default function App() {
   const [achievements, setAchievements] = useState<AchievementsState>(loadAchievements);
   const [stats, setStats] = useState<UserStats>(loadStats);
   const [relayState, setRelayState] = useState<RelayState>(loadRelayState);
+  const [inventory, setInventory] = useState<InventoryState>(loadInventory);
   const [pendingRelayCode, setPendingRelayCode] = useState<string | null>(null);
+  const [dualDungeonMode, setDualDungeonMode] = useState<'initiate' | 'join' | null>(null);
+  const [dungeonCode, setDungeonCode] = useState<string | null>(null);
   const [activeView, setActiveView] = useState<ActiveView>(snapshot.profile ? 'home' : 'onboarding');
   const [moodInput, setMoodInput] = useState<MoodInput | null>(null);
   const [abc, setAbc] = useState<ABCInput | null>(null);
@@ -85,6 +92,10 @@ export default function App() {
     }
     prevRelayCount.current = relayState.myMessages.length;
   }, [relayState]);
+
+  useEffect(() => {
+    saveInventory(inventory);
+  }, [inventory]);
 
   // URL Hash detection for relay codes
   useEffect(() => {
@@ -309,6 +320,16 @@ export default function App() {
     if (activeView === 'daily-tasks') return <DailyTasksPage dailyTasksState={dailyTasks} onBack={() => setActiveView('home')} />;
     if (activeView === 'pet-care') return <PetCarePage gameProgress={gameProgress} onFeed={handleFeedPet} onPlay={handlePlayWithPet} onRest={handleRestPet} onBack={() => setActiveView('home')} />;
     if (activeView === 'achievements') return <AchievementsPage achievementsState={achievements} stats={stats} onBack={() => setActiveView('home')} />;
+    if (activeView === 'inventory') return (
+      <InventoryPage
+        inventory={inventory}
+        onInventoryChange={setInventory}
+        onBack={() => setActiveView('home')}
+        onGiftItem={(item) => {
+          giftItem(inventory, item.id);
+        }}
+      />
+    );
     return <HomePage snapshot={snapshot} gameProgress={gameProgress} onNavigate={setActiveView} />;
   };
 
@@ -380,6 +401,39 @@ export default function App() {
             relayMaxChainReach: updates.relayTotalReach ? Math.max(prev.relayMaxChainReach, prev.relayTotalReach + (updates.relayTotalReach || 0)) : prev.relayMaxChainReach
           }))}
         />
+      )}
+
+      {/* 双人副本弹窗 */}
+      {dualDungeonMode && (
+        <DualDungeon
+          mode={dualDungeonMode}
+          dungeonCode={dungeonCode || undefined}
+          onComplete={(rewards) => {
+            let updated = inventory;
+            for (const reward of rewards) {
+              updated = addItem(updated, reward);
+            }
+            setInventory(updated);
+            setDualDungeonMode(null);
+            audioManager.playSfx('complete');
+          }}
+          onClose={() => setDualDungeonMode(null)}
+        />
+      )}
+
+      {/* 副本入口 — 右下角 */}
+      {activeView === 'home' && (
+        <button
+          className="floating-settings-btn"
+          style={{ right: 60 }}
+          onClick={() => {
+            audioManager.playSfx('click');
+            setDualDungeonMode('initiate');
+          }}
+          aria-label="双人副本"
+        >
+          ⚔️
+        </button>
       )}
 
       {/* 音效设置按钮 - 固定在右下角 */}

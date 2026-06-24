@@ -1,0 +1,489 @@
+/* ============================================
+   心晴岛 2D 国风游戏样式 — 梦幻西游风格
+   ============================================ */
+
+/* ---- Q版 Chibi 角色 ---- */
+.chibi-container {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  animation: chibi-bob 3s ease-in-out infinite;
+}
+
+@keyframes chibi-bob {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+/* 大头 */
+.chibi-head {
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  position: relative;
+  background: radial-gradient(circle at 35% 30%, #fff5e8 0%, #fdd9b0 50%, #f5c090 100%);
+  box-shadow:
+    0 0 0 2px rgba(180,120,70,.2),
+    0 4px 12px rgba(120,60,20,.15),
+    inset 0 -4px 8px rgba(160,80,30,.1);
+}
+
+.chibi-head.stage1 { width: 48px; height: 48px; }
+.chibi-head.stage2 { width: 56px; height: 56px; }
+.chibi-head.stage3 { width: 64px; height: 64px; }
+.chibi-head.stage4 { width: 72px; height: 72px; }
+.chibi-head.stage5 { width: 84px; height: 84px; }
+
+/* 眼睛 */
+.chibi-eyes {
+  position: absolute; top: 18px; left: 50%;
+  transform: translateX(-50%);
+  display: flex; gap: 12px;
+}
+
+.chibi-eye {
+  width: 10px; height: 12px;
+  background: #2a1a0a;
+  border-radius: 50%;
+  position: relative;
+  animation: chibi-blink 4s ease-in-out infinite;
+}
+
+.chibi-eye::after {
+  content: '';
+  position: absolute;
+  width: 4px; height: 4px; background: white;
+  border-radius: 50%; top: 2px; left: 1px;
+}
+
+@keyframes chibi-blink {
+  0%,44%,48%,100% { transform: scaleY(1); }
+  46% { transform: scaleY(.08); }
+}
+
+/* 嘴 */
+.chibi-mouth {
+  position: absolute; bottom: 14px; left: 50%;
+  transform: translateX(-50%);
+  width: 8px; height: 4px;
+  border-bottom: 2px solid #c49080;
+  border-radius: 0 0 8px 8px;
+}
+
+/* 腮红 */
+.chibi-blush {
+  position: absolute; width: 12px; height: 8px;
+  background: radial-gradient(ellipse, rgba(255,140,140,.4), transparent);
+  border-radius: 50%;
+}
+.chibi-blush.l { top: 26px; left: 4px; }
+.chibi-blush.r { top: 26px; right: 4px; }
+
+/* 小身体 */
+.chibi-body {
+  width: 24px; height: 28px;
+  background: radial-gradient(ellipse at 50% 20%, #fff5e8, #fdd9b0 60%, #f0c890);
+  border-radius: 50% 50% 40% 40%;
+  margin-top: -4px;
+  box-shadow: inset 0 -3px 4px rgba(160,80,30,.1);
+}
+
+/* 光晕 */
+.chibi-aura {
+  position: absolute;
+  width: 120%; height: 120%;
+  border-radius: 50%;
+  top: -10%; left: -10%;
+  animation: aura-pulse 2s ease-in-out infinite;
+  pointer-events: none; z-index: -1;
+}
+
+.chibi-aura.aura-common { background: radial-gradient(circle, rgba(200,180,160,.2), transparent 65%); }
+.chibi-aura.aura-uncommon { background: radial-gradient(circle, rgba(140,200,160,.25), transparent 65%); }
+.chibi-aura.aura-rare { background: radial-gradient(circle, rgba(120,160,220,.25), transparent 65%); }
+.chibi-aura.aura-legendary { background: radial-gradient(circle, rgba(220,180,40,.3), transparent 60%); }
+
+@keyframes aura-pulse {
+  0%,100% { transform: scale(1); opacity:.5; }
+  50% { transform: scale(1.15); opacity:1; }
+}
+
+/* 配饰 */
+.chibi-crown {
+  position: absolute; top: -18px; left: 50%;
+  transform: translateX(-50%);
+  font-size: 20px;
+  filter: drop-shadow(0 2px 4px rgba(200,150,0,.4));
+  animation: crown-bob 2s ease-in-out infinite;
+}
+
+@keyframes crown-bob {
+  0%,100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(-3px); }
+}
+
+.chibi-wings::before,
+.chibi-wings::after {
+  content: '🦋'; position: absolute;
+  font-size: 18px; top: 5px;
+  animation: wing-flap .5s ease-in-out infinite;
+}
+.chibi-wings::before { left: -22px; }
+.chibi-wings::after { right: -22px; animation-delay: .25s; }
+
+@keyframes wing-flap {
+  0%,100% { transform: scaleY(1); }
+  50% { transform: scaleY(.5); }
+}
+
+/* ---- 2D 国风岛屿场景 ---- */
+.guofeng-scene {
+  width: 100%; height: 100%;
+  position: relative;
+  overflow: hidden;
+  border-radius: inherit;
+}
+
+/* 天空 */
+.guofeng-sky {
+  position: absolute; top: 0; left: 0; right: 0; height: 60%;
+  transition: background .5s ease;
+}
+
+.guofeng-sky.clear {
+  background: linear-gradient(180deg, #e8f0ff 0%, #f0e8d8 100%);
+}
+
+.guofeng-sky.stormy {
+  background: linear-gradient(180deg, #c8d0d8 0%, #d8d0c8 100%);
+}
+
+/* 太阳 */
+.guofeng-sun {
+  position: absolute; top: 16px; right: 32px;
+  width: 40px; height: 40px; border-radius: 50%;
+  background: radial-gradient(circle, #fff8e0, #f0c860);
+  box-shadow: 0 0 30px rgba(240,200,100,.5), 0 0 60px rgba(240,200,100,.2);
+  animation: sun-glow 4s ease-in-out infinite;
+}
+
+@keyframes sun-glow {
+  0%,100% { box-shadow: 0 0 30px rgba(240,200,100,.5), 0 0 60px rgba(240,200,100,.2); }
+  50% { box-shadow: 0 0 40px rgba(240,200,100,.7), 0 0 80px rgba(240,200,100,.3); }
+}
+
+/* 云 */
+.guofeng-cloud {
+  position: absolute;
+  background: rgba(255,255,255,.7);
+  border-radius: 50px;
+  animation: cloud-drift 20s linear infinite;
+}
+
+.guofeng-cloud::before,
+.guofeng-cloud::after {
+  content: ''; position: absolute;
+  background: inherit; border-radius: 50%;
+}
+
+.guofeng-cloud::before { width: 40px; height: 40px; top: -18px; left: 8px; }
+.guofeng-cloud::after { width: 30px; height: 30px; top: -10px; right: 6px; }
+
+.guofeng-cloud.a { width: 70px; height: 24px; top: 30px; left: 20%; }
+.guofeng-cloud.b { width: 90px; height: 28px; top: 60px; right: 15%; animation-duration: 25s; animation-delay: -10s; }
+
+@keyframes cloud-drift {
+  0% { transform: translateX(-30px); }
+  50% { transform: translateX(30px); }
+  100% { transform: translateX(-30px); }
+}
+
+/* 远山 */
+.guofeng-mountains {
+  position: absolute; bottom: 35%; left: -10%; right: -10%;
+  height: 80px;
+}
+
+.guofeng-mountain {
+  position: absolute; bottom: 0;
+  width: 0; height: 0;
+  border-left: solid transparent;
+  border-right: solid transparent;
+  border-bottom: solid;
+}
+
+.guofeng-mountain.m1 {
+  border-left-width: 60px; border-right-width: 80px;
+  border-bottom-width: 60px; border-bottom-color: rgba(180,190,170,.6);
+  left: 10%; animation: mountain-haze 6s ease-in-out infinite;
+}
+
+.guofeng-mountain.m2 {
+  border-left-width: 80px; border-right-width: 60px;
+  border-bottom-width: 70px; border-bottom-color: rgba(160,175,155,.5);
+  left: 40%; animation: mountain-haze 8s ease-in-out infinite reverse;
+}
+
+.guofeng-mountain.m3 {
+  border-left-width: 70px; border-right-width: 90px;
+  border-bottom-width: 55px; border-bottom-color: rgba(190,200,180,.4);
+  right: 5%; animation: mountain-haze 7s ease-in-out infinite;
+}
+
+@keyframes mountain-haze {
+  0%,100% { opacity: .8; }
+  50% { opacity: 1; }
+}
+
+/* 水面 */
+.guofeng-water {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  height: 35%;
+  background: linear-gradient(180deg, rgba(160,200,210,.4), rgba(120,180,200,.7));
+}
+
+.guofeng-water::before {
+  content: '';
+  position: absolute; top: 0; left: -20%; right: -20%; height: 3px;
+  background: repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(255,255,255,.15) 40px, rgba(255,255,255,.15) 42px);
+  animation: water-ripple 4s linear infinite;
+}
+
+@keyframes water-ripple {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(42px); }
+}
+
+/* 岛屿 */
+.guofeng-island {
+  position: absolute; bottom: 30%; left: 50%;
+  transform: translateX(-50%);
+  width: 200px; height: 60px;
+  background: linear-gradient(180deg, #d4c090, #c4a870);
+  border-radius: 45% 45% 50% 50% / 60% 60% 40% 40%;
+  box-shadow:
+    0 6px 16px rgba(100,60,20,.15),
+    inset 0 -8px 12px rgba(120,80,30,.1);
+}
+
+/* 树 */
+.guofeng-tree {
+  position: absolute; bottom: 30px; left: 20px;
+}
+
+.guofeng-tree .trunk {
+  width: 6px; height: 28px;
+  background: linear-gradient(180deg, #8b6914, #6b5010);
+  border-radius: 3px; margin: 0 auto;
+}
+
+.guofeng-tree .leaves {
+  width: 36px; height: 36px;
+  background: radial-gradient(circle at 40% 30%, #5a9a4a, #3a7a2a);
+  border-radius: 50%;
+  margin-top: -6px;
+  box-shadow: 8px 4px 0 rgba(74,130,60,.6), -6px 6px 0 rgba(60,110,50,.5);
+}
+
+.guofeng-tree.grow .leaves {
+  animation: tree-sway 3s ease-in-out infinite;
+}
+
+@keyframes tree-sway {
+  0%,100% { transform: rotate(0); }
+  25% { transform: rotate(-3deg); }
+  75% { transform: rotate(3deg); }
+}
+
+/* 灯塔 */
+.guofeng-lighthouse {
+  position: absolute; bottom: 26px; right: 24px;
+  width: 12px; height: 30px;
+  background: linear-gradient(180deg, #e8e0d8, #d0c8c0);
+  border-radius: 4px 4px 0 0;
+}
+
+.guofeng-lighthouse::after {
+  content: ''; position: absolute;
+  top: -8px; left: -4px;
+  width: 20px; height: 10px;
+  background: #c04040;
+  border-radius: 3px 3px 0 0;
+}
+
+.guofeng-lighthouse.lit::before {
+  content: '';
+  position: absolute; top: 2px; left: 50%;
+  transform: translateX(-50%);
+  width: 6px; height: 6px;
+  background: radial-gradient(circle, #ffe880, #f0c040);
+  border-radius: 50%;
+  box-shadow: 0 0 12px rgba(240,200,60,.6);
+  animation: lamp-blink 2s ease-in-out infinite;
+}
+
+@keyframes lamp-blink {
+  0%,100% { opacity: .7; transform: translateX(-50%) scale(1); }
+  50% { opacity: 1; transform: translateX(-50%) scale(1.3); }
+}
+
+/* 粒子 */
+.guofeng-particles {
+  position: absolute; inset: 0; pointer-events: none;
+}
+
+.guofeng-particle {
+  position: absolute; width: 4px; height: 4px;
+  border-radius: 50%;
+  background: rgba(240,200,80,.6);
+  animation: particle-rise 3s ease-in infinite;
+}
+
+@keyframes particle-rise {
+  0% { transform: translateY(0) scale(1); opacity: .8; }
+  100% { transform: translateY(-60px) scale(0); opacity: 0; }
+}
+
+/* ---- 道具卡片 ---- */
+.item-card {
+  position: relative;
+  background: linear-gradient(180deg, rgba(255,255,255,.9), rgba(245,240,232,.9));
+  border-radius: 16px; padding: 16px;
+  border: 2px solid;
+  transition: all .2s ease;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.item-card:active { transform: scale(.97); }
+
+.item-card::before {
+  content: ''; position: absolute; inset: 0;
+  opacity: .04;
+  pointer-events: none;
+}
+
+/* 稀有度边框 */
+.item-card.rarity-white { border-color: rgba(180,170,150,.3); }
+.item-card.rarity-green { border-color: rgba(58,134,96,.4); box-shadow: 0 0 12px rgba(58,134,96,.1); }
+.item-card.rarity-blue { border-color: rgba(60,120,180,.45); box-shadow: 0 0 16px rgba(60,120,180,.12); }
+.item-card.rarity-purple { border-color: rgba(140,80,180,.5); box-shadow: 0 0 20px rgba(140,80,180,.15), 0 0 40px rgba(140,80,180,.05); }
+.item-card.rarity-gold { border-color: rgba(212,160,40,.6); box-shadow: 0 0 24px rgba(212,160,40,.2), 0 0 48px rgba(212,160,40,.08); animation: gold-shimmer 2s ease-in-out infinite; }
+
+@keyframes gold-shimmer {
+  0%,100% { box-shadow: 0 0 24px rgba(212,160,40,.2), 0 0 48px rgba(212,160,40,.08); }
+  50% { box-shadow: 0 0 32px rgba(212,160,40,.35), 0 0 56px rgba(212,160,40,.15); }
+}
+
+.item-card .item-icon {
+  font-size: 40px; text-align: center; display: block;
+  filter: drop-shadow(0 4px 6px rgba(0,0,0,.1));
+}
+
+.item-card .item-name {
+  text-align: center; font-weight: 800; font-size: 14px;
+  margin-top: 6px; color: #4a3020;
+}
+
+.item-card .item-rarity-label {
+  text-align: center; font-size: 10px; font-weight: 700;
+  padding: 2px 8px; border-radius: 8px; display: inline-block;
+  margin: 4px auto 0;
+}
+
+.rarity-white .item-rarity-label { background: rgba(180,170,150,.15); color: #8a7a60; }
+.rarity-green .item-rarity-label { background: rgba(58,134,96,.12); color: #3a8660; }
+.rarity-blue .item-rarity-label { background: rgba(60,120,180,.12); color: #3c78b4; }
+.rarity-purple .item-rarity-label { background: rgba(140,80,180,.12); color: #8c50b4; }
+.rarity-gold .item-rarity-label { background: rgba(212,160,40,.15); color: #8a6a10; }
+
+/* ---- 双人副本 ---- */
+.dual-dungeon-container {
+  position: fixed; inset: 0; z-index: 10001;
+  background: rgba(40,20,10,.8);
+  display: flex; align-items: center; justify-content: center;
+  animation: fade-in .3s ease;
+}
+
+.dual-dungeon-card {
+  background: linear-gradient(180deg, #fdf8f3, #f5ede0);
+  border-radius: 24px; padding: 28px 24px;
+  width: calc(100% - 32px); max-width: 360px;
+  text-align: center;
+  border: 2px solid #d4a040;
+  box-shadow: 0 20px 60px rgba(0,0,0,.3), 0 0 0 4px rgba(212,160,40,.15);
+}
+
+.dual-dungeon-card h2 {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 22px; color: #4a3020; margin-bottom: 8px;
+}
+
+.dual-players {
+  display: flex; align-items: center; justify-content: center;
+  gap: 20px; margin: 20px 0;
+}
+
+.dual-player {
+  text-align: center;
+}
+
+.dual-player-name {
+  font-size: 12px; font-weight: 700; color: #8a6a10;
+  margin-top: 6px; display: block;
+}
+
+.dual-vs {
+  font-size: 28px; color: #d4a040;
+  animation: vs-pulse 1s ease-in-out infinite;
+}
+
+@keyframes vs-pulse {
+  0%,100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+
+.dual-code-display {
+  display: inline-block;
+  padding: 10px 20px; border-radius: 12px;
+  background: linear-gradient(135deg, rgba(212,160,40,.15), rgba(212,160,40,.05));
+  border: 1px solid rgba(212,160,40,.3);
+  font-size: 28px; font-weight: 900; letter-spacing: 4px;
+  font-family: monospace; color: #6a4a10;
+  margin: 12px 0;
+}
+
+.dual-reward-preview {
+  display: flex; gap: 8px; justify-content: center;
+  margin: 16px 0;
+}
+
+.dual-reward-item {
+  padding: 8px 12px; border-radius: 12px;
+  font-size: 24px;
+}
+
+/* 墨水飞鸟 */
+.guofeng-bird {
+  position: absolute; font-size: 14px;
+  animation: bird-fly 12s linear infinite;
+  opacity: .6;
+}
+
+@keyframes bird-fly {
+  0% { left: -30px; top: 40%; }
+  25% { top: 30%; }
+  50% { top: 45%; }
+  75% { top: 35%; }
+  100% { left: calc(100% + 30px); top: 40%; }
+}
+
+/* 印章效果 */
+.guofeng-seal {
+  display: inline-block; padding: 4px 8px;
+  border: 2px solid #c04040; border-radius: 4px;
+  color: #c04040; font-weight: 900; font-size: 12px;
+  font-family: 'Noto Serif SC', serif;
+  transform: rotate(-3deg);
+  opacity: .8;
+}
