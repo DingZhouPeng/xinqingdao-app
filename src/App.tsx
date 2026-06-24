@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import AppShell from './components/AppShell';
 import PageTransition from './components/PageTransition';
 import OnboardingPage from './pages/OnboardingPage';
@@ -75,8 +75,15 @@ export default function App() {
     saveStats(stats);
   }, [stats]);
 
+  const prevRelayCount = useRef(relayState.myMessages.length);
+
   useEffect(() => {
     saveRelayState(relayState);
+    // 检测新接力消息 → 播放发送音效
+    if (relayState.myMessages.length > prevRelayCount.current) {
+      audioManager.playSfx('send');
+    }
+    prevRelayCount.current = relayState.myMessages.length;
   }, [relayState]);
 
   // URL Hash detection for relay codes
@@ -93,6 +100,13 @@ export default function App() {
       window.history.replaceState(null, '', window.location.pathname);
     }
   }, []);
+
+  // 进化庆祝时播放音效
+  useEffect(() => {
+    if (evoCelebration) {
+      audioManager.playSfx('evolution');
+    }
+  }, [evoCelebration]);
 
   // 登录连续天数更新
   useEffect(() => {
@@ -120,7 +134,7 @@ export default function App() {
       // 奖励金币
       const totalReward = newlyUnlocked.reduce((sum, a) => sum + a.reward, 0);
       setGameProgress(prev => earnCoins(prev, totalReward, '成就奖励'));
-      audioManager.playSfx('complete');
+      audioManager.playSfx('unlock');
     }
   };
 
@@ -170,7 +184,8 @@ export default function App() {
   const completeOnboarding = (profile: UserProfile) => {
     setSnapshot((current) => ({ ...current, profile }));
     audioManager.playSfx('complete');
-    // Check for pending relay code
+    // 首页播放环境音
+    audioManager.playSfx('ambient');
     const pendingCode = localStorage.getItem('xinqingdao-pending-relay-code');
     if (pendingCode) {
       localStorage.removeItem('xinqingdao-pending-relay-code');

@@ -4,139 +4,91 @@
 
 .guide-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.7);
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(74, 48, 32, 0.7);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   z-index: 9998;
   animation: fade-in 0.3s ease-out;
 }
 
 .guide-spotlight {
   position: fixed;
-  width: 120px;
-  height: 120px;
+  width: 100px; height: 100px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, transparent 70%);
-  border: 3px solid rgba(255, 255, 255, 0.5);
-  z-index: 9999;
-  pointer-events: none;
+  background: radial-gradient(circle, rgba(216,152,112,.25), transparent 70%);
+  border: 2px solid rgba(216,152,112,.4);
+  z-index: 9999; pointer-events: none;
   animation: spotlight-pulse 2s ease-in-out infinite;
 }
 
 @keyframes spotlight-pulse {
-  0%, 100% {
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 1;
-  }
-  50% {
-    transform: translate(-50%, -50%) scale(1.1);
-    opacity: 0.8;
-  }
+  0%,100% { transform:translate(-50%,-50%) scale(1); opacity:1 }
+  50% { transform:translate(-50%,-50%) scale(1.1); opacity:.7 }
 }
 
 .guide-card {
   position: fixed;
-  width: calc(100% - 48px);
-  max-width: 360px;
-  background: white;
-  border-radius: var(--radius-xl);
-  padding: var(--space-xl);
-  box-shadow: var(--shadow-xl);
+  width: calc(100% - 40px); max-width: 340px;
+  background: linear-gradient(175deg, #fdf8f3, #faf3ec);
+  border-radius: 24px; padding: 28px 24px;
+  box-shadow: 0 20px 60px rgba(74,48,32,.25), 0 0 0 1px rgba(216,152,112,.15);
   z-index: 10000;
-  animation: guide-slide-up 0.4s var(--ease-out-cubic);
+  animation: guide-slide-up .4s cubic-bezier(.34,1.56,.64,1);
 }
 
 .guide-card.centered {
-  top: 50%;
-  left: 50%;
+  top: 50%; left: 50%;
   transform: translate(-50%, -50%);
 }
 
-.guide-card.with-target {
-  /* 位置通过 style 属性动态设置 */
-}
-
 @keyframes guide-slide-up {
-  from {
-    opacity: 0;
-    transform: translate(-50%, 20px);
-  }
-  to {
-    opacity: 1;
-    transform: translate(-50%, 0);
-  }
+  from { opacity:0; transform:translate(-50%,30px) scale(.92) }
+  to { opacity:1; transform:translate(-50%,0) scale(1) }
 }
 
 .guide-emoji {
-  font-size: 48px;
-  text-align: center;
-  margin-bottom: var(--space-md);
-  animation: guide-emoji-bounce 0.6s var(--ease-spring);
+  font-size: 52px; text-align: center; margin-bottom: 14px;
+  animation: guide-emoji-bounce .7s cubic-bezier(.34,1.56,.64,1);
 }
 
 @keyframes guide-emoji-bounce {
-  0% {
-    transform: scale(0) rotate(-180deg);
-  }
-  60% {
-    transform: scale(1.2) rotate(10deg);
-  }
-  100% {
-    transform: scale(1) rotate(0);
-  }
+  0% { transform:scale(0) rotate(-30deg) }
+  60% { transform:scale(1.15) rotate(5deg) }
+  100% { transform:scale(1) rotate(0) }
 }
 
 .guide-title {
-  margin: 0 0 var(--space-sm);
-  font-size: 22px;
-  font-weight: 700;
-  color: var(--neutral-900);
-  text-align: center;
+  margin: 0 0 8px;
+  font-family: 'Noto Serif SC', serif;
+  font-size: 20px; font-weight: 500;
+  color: #4a3020; text-align: center;
 }
 
 .guide-description {
-  margin: 0 0 var(--space-lg);
-  font-size: 15px;
-  color: var(--neutral-700);
-  text-align: center;
-  line-height: 1.6;
+  margin: 0 0 20px;
+  font-size: 14px; color: #b89880;
+  text-align: center; line-height: 1.5;
 }
 
 .guide-progress {
-  display: flex;
-  justify-content: center;
-  gap: var(--space-sm);
-  margin-bottom: var(--space-lg);
+  display: flex; justify-content: center; gap: 6px;
+  margin-bottom: 20px;
 }
 
 .progress-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: rgba(200, 200, 200, 0.5);
-  transition: all var(--duration-normal) var(--ease-out-cubic);
+  width: 6px; height: 6px; border-radius: 50%;
+  background: rgba(180,140,110,.3);
+  transition: all .3s ease;
 }
-
 .progress-dot.active {
-  width: 24px;
-  border-radius: 4px;
-  background: linear-gradient(90deg, var(--primary), var(--primary-light));
+  width: 22px; border-radius: 3px;
+  background: linear-gradient(90deg, #e8b890, #d89870);
 }
+.progress-dot.completed { background: #d89870; }
 
-.progress-dot.completed {
-  background: var(--success);
-}
-
-.guide-actions {
-  display: flex;
-  gap: var(--space-sm);
-}
-
-.guide-actions button {
-  flex: 1;
-}
+.guide-actions { display: flex; gap: 10px; }
+.guide-actions button { flex: 1; }
 
 /* ---- 接力冷启动横幅 ---- */
 .relay-coldstart-banner {

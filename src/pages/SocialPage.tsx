@@ -196,12 +196,11 @@ export default function SocialPage({
         </div>
       ) : (
         <div className="relay-impact-card" style={{ opacity: 0.8 }}>
-          <span style={{ fontSize: '14px', fontWeight: 700, color: 'var(--muted)' }}>
-            🕊️ 还没有发起过接力
-          </span>
-          <p style={{ fontSize: '13px', color: 'var(--muted)', marginTop: '6px' }}>
-            写下 3 条鼓励消息，开始你的第一次温暖接力
-          </p>
+          <div className="empty-state" style={{ padding: 20 }}>
+            <span className="empty-state-icon">🕊️</span>
+            <span className="empty-state-title">还没有发起过接力</span>
+            <span className="empty-state-desc">写下 3 条鼓励消息，开始你的第一次温暖接力吧</span>
+          </div>
         </div>
       )}
 

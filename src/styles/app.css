@@ -1205,6 +1205,41 @@ input[type="range"] { width: 100%; accent-color: var(--accent); margin: 12px 0; 
 .skill-card.is-unlocked { opacity: 1; background: linear-gradient(145deg, #fff, #f4fff9); }
 .empty-text { color: var(--muted); }
 
+/* ---- 空状态 ---- */
+.empty-state {
+  text-align: center;
+  padding: 40px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.empty-state-icon {
+  font-size: 56px;
+  opacity: 0.5;
+  animation: empty-float 4s ease-in-out infinite;
+}
+
+.empty-state-title {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 500;
+  color: var(--ink-700);
+}
+
+.empty-state-desc {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.6;
+  max-width: 240px;
+}
+
+@keyframes empty-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
 /* Lighthouse */
 .lighthouse-header {
   align-items: center;

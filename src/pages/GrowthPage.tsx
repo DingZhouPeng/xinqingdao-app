@@ -26,7 +26,13 @@ export default function GrowthPage({ snapshot }: GrowthPageProps) {
 
       <section className="panel-card">
         <h2>最近记录</h2>
-        {snapshot.records.length === 0 && <p className="empty-text">还没有记录。完成一次心情天气后，这里会出现你的变化。</p>}
+        {snapshot.records.length === 0 && (
+          <div className="empty-state">
+            <span className="empty-state-icon">📒</span>
+            <span className="empty-state-title">还没有记录</span>
+            <span className="empty-state-desc">完成一次心情记录后，这里会出现你的情绪变化历程</span>
+          </div>
+        )}
         {snapshot.records.map((record) => (
           <article className="record-card" key={record.id}>
             <span className="record-weather">{moodEmoji(record.input.mood)}</span>
